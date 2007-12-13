@@ -13,33 +13,10 @@ Junkie - A fix for what ails you
 
 =head1 SYNOPSIS
 
-# my class ...
-package My::DBI;
-use Moose;
-
-has 'dsn'  => (is => 'rw', isa => 'Str');
-has 'user' => (is => 'rw', isa => 'Str');
-has 'pass' => (is => 'rw', isa => 'Str');
-
-1;
-
-# my IOC config
-MyApp:
-    DATABASE_USER: 'foo'
-    ...
-    Database:
-        dsn:  'dbi:mysql:test'
-        handle:
-            class: My::DBI
-            requires:
-                - { dsn  => ./dsn }
-                - { user => /DATABASE_USER }
-            params:
-                - pass
-
-# pure perl
 container MyApp => is {
+    
     service 'DATABASE_USER' => 'foo';
+    
     container 'Database' => is {
         service 'dsn' => 'dbi:mysql:test';
         service 'handle' => {
@@ -51,7 +28,28 @@ container MyApp => is {
                 { user => $c->fetch('/DATABASE_USER') },
             ],
         };
+    };
+    
+    # run arbitrary code ...
+    foreach my $i (0 .. 5) {
+        service "Count$i" => $i;
     }
+    
+    if ($ENV{IS_PROD}) {
+        # ...
+    }
+    else {
+        # ....
+    }
+    
+    service 'logger' => {
+        type     => 'ConstructorInjection',
+        lifecyle => 'Singleton'
+        class    => 'My::Logger',
+        requires => [
+            { logfile  => $ENV{MY_APP_LOGFILE} },
+        ],
+    };    
 };
 
 =head1 DESCRIPTION
