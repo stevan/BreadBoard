@@ -10,7 +10,7 @@ with 'Junkie::Service';
 
 has 'class' => (
     is       => 'rw',
-    isa      => 'ClassName',
+    isa      => 'Str',
     required => 1,
 );
 

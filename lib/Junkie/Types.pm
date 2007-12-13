@@ -1,9 +1,28 @@
 package Junkie::Types;
 use Moose::Util::TypeConstraints;
 
-## load the Junkie::Service type 
-## that is created in this module
 use Junkie::Service;
+
+enum 'Junkie::Service::LifeCycles' => qw[
+    Null
+    Singleton
+];
+
+## for Junkie::Container
+
+subtype 'Junkie::Container::SubContainerList'
+    => as 'HashRef[Junkie::Container]';
+
+coerce 'Junkie::Container::SubContainerList'
+    => from 'ArrayRef[Junkie::Container]'
+        => via { +{ map { $_->name => $_ } @$_ } };
+        
+subtype 'Junkie::Container::ServiceList'
+    => as 'HashRef[Junkie::Service]';
+
+coerce 'Junkie::Container::ServiceList'
+    => from 'ArrayRef[Junkie::Service]'
+        => via { +{ map { $_->name => $_ } @$_ } };        
 
 ## for Junkie::Service::WithDependencies ...
 
