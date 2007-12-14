@@ -9,14 +9,21 @@ with 'Junkie::Service';
 
 has 'dependencies' => (
     metaclass => 'Collection::Hash',
-    is        => 'ro',
+    is        => 'rw',
     isa       => 'Junkie::Service::Dependencies',
     lazy      => 1,
+    coerce    => 1,
     default   => sub { +{} },
+    trigger   => sub {
+        my $self = shift;
+        $_->parent($self) foreach values %{$self->dependencies};        
+    },
     provides  => {
-        'set'   => 'add_dependency',
-        'empty' => 'has_dependencies',
-        'kv'    => 'get_all_dependencies',
+        'set'    => 'add_dependency',
+        'get'    => 'get_dependency',
+        'exists' => 'has_dependency',        
+        'empty'  => 'has_dependencies',
+        'kv'     => 'get_all_dependencies',
     }
 );
 

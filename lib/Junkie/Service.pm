@@ -3,20 +3,13 @@ use Moose::Role;
 
 our $VERSION = '0.01';
 
-with 'MooseX::Param';
+with 'MooseX::Param',
+     'Junkie::Traversable';
 
 has 'name' => (
     is       => 'rw', 
     isa      => 'Str', 
     required => 1
-);
-
-has 'parent' => (
-    is          => 'rw',
-    isa         => 'Junkie::Container',
-    is_weak_ref => 1,
-    clearer     => 'detach_from_parent',
-    predicate   => 'has_parent',
 );
 
 has 'lifecycle' => (

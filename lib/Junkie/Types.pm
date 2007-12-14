@@ -2,6 +2,7 @@ package Junkie::Types;
 use Moose::Util::TypeConstraints;
 
 use Junkie::Service;
+use Junkie::Dependency;
 
 enum 'Junkie::Service::LifeCycles' => qw[
     Null
@@ -27,7 +28,17 @@ coerce 'Junkie::Container::ServiceList'
 ## for Junkie::Service::WithDependencies ...
 
 subtype 'Junkie::Service::Dependencies' 
-    => as 'HashRef[Junkie::Service]';
+    => as 'HashRef[Junkie::Dependency]';
+
+coerce 'Junkie::Service::Dependencies'
+    => from 'HashRef[Junkie::Service | Junkie::Dependency]'
+        => via { 
+            +{ map { 
+                $_ => ($_[0]->{$_}->isa('Junkie::Dependency')
+                        ? $_[0]->{$_}
+                        : Junkie::Dependency->new(service => $_[0]->{$_}))
+             } keys %{$_[0]} } 
+        };
     
 ## for Junkie::Service::WithParameters ...
 

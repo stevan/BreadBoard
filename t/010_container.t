@@ -23,13 +23,14 @@ $c->add_sub_container(
             Junkie::Container->new(
                 name     => 'Model',
                 services => [
+                    Junkie::Literal->new(name => 'dsn',  value => ''),
                     Junkie::ConstructorInjection->new(
                         name  => 'schema',
                         class => 'My::App::Schema',
                         dependencies => {
-                            dsn  => Junkie::Literal->new(name => 'dsn',  value => ''),        
-                            user => Junkie::Literal->new(name => 'user', value => ''),        
-                            pass => Junkie::Literal->new(name => 'pass', value => ''),                                                    
+                            dsn  => Junkie::Dependency->new(service_path => '../dsn'),
+                            user => Junkie::Literal->new(name => 'user', value => ''),
+                            pass => Junkie::Literal->new(name => 'pass', value => ''),
                         },
                     )
                 ]
@@ -93,5 +94,7 @@ is($app->name, 'Application', '... got the right container');
     
     is($service->parent, $model, '... the parent of the service is the model');    
 }
+
+
 
 

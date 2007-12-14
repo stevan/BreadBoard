@@ -18,14 +18,13 @@ container MyApp => is {
     service 'DATABASE_USER' => 'foo';
     
     container 'Database' => is {
-        service 'dsn' => 'dbi:mysql:test';
         service 'handle' => {
             type     => 'ConstructorInjection',
             class    => 'My::DBI',
             params   => [qw[ password ]]
             requires => [
-                { dsn  => $c->fetch('./dsn')          },
-                { user => $c->fetch('/DATABASE_USER') },
+                { dsn  => service('dsn' => 'dbi:mysql:test') },
+                { user => service('/DATABASE_USER')          },
             ],
         };
     };

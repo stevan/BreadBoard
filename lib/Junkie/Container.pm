@@ -6,18 +6,12 @@ use MooseX::AttributeHelpers;
 
 use Junkie::Types;
 
+with 'Junkie::Traversable';
+
 has 'name' => (
     is       => 'rw', 
     isa      => 'Str', 
     required => 1
-);
-
-has 'parent' => (
-    is          => 'rw',
-    isa         => 'Junkie::Container',
-    is_weak_ref => 1,
-    clearer     => 'detach_from_parent',
-    predicate   => 'has_parent',
 );
 
 has 'services' => (
@@ -77,3 +71,8 @@ sub add_sub_container {
 1;
 
 __END__
+
+
+
+
+
