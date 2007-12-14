@@ -8,23 +8,23 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Junkie::ConstructorInjection');    
-    use_ok('Junkie::Literal');        
+    use_ok('Junkie::ConstructorInjection');
+    use_ok('Junkie::Literal');
 }
 
 {
     package Needle;
     use Moose;
-    
+
     package Mexican::Black::Tar;
     use Moose;
-    
+
     package Addict;
     use Moose;
-    
+
     has 'needle' => (is => 'ro');
     has 'spoon'  => (is => 'ro');
-    has 'stash'  => (is => 'ro');        
+    has 'stash'  => (is => 'ro');
 }
 
 my $s = Junkie::ConstructorInjection->new(
@@ -32,7 +32,7 @@ my $s = Junkie::ConstructorInjection->new(
     class => 'Addict',
     dependencies => {
         needle => Junkie::ConstructorInjection->new(name => 'spike', class => 'Needle'),
-        spoon  => Junkie::Literal->new(name => 'works', value => 'Spoon!'),        
+        spoon  => Junkie::Literal->new(name => 'works', value => 'Spoon!'),
     },
     parameters => {
         stash => { isa => 'Mexican::Black::Tar' }
@@ -64,7 +64,7 @@ dies_ok {
 } '... you must supply the required parameters (and no more)';
 
 {
-    my $i2 = $s->get(stash => Mexican::Black::Tar->new);    
+    my $i2 = $s->get(stash => Mexican::Black::Tar->new);
     isnt($i, $i2, '... calling it again returns an new object');
 }
 

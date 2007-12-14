@@ -34,8 +34,6 @@ sub fetch {
         return @_ if not(defined($h)) || $h ne '..' || not($c->has_parent);
         return ROUTINE->($c->parent, @t);
     }->($root, @path) if $path[0] eq '..';
-
-    #warn "Okay, ready with " . $root->name . " and (" . (join ", " => @path) . ")";
     
     return $root unless @path;
 
