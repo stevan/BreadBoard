@@ -13,7 +13,7 @@ has 'service_path' => (
 
 has 'service' => (
     is       => 'ro',
-    does     => 'Junkie::Service',
+    does     => 'Junkie::Service | Junkie::Dependency',
     lazy     => 1,
     default  => sub {
         my $self = shift;
