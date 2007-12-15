@@ -3,8 +3,6 @@ use Moose::Role;
 
 use Sub::Current;
 
-use Junkie::Types;
-
 our $VERSION = '0.01';
 
 has 'parent' => (

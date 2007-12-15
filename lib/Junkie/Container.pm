@@ -53,9 +53,9 @@ has 'sub_containers' => (
 
 sub add_service {
     my ($self, $service) = @_;
-    (blessed $service && $service->isa('Junkie::Service'))
+    (blessed $service && $service->does('Junkie::Service'))
         || confess "You must pass in a Junkie::Service instance, not $service";
-    $service->container($self);
+    $service->parent($self);
     $self->services->{$service->name} = $service;
 }
 

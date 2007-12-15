@@ -1,7 +1,7 @@
 package Junkie::Dependency;
 use Moose;
 
-use Junkie::Types;
+use Junkie::Service;
 
 with 'Junkie::Traversable';
 
