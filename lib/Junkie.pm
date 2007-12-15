@@ -32,13 +32,18 @@ sub as (&) { $_[0] }
 
 our $CC;
 
-sub container ($$) {
+sub set_root_container {
+    (defined $CC && confess "Cannot set the root container, CC is already defined $CC");
+    $CC = shift;
+}
+
+sub container ($;$) {
     my ($name, $body) = @_;
     my $c = Junkie::Container->new(name => $name);
     if (defined $CC) {
         $CC->add_sub_container($c);
     }
-    {
+    if (defined $body) {
         local $_  = $c;
         local $CC = $c;
         $body->($c);
