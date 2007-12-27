@@ -17,7 +17,7 @@ our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
 my @exports = qw[
-    container 
+    container
     service
     as
     depends_on
@@ -60,6 +60,26 @@ sub service ($@) {
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
         my $type   = $params{type} || (exists $params{block} ? 'Block' : 'Constructor');
+        if (exists $params{dependencies} && ref $params{dependencies} eq 'ARRAY') {
+            # NOTE:
+            # allow for auto-wiring the dependencies here
+            # which just makes life a lot easier in the
+            # common case
+            # - SL
+            $params{dependencies} = {
+                map {
+                    # we need to strip off our ../../
+                    # which is added below in &depends_on
+                    my ($name) = ($_->service_path =~ /\.\.\/\.\.\/(.*)/);
+                    # but don't let them do anything silly
+                    # cause a name with a / in it is surely
+                    # wrong.
+                    confess "Cannot have a name with / in it, your abusing the auto-wiring there kiddo"
+                        if $name =~ /\//;
+                    ($name => $_)
+                } @{$params{dependencies}}
+            };
+        }
         $s =  "Junkie::${type}Injection"->new(name => $name, %params);
     }
     else {
@@ -87,28 +107,30 @@ Junkie - A fix for what ails you
 =head1 SYNOPSIS
 
   use Junkie;
-    
+
   my $c = container 'MyApp' => as {
-      
-      service 'log_file' => "logfile.log";
-      
+
+      service 'log_file_name' => "logfile.log";
+
       service 'logger' => (
           class        => 'FileLogger',
           lifecycle    => 'Singleton',
           dependencies => {
-              log_file => depends_on('log_file'),
+              log_file => depends_on('log_file_name'),
           }
       );
-      
+
       service 'application' => (
           class        => 'MyApplication',
-          dependencies => {
-              logger => depends_on('logger'),
-          }        
+          dependencies => [
+              # this will auto-wire the depenency 
+              # for you with the name "logger" 
+              depends_on('logger'),
+          ]
       );
-      
+
   };
-  
+
   $c->fetch('application')->run;
 
 =head1 DESCRIPTION

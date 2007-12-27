@@ -33,11 +33,13 @@ subtype 'Junkie::Service::Dependencies'
 coerce 'Junkie::Service::Dependencies'
     => from 'HashRef[Junkie::Service | Junkie::Dependency]'
         => via { 
-            +{ map { 
-                $_ => ($_[0]->{$_}->isa('Junkie::Dependency')
-                        ? $_[0]->{$_}
-                        : Junkie::Dependency->new(service => $_[0]->{$_}))
-             } keys %{$_[0]} } 
+            +{ 
+                map { 
+                    $_ => ($_[0]->{$_}->isa('Junkie::Dependency')
+                            ? $_[0]->{$_}
+                            : Junkie::Dependency->new(service => $_[0]->{$_}))
+                } keys %{$_[0]} 
+            } 
         };
     
 ## for Junkie::Service::WithParameters ...
