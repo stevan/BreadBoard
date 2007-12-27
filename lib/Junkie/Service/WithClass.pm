@@ -14,6 +14,10 @@ has 'class' => (
     required => 1,
 );
 
+before 'get' => sub {
+    Class::MOP::load_class((shift)->class)
+};
+
 1;
 
 __END__
