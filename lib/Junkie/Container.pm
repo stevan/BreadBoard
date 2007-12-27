@@ -48,6 +48,7 @@ has 'sub_containers' => (
         'get'    => 'get_sub_container',
         'exists' => 'has_sub_container',
         'keys'   => 'get_sub_container_list',
+        'empty'  => 'has_sub_containers',
     }
 );
 
