@@ -40,6 +40,19 @@ coerce 'Junkie::Service::Dependencies'
                             : Junkie::Dependency->new(service => $_[0]->{$_}))
                 } keys %{$_[0]} 
             } 
+        }
+    => from 'ArrayRef[Junkie::Service | Junkie::Dependency]'
+        => via {
+            # auto-wire the dependencies with 
+            # the service name if we get them 
+            # as an array
+            +{ 
+                map { 
+                    ($_->isa('Junkie::Dependency')
+                        ? ($_->service_name => $_) 
+                        : ($_->name         => Junkie::Dependency->new(service => $_)))
+                } @{$_[0]} 
+            }            
         };
     
 ## for Junkie::Service::WithParameters ...

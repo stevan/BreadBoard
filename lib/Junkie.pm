@@ -60,26 +60,6 @@ sub service ($@) {
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
         my $type   = $params{type} || (exists $params{block} ? 'Block' : 'Constructor');
-        if (exists $params{dependencies} && ref $params{dependencies} eq 'ARRAY') {
-            # NOTE:
-            # allow for auto-wiring the dependencies here
-            # which just makes life a lot easier in the
-            # common case
-            # - SL
-            $params{dependencies} = {
-                map {
-                    # we need to strip off our ../../
-                    # which is added below in &depends_on
-                    my ($name) = ($_->service_path =~ /\.\.\/\.\.\/(.*)/);
-                    # but don't let them do anything silly
-                    # cause a name with a / in it is surely
-                    # wrong.
-                    confess "Cannot have a name with / in it, your abusing the auto-wiring there kiddo"
-                        if $name =~ /\//;
-                    ($name => $_)
-                } @{$params{dependencies}}
-            };
-        }
         $s =  "Junkie::${type}Injection"->new(name => $name, %params);
     }
     else {
