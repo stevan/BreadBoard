@@ -12,6 +12,12 @@ has 'name' => (
     required => 1
 );
 
+has 'is_locked' => (
+    is      => 'rw',
+    isa     => 'Bool',
+    default => sub { 0 }
+);
+
 has 'lifecycle' => (
     is      => 'rw', 
     isa     => 'Str', 
@@ -26,6 +32,9 @@ has 'lifecycle' => (
 );
 
 requires 'get';
+
+sub lock   { (shift)->is_locked(1) }
+sub unlock { (shift)->is_locked(0) }
 
 1;
 

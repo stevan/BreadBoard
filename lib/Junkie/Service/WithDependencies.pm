@@ -2,6 +2,7 @@ package Junkie::Service::WithDependencies;
 use Moose::Role;
 
 use Junkie::Types;
+use Junkie::Service::Deferred;
 
 our $VERSION = '0.01';
 
@@ -32,8 +33,24 @@ sub resolve_dependencies {
     my %deps;
     if ($self->has_dependencies) {
         foreach my $dep ($self->get_all_dependencies) {
-            my ($key, $service) = @$dep;
-            $deps{$key} = $service->get;
+            my ($key, $dependency) = @$dep;
+            
+            my $service = $dependency->service;
+            
+            if ($service->is_locked) {
+                
+                confess "You cannot defer a parameterized service"
+                    if $service->does('Junkie::Service::WithParameters') 
+                    && $service->has_parameters;
+                    
+                $deps{$key} = Junkie::Service::Deferred->new(service => $service);
+            }
+            else {
+                $service->lock;
+                $deps{$key} = eval { $service->get };
+                $service->unlock;            
+                if ($@) { die $@ }
+            }
         }
     }  
     return %deps;  

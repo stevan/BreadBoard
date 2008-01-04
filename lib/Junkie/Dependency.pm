@@ -33,7 +33,7 @@ has 'service' => (
             || confess "Could not fetch service without service path";        
         $self->fetch($self->service_path);
     },
-    handles  => [ 'get' ]
+    handles  => [ 'get', 'is_locked', 'lock', 'unlock' ]
 );
 
 1;
