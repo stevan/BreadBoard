@@ -12,7 +12,17 @@ has 'block' => (
     required => 1,
 );
 
-sub get { ($_[0])->block->($_[0]) }
+has 'class' => (
+    is        => 'rw',
+    isa       => 'Str',
+    predicate => 'has_class'
+);
+
+sub get { 
+    my $self = shift;
+    Class::MOP::load_class($self->class) if $self->has_class;
+    $self->block->($self) 
+}
 
 1;
 

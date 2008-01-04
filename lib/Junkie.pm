@@ -21,6 +21,7 @@ my @exports = qw[
     service
     as
     depends_on
+    wire_names
 ];
 
 Sub::Exporter::setup_exporter({
@@ -68,6 +69,7 @@ sub service ($@) {
     $CC->add_service($s);
 }
 
+sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
 
 sub depends_on ($) {
     my $path = shift;

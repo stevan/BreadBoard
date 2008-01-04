@@ -30,9 +30,10 @@ BEGIN {
 
 my $s = Junkie::BlockInjection->new(
     name  => 'William',
+    class => 'Addict',
     block => sub {
         my $s = shift;
-        Addict->new(%{ $s->params });
+        $s->class->new(%{ $s->params });
     },
     dependencies => {
         needle => Junkie::SetterInjection->new(name => 'spike', class => 'Needle'),
