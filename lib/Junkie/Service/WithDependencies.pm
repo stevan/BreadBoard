@@ -37,6 +37,9 @@ sub resolve_dependencies {
             
             my $service = $dependency->service;
             
+            # NOTE:
+            # this is what checks for 
+            # circular dependencies
             if ($service->is_locked) {
                 
                 confess "You cannot defer a parameterized service"
