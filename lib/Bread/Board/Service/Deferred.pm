@@ -14,7 +14,6 @@ use overload
         }
         return overload::StrVal($_[0]); 
     },
-    
     # cover your basic dereferncers
     '%{}' => sub { 
         return $_[0] if (caller)[0] eq 'Bread::Board::Service::Deferred';
@@ -24,7 +23,7 @@ use overload
     '@{}' => sub { $_[0] = (eval { $_[0]->{service}->instace } || $_[0]->{service}->get); $_[0] },
     '${}' => sub { $_[0] = (eval { $_[0]->{service}->instace } || $_[0]->{service}->get); $_[0] },             
     '&{}' => sub { $_[0] = (eval { $_[0]->{service}->instace } || $_[0]->{service}->get); $_[0] },
-    
+    '*{}' => sub { $_[0] = (eval { $_[0]->{service}->instace } || $_[0]->{service}->get); $_[0] },
     ## and as a last ditch resort ...
     nomethod => sub {
         $_[0] = (eval { $_[0]->{service}->instace } || $_[0]->{service}->get);
@@ -40,9 +39,16 @@ sub new {
     my ($class, %params) = @_;
     (Scalar::Util::blessed($params{service}) && $params{service}->does('Bread::Board::Service'))
         || Carp::confess "You can only defer Bread::Board::Service instances";
-    bless {
-        service => $params{service}
-    } => $class; 
+    bless { service => $params{service} } => $class; 
+}
+
+sub meta {
+    if ($_[0]->{service}->can('class')) {
+        my $class = $_[0]->{service}->class;
+        return $class->meta;
+    }    
+    $_[0] = (eval { $_[0]->{service}->instace } || $_[0]->{service}->get);
+    (shift)->meta;    
 }
 
 sub can { 
