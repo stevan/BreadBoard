@@ -84,7 +84,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board - A fix for what ails you
+Bread::Board
 
 =head1 SYNOPSIS
 
@@ -116,5 +116,58 @@ Bread::Board - A fix for what ails you
   $c->fetch('application')->run;
 
 =head1 DESCRIPTION
+
+  +-----------------------------------------+
+  |          A B C D E   F G H I J          |
+  |-----------------------------------------|
+  | o o |  1 o-o-o-o-o v o-o-o-o-o 1  | o o |
+  | o o |  2 o-o-o-o-o   o-o-o-o-o 2  | o o |
+  | o o |  3 o-o-o-o-o   o-o-o-o-o 3  | o o |
+  | o o |  4 o-o-o-o-o   o-o-o-o-o 4  | o o |
+  | o o |  5 o-o-o-o-o   o-o-o-o-o 5  | o o |
+  |     |  6 o-o-o-o-o   o-o-o-o-o 6  |     |
+  | o o |  7 o-o-o-o-o   o-o-o-o-o 7  | o o |
+  | o o |  8 o-o-o-o-o   o-o-o-o-o 8  | o o | 
+  | o o |  9 o-o-o-o-o   o-o-o-o-o 9  | o o |
+  | o o | 10 o-o-o-o-o   o-o-o-o-o 10 | o o |
+  | o o | 11 o-o-o-o-o   o-o-o-o-o 11 | o o |
+  |     | 12 o-o-o-o-o   o-o-o-o-o 12 |     | 
+  | o o | 13 o-o-o-o-o   o-o-o-o-o 13 | o o | 
+  | o o | 14 o-o-o-o-o   o-o-o-o-o 14 | o o | 
+  | o o | 15 o-o-o-o-o   o-o-o-o-o 15 | o o | 
+  | o o | 16 o-o-o-o-o   o-o-o-o-o 16 | o o | 
+  | o o | 17 o-o-o-o-o   o-o-o-o-o 17 | o o | 
+  |     | 18 o-o-o-o-o   o-o-o-o-o 18 |     | 
+  | o o | 19 o-o-o-o-o   o-o-o-o-o 19 | o o | 
+  | o o | 20 o-o-o-o-o   o-o-o-o-o 20 | o o | 
+  | o o | 21 o-o-o-o-o   o-o-o-o-o 21 | o o |
+  | o o | 22 o-o-o-o-o   o-o-o-o-o 22 | o o |
+  | o o | 22 o-o-o-o-o   o-o-o-o-o 22 | o o | 
+  |     | 23 o-o-o-o-o   o-o-o-o-o 23 |     | 
+  | o o | 24 o-o-o-o-o   o-o-o-o-o 24 | o o | 
+  | o o | 25 o-o-o-o-o   o-o-o-o-o 25 | o o | 
+  | o o | 26 o-o-o-o-o   o-o-o-o-o 26 | o o | 
+  | o o | 27 o-o-o-o-o   o-o-o-o-o 27 | o o | 
+  | o o | 28 o-o-o-o-o   o-o-o-o-o 28 | o o | 
+  +-----------------------------------------+
+
+=head1 BUGS
+
+All complex software has bugs lurking in it, and this module is no
+exception. If you find a bug please either email me, or add the bug
+to cpan-RT.
+
+=head1 AUTHOR
+
+Stevan Little E<lt>stevan@iinteractive.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2007-2008 by Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
 =cut
