@@ -24,16 +24,23 @@ to use cyclical deps.
 {
     package Class::A;
     use Moose;
+    has 'B' => (is => 'ro', isa => 'Class::B');
     package Class::B;
     use Moose;
+    has 'A' => (is => 'ro', isa => 'Class::A');    
+    
     package Class::C;
     use Moose;
+    has 'D' => (is => 'ro', isa => 'Class::D');
     package Class::D;
     use Moose;
+    has 'E' => (is => 'ro', isa => 'Class::E');    
     package Class::E;
     use Moose;            
+    has 'F' => (is => 'ro', isa => 'Class::F');    
     package Class::F;
     use Moose;    
+    has 'C' => (is => 'ro', isa => 'Class::C');    
 }
 
 
@@ -49,11 +56,13 @@ to use cyclical deps.
     
         service 'A' => (
             class        => 'Class::A',
+            lifecycle    => 'Singleton',
             dependencies => [ depends_on('B') ]
         );
     
         service 'B' => (
-            class        => 'Class::B',
+            class        => 'Class::B',    
+            lifecycle    => 'Singleton',
             dependencies => [ depends_on('A') ]
         );    
     
@@ -63,9 +72,20 @@ to use cyclical deps.
     ok($c->has_service('A'), '... got the A service');
     ok($c->has_service('B'), '... got the B service');
 
+    my $b = $c->fetch('B')->get;
+    isa_ok($b, 'Class::B');      
+
     my $a = $c->fetch('A')->get;
     isa_ok($a, 'Class::A');
+    
+    isa_ok($b->A, 'Class::A');    
+    isa_ok($a->B, 'Class::B');
+    
+    is($a->B, $b, '... our Bs match');    
+    is($b->A, $a, '... our As match');        
+
 }
+
 
 #       +---+
 #    +--| C |<-+
@@ -78,35 +98,56 @@ to use cyclical deps.
 #       +---+
 
 {
-    my $c = container 'Test' => as {
+    my $container = container 'Test' => as {
     
         service 'C' => (
             class        => 'Class::C',
+            lifecycle    => 'Singleton',            
             dependencies => [ depends_on('D') ]
         );
     
         service 'D' => (
             class        => 'Class::D',
+            lifecycle    => 'Singleton',              
             dependencies => [ depends_on('E') ]
         );
             
         service 'E' => (
             class        => 'Class::E',
+            lifecycle    => 'Singleton',              
             dependencies => [ depends_on('F') ]
         );        
         
         service 'F' => (
             class        => 'Class::F',
-            dependencies => [ depends_on('F') ]
+            lifecycle    => 'Singleton',              
+            dependencies => [ depends_on('C') ]
         );        
     
     };
-    isa_ok($c, 'Bread::Board::Container');
+    isa_ok($container, 'Bread::Board::Container');
 
-    ok($c->has_service($_), '... got the ' . $_ . ' service') for qw/C D E F/;
+    ok($container->has_service($_), '... got the ' . $_ . ' service') for qw/C D E F/;
 
-    my $a = $c->fetch('C')->get;
-    isa_ok($a, 'Class::C');
+    my $c = $container->fetch('C')->get;
+    isa_ok($c, 'Class::C');
+    
+    my $d = $container->fetch('D')->get;
+    isa_ok($d, 'Class::D');    
+    
+    my $e = $container->fetch('E')->get;
+    isa_ok($e, 'Class::E');    
+    
+    my $f = $container->fetch('F')->get;
+    isa_ok($f, 'Class::F'); 
+    
+    isa_ok($c->D, 'Class::D');    
+    isa_ok($d->E, 'Class::E');
+    isa_ok($e->F, 'Class::F');    
+    isa_ok($f->C, 'Class::C');    
+    
+    is($f->C, $c, '... our Cs match'); 
+    is($c->D->E->F, $f, '... our Fs match');
 }
 
 

@@ -97,18 +97,35 @@ Bread::Board
       service 'logger' => (
           class        => 'FileLogger',
           lifecycle    => 'Singleton',
-          dependencies => {
-              log_file => depends_on('log_file_name'),
-          }
+          dependencies => [
+              depends_on('log_file_name'),
+          ]
       );
+      
+      container 'Database' => as {
+          service 'dsn' => "dbi:sqlite:dbname=my-app.db";    
+          service 'password' => "dbi:sqlite:dbname=my-app.db";    
+          service 'username' => "dbi:sqlite:dbname=my-app.db";                  
+      
+          service 'dbh' => (
+              block => sub {
+                  my $s = shift;
+                  DBI->connect(
+                      $s->param('dsn'),
+                      $s->param('username'),
+                      $s->param('password'),                  
+                  ) || die "Could not connect";
+              },
+              dependencies => wire_names(qw[dsn username password])   
+          );
+      };
 
       service 'application' => (
           class        => 'MyApplication',
-          dependencies => [
-              # this will auto-wire the depenency 
-              # for you with the name "logger" 
-              depends_on('logger'),
-          ]
+          dependencies => {
+              logger => depends_on('logger'),
+              dbh    => depends_on('Database/dbh'),
+          }
       );
 
   };

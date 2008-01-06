@@ -13,8 +13,19 @@ has 'instance' => (
 around 'get' => sub {
     my $next = shift;
     my $self = shift;
+    
+    # return it if we got it ...
     return $self->instance if $self->has_instance;
-    $self->instance($self->$next(@_));
+    
+    # otherwise fetch it ...
+    my $instance = $self->$next(@_);
+    
+    # if we get a copy, and our copy 
+    # has not already been set ...
+    $self->instance($instance) unless $self->has_instance;
+    
+    # return whatever we have ...
+    return $self->instance;
 };
 
 1;

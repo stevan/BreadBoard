@@ -41,11 +41,11 @@ sub resolve_dependencies {
             # this is what checks for 
             # circular dependencies
             if ($service->is_locked) {
-                
+            
                 confess "You cannot defer a parameterized service"
                     if $service->does('Bread::Board::Service::WithParameters') 
                     && $service->has_parameters;
-                    
+                
                 $deps{$key} = Bread::Board::Service::Deferred->new(service => $service);
             }
             else {
