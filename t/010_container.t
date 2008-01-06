@@ -8,58 +8,58 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Junkie::Container');
-    use_ok('Junkie::ConstructorInjection');
-    use_ok('Junkie::Literal');    
+    use_ok('Bread::Board::Container');
+    use_ok('Bread::Board::ConstructorInjection');
+    use_ok('Bread::Board::Literal');    
 }
 
-my $c = Junkie::Container->new(name => '/');
-isa_ok($c, 'Junkie::Container');
+my $c = Bread::Board::Container->new(name => '/');
+isa_ok($c, 'Bread::Board::Container');
 
 $c->add_sub_container( 
-    Junkie::Container->new(
+    Bread::Board::Container->new(
         name           => 'Application',
         sub_containers => [
-            Junkie::Container->new(
+            Bread::Board::Container->new(
                 name     => 'Model',
                 services => [
-                    Junkie::Literal->new(name => 'dsn',  value => ''),
-                    Junkie::ConstructorInjection->new(
+                    Bread::Board::Literal->new(name => 'dsn',  value => ''),
+                    Bread::Board::ConstructorInjection->new(
                         name  => 'schema',
                         class => 'My::App::Schema',
                         dependencies => {
-                            dsn  => Junkie::Dependency->new(service_path => '../dsn'),
-                            user => Junkie::Literal->new(name => 'user', value => ''),
-                            pass => Junkie::Literal->new(name => 'pass', value => ''),
+                            dsn  => Bread::Board::Dependency->new(service_path => '../dsn'),
+                            user => Bread::Board::Literal->new(name => 'user', value => ''),
+                            pass => Bread::Board::Literal->new(name => 'pass', value => ''),
                         },
                     )
                 ]
             ),
-            Junkie::Container->new(
+            Bread::Board::Container->new(
                 name     => 'View',
                 services => [
-                    Junkie::ConstructorInjection->new(
+                    Bread::Board::ConstructorInjection->new(
                         name  => 'TT',
                         class => 'My::App::View::TT',
                         dependencies => {
-                            tt_include_path => Junkie::Literal->new(name => 'include_path',  value => []),
+                            tt_include_path => Bread::Board::Literal->new(name => 'include_path',  value => []),
                         },
                     )
                 ]                             
              ),
-             Junkie::Container->new(name => 'Controller'),                       
+             Bread::Board::Container->new(name => 'Controller'),                       
         ]
     )
 );
 
 my $app = $c->get_sub_container('Application');
-isa_ok($app, 'Junkie::Container');
+isa_ok($app, 'Bread::Board::Container');
 
 is($app->name, 'Application', '... got the right container');
 
 {
     my $controller = $app->get_sub_container('Controller');
-    isa_ok($controller, 'Junkie::Container');
+    isa_ok($controller, 'Bread::Board::Container');
 
     is($controller->name, 'Controller', '... got the right container');
     is($controller->parent, $app, '... app is the parent of the controller');
@@ -68,7 +68,7 @@ is($app->name, 'Application', '... got the right container');
 }
 {
     my $view = $app->get_sub_container('View');
-    isa_ok($view, 'Junkie::Container');
+    isa_ok($view, 'Bread::Board::Container');
 
     is($view->name, 'View', '... got the right container');
     is($view->parent, $app, '... app is the parent of the view');
@@ -76,13 +76,13 @@ is($app->name, 'Application', '... got the right container');
     ok($view->has_services, '... the veiw has services');
     
     my $service = $view->get_service('TT');
-    does_ok($service, 'Junkie::Service');
+    does_ok($service, 'Bread::Board::Service');
     
     is($service->parent, $view, '... the parent of the service is the view');
 }
 {
     my $model = $app->get_sub_container('Model');
-    isa_ok($model, 'Junkie::Container');
+    isa_ok($model, 'Bread::Board::Container');
 
     is($model->name, 'Model', '... got the right container');
     is($model->parent, $app, '... app is the parent of the model');
@@ -90,7 +90,7 @@ is($app->name, 'Application', '... got the right container');
     ok($model->has_services, '... the model has services');
     
     my $service = $model->get_service('schema');
-    does_ok($service, 'Junkie::Service');
+    does_ok($service, 'Bread::Board::Service');
     
     is($service->parent, $model, '... the parent of the service is the model');    
 }

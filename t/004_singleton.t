@@ -8,9 +8,9 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Junkie::ConstructorInjection');    
-    use_ok('Junkie::LifeCycle::Singleton');   
-    use_ok('Junkie::Literal');        
+    use_ok('Bread::Board::ConstructorInjection');    
+    use_ok('Bread::Board::LifeCycle::Singleton');   
+    use_ok('Bread::Board::Literal');        
 }
 
 {
@@ -28,24 +28,24 @@ BEGIN {
     has 'stash'  => (is => 'ro');        
 }
 
-my $s = Junkie::ConstructorInjection->new(
+my $s = Bread::Board::ConstructorInjection->new(
     lifecycle    => 'Singleton',    
     name         => 'William',
     class        => 'Addict',
     dependencies => {
-        needle => Junkie::ConstructorInjection->new(name => 'spike', class => 'Needle'),
-        spoon  => Junkie::Literal->new(name => 'works', value => 'Spoon!'),        
+        needle => Bread::Board::ConstructorInjection->new(name => 'spike', class => 'Needle'),
+        spoon  => Bread::Board::Literal->new(name => 'works', value => 'Spoon!'),        
     },
     parameters => {
         stash => { isa => 'Mexican::Black::Tar' }
     }
 );
-isa_ok($s, 'Junkie::ConstructorInjection');
-does_ok($s, 'Junkie::Service::WithClass');
-does_ok($s, 'Junkie::Service::WithDependencies');
-does_ok($s, 'Junkie::Service::WithParameters');
-does_ok($s, 'Junkie::Service');
-does_ok($s, 'Junkie::LifeCycle::Singleton');
+isa_ok($s, 'Bread::Board::ConstructorInjection');
+does_ok($s, 'Bread::Board::Service::WithClass');
+does_ok($s, 'Bread::Board::Service::WithDependencies');
+does_ok($s, 'Bread::Board::Service::WithParameters');
+does_ok($s, 'Bread::Board::Service');
+does_ok($s, 'Bread::Board::LifeCycle::Singleton');
 is($s->lifecycle, 'Singleton', '... got the right lifecycle');
 
 ok(!$s->has_instance, '... we dont have an instance yet');

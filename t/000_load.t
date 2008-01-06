@@ -6,27 +6,27 @@ use warnings;
 use Test::More no_plan => 1;
 
 BEGIN {
-    use_ok('Junkie');
+    use_ok('Bread::Board');
 
-    use_ok('Junkie::Types');
+    use_ok('Bread::Board::Types');
 
     # roles
-    use_ok('Junkie::Service');
-    use_ok('Junkie::Service::WithClass');
-    use_ok('Junkie::Service::WithDependencies');
-    use_ok('Junkie::Service::WithParameters');
+    use_ok('Bread::Board::Service');
+    use_ok('Bread::Board::Service::WithClass');
+    use_ok('Bread::Board::Service::WithDependencies');
+    use_ok('Bread::Board::Service::WithParameters');
 
     # services
-    use_ok('Junkie::ConstructorInjection');
-    use_ok('Junkie::SetterInjection');
-    use_ok('Junkie::BlockInjection');    
-    use_ok('Junkie::Literal');
+    use_ok('Bread::Board::ConstructorInjection');
+    use_ok('Bread::Board::SetterInjection');
+    use_ok('Bread::Board::BlockInjection');    
+    use_ok('Bread::Board::Literal');
     
-    use_ok('Junkie::Container');
-    use_ok('Junkie::Dependency');
+    use_ok('Bread::Board::Container');
+    use_ok('Bread::Board::Dependency');
     
-    use_ok('Junkie::Traversable');       
+    use_ok('Bread::Board::Traversable');       
     
-    use_ok('Junkie::LifeCycle::Singleton');       
+    use_ok('Bread::Board::LifeCycle::Singleton');       
 }
 

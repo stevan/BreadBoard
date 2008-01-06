@@ -1,17 +1,17 @@
-package Junkie;
+package Bread::Board;
 use Moose;
 
-use Junkie::Types;
+use Bread::Board::Types;
 
-use Junkie::ConstructorInjection;
-use Junkie::SetterInjection;
-use Junkie::BlockInjection;
-use Junkie::Literal;
+use Bread::Board::ConstructorInjection;
+use Bread::Board::SetterInjection;
+use Bread::Board::BlockInjection;
+use Bread::Board::Literal;
 
-use Junkie::Container;
-use Junkie::Dependency;
+use Bread::Board::Container;
+use Bread::Board::Dependency;
 
-use Junkie::LifeCycle::Singleton;
+use Bread::Board::LifeCycle::Singleton;
 
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
@@ -40,7 +40,7 @@ sub set_root_container {
 
 sub container ($;$) {
     my ($name, $body) = @_;
-    my $c = Junkie::Container->new(name => $name);
+    my $c = Bread::Board::Container->new(name => $name);
     if (defined $CC) {
         $CC->add_sub_container($c);
     }
@@ -56,12 +56,12 @@ sub service ($@) {
     my $name = shift;
     my $s;
     if (scalar @_ == 1) {
-        $s = Junkie::Literal->new(name => $name, value => $_[0]);
+        $s = Bread::Board::Literal->new(name => $name, value => $_[0]);
     }
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
         my $type   = $params{type} || (exists $params{block} ? 'Block' : 'Constructor');
-        $s =  "Junkie::${type}Injection"->new(name => $name, %params);
+        $s =  "Bread::Board::${type}Injection"->new(name => $name, %params);
     }
     else {
         confess "I don't understand @_";
@@ -73,7 +73,7 @@ sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
 
 sub depends_on ($) {
     my $path = shift;
-    Junkie::Dependency->new(service_path => ('../../' . $path));
+    Bread::Board::Dependency->new(service_path => ('../../' . $path));
 }
 
 1;
@@ -84,11 +84,11 @@ __END__
 
 =head1 NAME
 
-Junkie - A fix for what ails you
+Bread::Board - A fix for what ails you
 
 =head1 SYNOPSIS
 
-  use Junkie;
+  use Bread::Board;
 
   my $c = container 'MyApp' => as {
 

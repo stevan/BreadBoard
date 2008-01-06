@@ -1,10 +1,10 @@
-package Junkie::Service::Deferred;
+package Bread::Board::Service::Deferred;
 use Moose ();
 
 our $VERSION = '0.01';
 
 use overload '%{}' => sub { 
-                    return $_[0] if (caller)[0] eq 'Junkie::Service::Deferred';
+                    return $_[0] if (caller)[0] eq 'Bread::Board::Service::Deferred';
                     $_[0] = $_[0]->{service}->get; 
                     $_[0] 
               },
@@ -22,8 +22,8 @@ use overload '%{}' => sub {
 
 sub new { 
     my ($class, %params) = @_;
-    (Scalar::Util::blessed($params{service}) && $params{service}->does('Junkie::Service'))
-        || Carp::confess "You can only defer Junkie::Service instances";
+    (Scalar::Util::blessed($params{service}) && $params{service}->does('Bread::Board::Service'))
+        || Carp::confess "You can only defer Bread::Board::Service instances";
     bless {
         service => $params{service}
     } => $class; 

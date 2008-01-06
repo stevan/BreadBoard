@@ -1,10 +1,10 @@
-package Junkie::BlockInjection;
+package Bread::Board::BlockInjection;
 use Moose;
 
 our $VERSION = '0.01';
 
-with 'Junkie::Service::WithDependencies',
-     'Junkie::Service::WithParameters';
+with 'Bread::Board::Service::WithDependencies',
+     'Bread::Board::Service::WithParameters';
 
 has 'block' => (
     is       => 'rw',
@@ -32,7 +32,7 @@ __END__
 
 =head1 NAME
 
-Junkie::Service::ConstructorInjection - A fix for what ails you
+Bread::Board::Service::ConstructorInjection - A fix for what ails you
 
 =head1 SYNOPSIS
 

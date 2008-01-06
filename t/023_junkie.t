@@ -6,7 +6,7 @@ use warnings;
 use Test::More no_plan => 1;
 
 BEGIN {
-    use_ok('Junkie'); 
+    use_ok('Bread::Board'); 
 }
 
 {
@@ -34,7 +34,7 @@ sub loggers {
 
 my $c = container 'MyApp';
 
-Junkie::set_root_container($c);
+Bread::Board::set_root_container($c);
     
 loggers(); # reuse baby !!!
 

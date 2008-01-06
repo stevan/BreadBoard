@@ -1,9 +1,9 @@
-package Junkie::Literal;
+package Bread::Board::Literal;
 use Moose;
 
 our $VERSION = '0.01';
 
-with 'Junkie::Service';
+with 'Bread::Board::Service';
 
 has 'value' => (
     is       => 'rw',
@@ -21,7 +21,7 @@ __END__
 
 =head1 NAME
 
-Junkie::Service::ConstructorInjection - A fix for what ails you
+Bread::Board::Service::ConstructorInjection - A fix for what ails you
 
 =head1 SYNOPSIS
 

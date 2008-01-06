@@ -1,18 +1,18 @@
-package Junkie::Service::WithParameters;
+package Bread::Board::Service::WithParameters;
 use Moose::Role;
 use MooseX::AttributeHelpers;
 use MooseX::Params::Validate;
 
-use Junkie::Types;
+use Bread::Board::Types;
 
 our $VERSION = '0.01';
 
-with 'Junkie::Service';
+with 'Bread::Board::Service';
 
 has 'parameters' => (
     metaclass => 'Collection::Hash',
     is        => 'ro',
-    isa       => 'Junkie::Service::Parameters',
+    isa       => 'Bread::Board::Service::Parameters',
     lazy      => 1,
     coerce    => 1,
     default   => sub { +{} },
@@ -41,7 +41,7 @@ __END__
 
 =head1 NAME
 
-Junkie::Service::ConstructorInjection - A fix for what ails you
+Bread::Board::Service::ConstructorInjection - A fix for what ails you
 
 =head1 SYNOPSIS
 

@@ -1,4 +1,4 @@
-package Junkie::Traversable;
+package Bread::Board::Traversable;
 use Moose::Role;
 
 use Sub::Current;
@@ -7,7 +7,7 @@ our $VERSION = '0.01';
 
 has 'parent' => (
     is          => 'rw',
-    isa         => 'Junkie::Traversable',
+    isa         => 'Bread::Board::Traversable',
     is_weak_ref => 1,
     clearer     => 'detach_from_parent',
     predicate   => 'has_parent',
@@ -37,7 +37,7 @@ sub fetch {
 
     my $get_container_or_service = sub {
         my ($c, $name) = @_;
-        if ($c->does('Junkie::Service::WithDependencies')) {
+        if ($c->does('Bread::Board::Service::WithDependencies')) {
             return $c->get_dependency($name) if $c->has_dependency($name);
             confess "Could not find dependency ($name) from service " . $c->name;
         }

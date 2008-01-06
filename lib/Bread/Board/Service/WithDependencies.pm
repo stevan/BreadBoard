@@ -1,17 +1,17 @@
-package Junkie::Service::WithDependencies;
+package Bread::Board::Service::WithDependencies;
 use Moose::Role;
 
-use Junkie::Types;
-use Junkie::Service::Deferred;
+use Bread::Board::Types;
+use Bread::Board::Service::Deferred;
 
 our $VERSION = '0.01';
 
-with 'Junkie::Service';
+with 'Bread::Board::Service';
 
 has 'dependencies' => (
     metaclass => 'Collection::Hash',
     is        => 'rw',
-    isa       => 'Junkie::Service::Dependencies',
+    isa       => 'Bread::Board::Service::Dependencies',
     lazy      => 1,
     coerce    => 1,
     default   => sub { +{} },
@@ -43,10 +43,10 @@ sub resolve_dependencies {
             if ($service->is_locked) {
                 
                 confess "You cannot defer a parameterized service"
-                    if $service->does('Junkie::Service::WithParameters') 
+                    if $service->does('Bread::Board::Service::WithParameters') 
                     && $service->has_parameters;
                     
-                $deps{$key} = Junkie::Service::Deferred->new(service => $service);
+                $deps{$key} = Bread::Board::Service::Deferred->new(service => $service);
             }
             else {
                 $service->lock;

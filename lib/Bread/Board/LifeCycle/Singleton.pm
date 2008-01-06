@@ -1,7 +1,7 @@
-package Junkie::LifeCycle::Singleton;
+package Bread::Board::LifeCycle::Singleton;
 use Moose::Role;
 
-with 'Junkie::LifeCycle';
+with 'Bread::Board::LifeCycle';
 
 has 'instance' => (
     is        => 'rw', 

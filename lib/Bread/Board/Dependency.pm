@@ -1,9 +1,9 @@
-package Junkie::Dependency;
+package Bread::Board::Dependency;
 use Moose;
 
-use Junkie::Service;
+use Bread::Board::Service;
 
-with 'Junkie::Traversable';
+with 'Bread::Board::Traversable';
 
 has 'service_path' => (
     is        => 'ro', 
@@ -25,7 +25,7 @@ has 'service_name' => (
 
 has 'service' => (
     is       => 'ro',
-    does     => 'Junkie::Service | Junkie::Dependency',
+    does     => 'Bread::Board::Service | Bread::Board::Dependency',
     lazy     => 1,
     default  => sub {
         my $self = shift;

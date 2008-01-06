@@ -8,76 +8,76 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Junkie::Container');
-    use_ok('Junkie::ConstructorInjection');
-    use_ok('Junkie::Literal');
+    use_ok('Bread::Board::Container');
+    use_ok('Bread::Board::ConstructorInjection');
+    use_ok('Bread::Board::Literal');
 }
 
-my $c = Junkie::Container->new(
+my $c = Bread::Board::Container->new(
     name => '/',
     sub_containers => [
-        Junkie::Container->new(
+        Bread::Board::Container->new(
             name           => 'Application',
             sub_containers => [
-                Junkie::Container->new(
+                Bread::Board::Container->new(
                     name     => 'Model',
                     services => [
-                        Junkie::Literal->new(name => 'dsn',  value => ''),
-                        Junkie::ConstructorInjection->new(
+                        Bread::Board::Literal->new(name => 'dsn',  value => ''),
+                        Bread::Board::ConstructorInjection->new(
                             name  => 'schema',
                             class => 'My::App::Schema',
                             dependencies => {
-                                dsn  => Junkie::Dependency->new(service_path => '../dsn'),
-                                user => Junkie::Literal->new(name => 'user', value => ''),
-                                pass => Junkie::Literal->new(name => 'pass', value => ''),
+                                dsn  => Bread::Board::Dependency->new(service_path => '../dsn'),
+                                user => Bread::Board::Literal->new(name => 'user', value => ''),
+                                pass => Bread::Board::Literal->new(name => 'pass', value => ''),
                             },
                         )
                     ]
                 ),
-                Junkie::Container->new(
+                Bread::Board::Container->new(
                     name     => 'View',
                     services => [
-                        Junkie::ConstructorInjection->new(
+                        Bread::Board::ConstructorInjection->new(
                             name  => 'TT',
                             class => 'My::App::View::TT',
                             dependencies => {
-                                tt_include_path => Junkie::Literal->new(name => 'include_path',  value => []),
+                                tt_include_path => Bread::Board::Literal->new(name => 'include_path',  value => []),
                             },
                         )
                     ]
                  ),
-                 Junkie::Container->new(name => 'Controller'),
+                 Bread::Board::Container->new(name => 'Controller'),
             ]
         )
     ]
 );
 
 my $model = $c->fetch('Application/Model');
-isa_ok($model, 'Junkie::Container');
+isa_ok($model, 'Bread::Board::Container');
 
 is($model->name, 'Model', '... got the right model');
 
 {
     my $model2 = $c->fetch('/Application/Model');
-    isa_ok($model2, 'Junkie::Container');
+    isa_ok($model2, 'Bread::Board::Container');
 
     is($model, $model2, '... they are the same thing');
 }
 
 my $dsn = $model->fetch('schema/dsn');
-isa_ok($dsn, 'Junkie::Dependency');
+isa_ok($dsn, 'Bread::Board::Dependency');
 
 is($dsn->service_path, '../dsn', '... got the right name');
 
 {
     my $dsn2 = $c->fetch('/Application/Model/schema/dsn');
-    isa_ok($dsn2, 'Junkie::Dependency');
+    isa_ok($dsn2, 'Bread::Board::Dependency');
 
     is($dsn, $dsn2, '... they are the same thing');
 }
 
 my $root = $model->fetch('../../');
-isa_ok($root, 'Junkie::Container');
+isa_ok($root, 'Bread::Board::Container');
 
 is($root, $c, '... got the same container');
 

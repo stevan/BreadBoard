@@ -6,7 +6,7 @@ use warnings;
 use Test::More no_plan => 1;
 
 BEGIN {
-    use_ok('Junkie');     
+    use_ok('Bread::Board');     
 }
 
 {

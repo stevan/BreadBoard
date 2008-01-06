@@ -1,12 +1,12 @@
-package Junkie::Service::WithClass;
+package Bread::Board::Service::WithClass;
 use Moose::Role;
 use MooseX::AttributeHelpers;
 
-use Junkie::Types;
+use Bread::Board::Types;
 
 our $VERSION = '0.01';
 
-with 'Junkie::Service';
+with 'Bread::Board::Service';
 
 has 'class' => (
     is       => 'rw',
@@ -26,7 +26,7 @@ __END__
 
 =head1 NAME
 
-Junkie::Service::ConstructorInjection - A fix for what ails you
+Bread::Board::Service::ConstructorInjection - A fix for what ails you
 
 =head1 SYNOPSIS
 

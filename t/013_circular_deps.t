@@ -8,7 +8,7 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Junkie');
+    use_ok('Bread::Board');
 }
 
 =pod
@@ -58,7 +58,7 @@ to use cyclical deps.
         );    
     
     };
-    isa_ok($c, 'Junkie::Container');
+    isa_ok($c, 'Bread::Board::Container');
 
     ok($c->has_service('A'), '... got the A service');
     ok($c->has_service('B'), '... got the B service');
@@ -101,7 +101,7 @@ to use cyclical deps.
         );        
     
     };
-    isa_ok($c, 'Junkie::Container');
+    isa_ok($c, 'Bread::Board::Container');
 
     ok($c->has_service($_), '... got the ' . $_ . ' service') for qw/C D E F/;
 

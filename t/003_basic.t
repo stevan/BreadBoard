@@ -8,9 +8,9 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Junkie::BlockInjection');
-    use_ok('Junkie::SetterInjection');
-    use_ok('Junkie::Literal');
+    use_ok('Bread::Board::BlockInjection');
+    use_ok('Bread::Board::SetterInjection');
+    use_ok('Bread::Board::Literal');
 }
 
 {
@@ -28,7 +28,7 @@ BEGIN {
     has 'stash'  => (is => 'rw');
 }
 
-my $s = Junkie::BlockInjection->new(
+my $s = Bread::Board::BlockInjection->new(
     name  => 'William',
     class => 'Addict',
     block => sub {
@@ -36,17 +36,17 @@ my $s = Junkie::BlockInjection->new(
         $s->class->new(%{ $s->params });
     },
     dependencies => {
-        needle => Junkie::SetterInjection->new(name => 'spike', class => 'Needle'),
-        spoon  => Junkie::Literal->new(name => 'works', value => 'Spoon!'),
+        needle => Bread::Board::SetterInjection->new(name => 'spike', class => 'Needle'),
+        spoon  => Bread::Board::Literal->new(name => 'works', value => 'Spoon!'),
     },
     parameters => {
         stash => { isa => 'Mexican::Black::Tar' }
     }
 );
-isa_ok($s, 'Junkie::BlockInjection');
-does_ok($s, 'Junkie::Service::WithDependencies');
-does_ok($s, 'Junkie::Service::WithParameters');
-does_ok($s, 'Junkie::Service');
+isa_ok($s, 'Bread::Board::BlockInjection');
+does_ok($s, 'Bread::Board::Service::WithDependencies');
+does_ok($s, 'Bread::Board::Service::WithParameters');
+does_ok($s, 'Bread::Board::Service');
 
 {
     my $i = $s->get(stash => Mexican::Black::Tar->new);
@@ -69,15 +69,15 @@ my $deps = $s->dependencies;
 is_deeply([ sort keys %$deps ], [qw/needle spoon/], '... got the right dependency keys');
 
 my $needle = $s->get_dependency('needle');
-isa_ok($needle, 'Junkie::Dependency');
-isa_ok($needle->service, 'Junkie::SetterInjection');
+isa_ok($needle, 'Bread::Board::Dependency');
+isa_ok($needle->service, 'Bread::Board::SetterInjection');
 
 is($needle->service->name, 'spike', '... got the right name');
 is($needle->service->class, 'Needle', '... got the right class');
 
 my $spoon = $s->get_dependency('spoon');
-isa_ok($spoon, 'Junkie::Dependency');
-isa_ok($spoon->service, 'Junkie::Literal');
+isa_ok($spoon, 'Bread::Board::Dependency');
+isa_ok($spoon->service, 'Bread::Board::Literal');
 
 is($spoon->service->name, 'works', '... got the right name');
 is($spoon->service->value, 'Spoon!', '... got the right literal value');

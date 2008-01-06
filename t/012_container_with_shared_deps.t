@@ -8,10 +8,10 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Junkie::Container');
-    use_ok('Junkie::ConstructorInjection');
-    use_ok('Junkie::BlockInjection');    
-    use_ok('Junkie::Literal');
+    use_ok('Bread::Board::Container');
+    use_ok('Bread::Board::ConstructorInjection');
+    use_ok('Bread::Board::BlockInjection');    
+    use_ok('Bread::Board::Literal');
 }
 
 {
@@ -20,19 +20,19 @@ BEGIN {
     has ['dsn', 'user', 'pass'] => (required => 1);
 }
 
-my $c = Junkie::Container->new(
+my $c = Bread::Board::Container->new(
     name     => 'Model',
     services => [
-        Junkie::ConstructorInjection->new(
+        Bread::Board::ConstructorInjection->new(
             name  => 'schema',
             class => 'My::App::Schema',
             dependencies => {
-                dsn  => Junkie::Literal->new(name => 'dsn',  value => ''),
-                user => Junkie::Literal->new(name => 'user', value => ''),
-                pass => Junkie::Literal->new(name => 'pass', value => ''),
+                dsn  => Bread::Board::Literal->new(name => 'dsn',  value => ''),
+                user => Bread::Board::Literal->new(name => 'user', value => ''),
+                pass => Bread::Board::Literal->new(name => 'pass', value => ''),
             },
         ),
-        Junkie::BlockInjection->new(
+        Bread::Board::BlockInjection->new(
             name => 'dbh',
             block => sub {
                 my $s = shift;
@@ -43,16 +43,16 @@ my $c = Junkie::Container->new(
                 )
             },
             dependencies => {
-                dsn  => Junkie::Dependency->new(service_path => '../../schema/dsn'),
-                user => Junkie::Dependency->new(service_path => '../../schema/user'),
-                pass => Junkie::Dependency->new(service_path => '../../schema/pass'),
+                dsn  => Bread::Board::Dependency->new(service_path => '../../schema/dsn'),
+                user => Bread::Board::Dependency->new(service_path => '../../schema/user'),
+                pass => Bread::Board::Dependency->new(service_path => '../../schema/pass'),
             },            
         )
     ]
 );
 
 my $s = $c->fetch('dbh');
-does_ok($s, 'Junkie::Service');
+does_ok($s, 'Bread::Board::Service');
 
 my $dbh = $s->get;
 isa_ok($dbh, 'DBH');

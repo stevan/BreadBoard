@@ -1,10 +1,10 @@
-package Junkie::Service;
+package Bread::Board::Service;
 use Moose::Role;
 
 our $VERSION = '0.01';
 
 with 'MooseX::Param',
-     'Junkie::Traversable';
+     'Bread::Board::Traversable';
 
 has 'name' => (
     is       => 'rw', 
@@ -23,11 +23,11 @@ has 'lifecycle' => (
     isa     => 'Str', 
     trigger => sub {
         my ($self, $lifecycle) = @_;
-        if ($self->does('Junkie::LifeCycle')) {
+        if ($self->does('Bread::Board::LifeCycle')) {
             bless $self => ($self->meta->superclasses)[0];
             return if $lifecycle eq 'Null';
         }
-        ("Junkie::LifeCycle::${lifecycle}")->meta->apply($self);        
+        ("Bread::Board::LifeCycle::${lifecycle}")->meta->apply($self);        
     }
 );
 
@@ -44,7 +44,7 @@ __END__
 
 =head1 NAME
 
-Junkie::Service - A fix for what ails you
+Bread::Board::Service - A fix for what ails you
 
 =head1 SYNOPSIS
 

@@ -1,12 +1,12 @@
 
-package Junkie::Container;
+package Bread::Board::Container;
 use Moose;
 use Moose::Util::TypeConstraints;
 use MooseX::AttributeHelpers;
 
-use Junkie::Types;
+use Bread::Board::Types;
 
-with 'Junkie::Traversable';
+with 'Bread::Board::Traversable';
 
 has 'name' => (
     is       => 'rw', 
@@ -17,7 +17,7 @@ has 'name' => (
 has 'services' => (
     metaclass => 'Collection::Hash',
     is        => 'rw',
-    isa       => 'Junkie::Container::ServiceList',
+    isa       => 'Bread::Board::Container::ServiceList',
     coerce    => 1,
     lazy      => 1,
     default   => sub{ +{} },
@@ -36,7 +36,7 @@ has 'services' => (
 has 'sub_containers' => (
     metaclass => 'Collection::Hash',
     is        => 'rw',
-    isa       => 'Junkie::Container::SubContainerList',
+    isa       => 'Bread::Board::Container::SubContainerList',
     coerce    => 1,
     lazy      => 1,
     default   => sub{ +{} },
@@ -54,16 +54,16 @@ has 'sub_containers' => (
 
 sub add_service {
     my ($self, $service) = @_;
-    (blessed $service && $service->does('Junkie::Service'))
-        || confess "You must pass in a Junkie::Service instance, not $service";
+    (blessed $service && $service->does('Bread::Board::Service'))
+        || confess "You must pass in a Bread::Board::Service instance, not $service";
     $service->parent($self);
     $self->services->{$service->name} = $service;
 }
 
 sub add_sub_container {
     my ($self, $container) = @_;
-    (blessed $container && $container->isa('Junkie::Container'))
-        || confess "You must pass in a Junkie::Container instance, not $container";
+    (blessed $container && $container->isa('Bread::Board::Container'))
+        || confess "You must pass in a Bread::Board::Container instance, not $container";
     $container->parent($self);
     $self->sub_containers->{$container->name} = $container;
 }
