@@ -6,6 +6,9 @@ use MooseX::AttributeHelpers;
 
 use Bread::Board::Types;
 
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
+
 with 'Bread::Board::Traversable';
 
 has 'name' => (

@@ -5,7 +5,8 @@ use MooseX::Params::Validate;
 
 use Bread::Board::Types;
 
-our $VERSION = '0.01';
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';
 

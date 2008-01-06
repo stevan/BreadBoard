@@ -3,7 +3,8 @@ use Moose::Role;
 
 use Sub::Current;
 
-our $VERSION = '0.01';
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
 
 has 'parent' => (
     is          => 'rw',

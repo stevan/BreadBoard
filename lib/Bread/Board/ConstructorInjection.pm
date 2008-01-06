@@ -3,7 +3,8 @@ use Moose;
 
 use Bread::Board::Types;
 
-our $VERSION = '0.01';
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service::WithClass',
      'Bread::Board::Service::WithDependencies',

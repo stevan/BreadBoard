@@ -3,6 +3,9 @@ use Moose::Role;
 
 with 'Bread::Board::LifeCycle';
 
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
+
 has 'instance' => (
     is        => 'rw', 
     isa       => 'Any',

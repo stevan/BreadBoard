@@ -3,6 +3,9 @@ use Moose;
 
 use Bread::Board::Service;
 
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
+
 with 'Bread::Board::Traversable';
 
 has 'service_path' => (
