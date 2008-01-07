@@ -16,7 +16,11 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-    Moose
+    Moose              
+    MooseX::Param
+    MooseX::AttributeHelpers
+    Sub::Exporter 
+    Sub::Current            
 
 COPYRIGHT AND LICENCE
 

@@ -167,24 +167,27 @@ Bread::Board - A solderless way to wire up you application components
   | o o | 25 o-o-o-o-o   o-o-o-o-o 25 | o o | 
   | o o | 26 o-o-o-o-o   o-o-o-o-o 26 | o o | 
   | o o | 27 o-o-o-o-o   o-o-o-o-o 27 | o o | 
-  | o o | 28 o-o-o-o-o   o-o-o-o-o 28 | o o | 
+  | o o | 28 o-o-o-o-o ^ o-o-o-o-o 28 | o o | 
   +-----------------------------------------+
 
-More docs to come.
+More docs to come, this is a very early release of this module. 
+Basically, if you don't grok the SYNOPSIS then check back later
+when the docs are written (or feel free to read the tests, the 
+F<t/02*_sugar.t> tests are the most illustrative IMO).
 
 =head1 EXPORTED FUNCTIONS
 
 =over 4
 
-=item I<container>
+=item I<container ($name, &body)>
 
-=item I<as>
+=item I<as (&body)>
 
-=item I<service>
+=item I<service ($name, $literal|%service_description)>
 
-=item I<depends_on>
+=item I<depends_on ($service_name)>
 
-=item I<wire_names>
+=item I<wire_names (@service_names)>
 
 =back
 
@@ -192,11 +195,20 @@ More docs to come.
 
 =over 4
 
-=item B<set_root_container>
+=item B<set_root_container ($container)>
 
 =item B<meta>
 
 =back
+
+=head1 ACKNOWLEDGEMENTS
+
+Chuck "sprongie" Adams, for testing/using early (pre-release) 
+versions of this module, and some good suggestions for naming
+it.
+
+Matt "mst" Trout, for finally coming up with the best name 
+for this module. 
 
 =head1 SEE ALSO 
 
