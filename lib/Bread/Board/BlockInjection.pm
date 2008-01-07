@@ -33,7 +33,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::BlockInjection
 
 =head1 SYNOPSIS
 

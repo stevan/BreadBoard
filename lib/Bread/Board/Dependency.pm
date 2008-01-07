@@ -47,7 +47,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Dependency
 
 =head1 SYNOPSIS
 

@@ -12,7 +12,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::LifeCycle
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,8 @@
 package Bread::Board;
 use Moose;
 
+use Sub::Exporter;
+
 use Bread::Board::Types;
 
 use Bread::Board::ConstructorInjection;
@@ -84,7 +86,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board
+Bread::Board - A solderless way to wire up you application components
 
 =head1 SYNOPSIS
 
@@ -103,9 +105,9 @@ Bread::Board
       );
       
       container 'Database' => as {
-          service 'dsn' => "dbi:sqlite:dbname=my-app.db";    
-          service 'password' => "dbi:sqlite:dbname=my-app.db";    
-          service 'username' => "dbi:sqlite:dbname=my-app.db";                  
+          service 'dsn'      => "dbi:sqlite:dbname=my-app.db";    
+          service 'username' => "user234";
+          service 'password' => "****";                                
       
           service 'dbh' => (
               block => sub {
@@ -167,6 +169,20 @@ Bread::Board
   | o o | 27 o-o-o-o-o   o-o-o-o-o 27 | o o | 
   | o o | 28 o-o-o-o-o   o-o-o-o-o 28 | o o | 
   +-----------------------------------------+
+
+More docs to come.
+
+=head1 SEE ALSO 
+
+=over 4
+
+=item L<IOC> 
+
+Bread::Board is basically my re-write of IOC.
+
+=item L<http://en.wikipedia.org/wiki/Breadboard>
+
+=back
 
 =head1 BUGS
 

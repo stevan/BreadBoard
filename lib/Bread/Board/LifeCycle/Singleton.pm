@@ -39,7 +39,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::LifeCycle::Singleton
 
 =head1 SYNOPSIS
 

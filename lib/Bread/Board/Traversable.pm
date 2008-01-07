@@ -62,7 +62,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Traversable
 
 =head1 SYNOPSIS
 

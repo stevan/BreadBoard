@@ -42,7 +42,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Service::WithParameters
 
 =head1 SYNOPSIS
 

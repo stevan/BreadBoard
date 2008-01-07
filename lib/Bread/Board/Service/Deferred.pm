@@ -89,7 +89,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Service::Deferred
 
 =head1 SYNOPSIS
 

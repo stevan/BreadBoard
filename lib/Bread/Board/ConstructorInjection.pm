@@ -23,7 +23,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::ConstructorInjection
 
 =head1 SYNOPSIS
 

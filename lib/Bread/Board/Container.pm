@@ -1,4 +1,3 @@
-
 package Bread::Board::Container;
 use Moose;
 use Moose::Util::TypeConstraints;
@@ -79,7 +78,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Container
 
 =head1 SYNOPSIS
 

@@ -22,7 +22,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Literal
 
 =head1 SYNOPSIS
 

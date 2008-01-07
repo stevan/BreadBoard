@@ -27,7 +27,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Service::WithClass
 
 =head1 SYNOPSIS
 

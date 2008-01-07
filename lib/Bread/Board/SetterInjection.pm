@@ -25,7 +25,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::SetterInjection
 
 =head1 SYNOPSIS
 

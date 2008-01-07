@@ -74,7 +74,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board::
+Bread::Board::Types
 
 =head1 SYNOPSIS
 
