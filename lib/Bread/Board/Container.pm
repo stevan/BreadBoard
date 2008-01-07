@@ -80,15 +80,37 @@ __END__
 
 Bread::Board::Container
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<add_service>
+
+=item B<add_sub_container>
+
+=item B<get_service>
+
+=item B<get_service_list>
+
+=item B<get_sub_container>
+
+=item B<get_sub_container_list>
+
+=item B<has_service>
+
+=item B<has_services>
+
+=item B<has_sub_container>
+
+=item B<has_sub_containers>
+
+=item B<name>
+
+=item B<services>
+
+=item B<sub_containers>
 
 =back
 

@@ -29,15 +29,15 @@ __END__
 
 Bread::Board::Service::WithClass
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<class>
+
+=item B<get>
 
 =back
 

@@ -41,15 +41,19 @@ __END__
 
 Bread::Board::LifeCycle::Singleton
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<get>
+
+=item B<instance>
+
+=item B<has_instance>
+
+=item B<flush_instance>
 
 =back
 

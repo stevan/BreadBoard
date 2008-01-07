@@ -91,17 +91,9 @@ __END__
 
 Bread::Board::Service::Deferred
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
-=head1 METHODS
-
-=over 4
-
-=item B<>
-
-=back
+No user servicable parts. Read the source if you are interested.
 
 =head1 BUGS
 

@@ -77,15 +77,27 @@ __END__
 
 Bread::Board::Service::WithDependencies
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<init_params>
+
+=item B<resolve_dependencies>
+
+=item B<dependencies>
+
+=item B<add_dependency>
+
+=item B<get_dependency>
+
+=item B<has_dependency>
+
+=item B<has_dependencies>
+
+=item B<get_all_dependencies>
 
 =back
 

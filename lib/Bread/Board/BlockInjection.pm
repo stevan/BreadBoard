@@ -35,15 +35,21 @@ __END__
 
 Bread::Board::BlockInjection
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<block>
+
+=item B<class>
+
+=item B<has_class>
+
+=item B<get>
+
+=item B<meta>
 
 =back
 

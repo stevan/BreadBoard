@@ -72,7 +72,15 @@ Bread::Board::Traversable
 
 =over 4
 
-=item B<>
+=item B<parent>
+
+=item B<has_parent>
+
+=item B<detach_from_parent>
+
+=item B<get_root_container>
+
+=item B<fetch>
 
 =back
 

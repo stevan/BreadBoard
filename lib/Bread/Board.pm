@@ -172,6 +172,32 @@ Bread::Board - A solderless way to wire up you application components
 
 More docs to come.
 
+=head1 EXPORTED FUNCTIONS
+
+=over 4
+
+=item I<container>
+
+=item I<as>
+
+=item I<service>
+
+=item I<depends_on>
+
+=item I<wire_names>
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item B<set_root_container>
+
+=item B<meta>
+
+=back
+
 =head1 SEE ALSO 
 
 =over 4

@@ -14,17 +14,7 @@ __END__
 
 Bread::Board::LifeCycle
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
-
-=head1 METHODS
-
-=over 4
-
-=item B<>
-
-=back
 
 =head1 BUGS
 

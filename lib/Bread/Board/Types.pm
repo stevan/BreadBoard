@@ -76,8 +76,6 @@ __END__
 
 Bread::Board::Types
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 BUGS

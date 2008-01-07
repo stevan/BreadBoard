@@ -49,15 +49,27 @@ __END__
 
 Bread::Board::Dependency
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<get>
+
+=item B<has_service_path>
+
+=item B<is_locked>
+
+=item B<lock>
+
+=item B<service>
+
+=item B<service_name>
+
+=item B<service_path>
+
+=item B<unlock>
 
 =back
 

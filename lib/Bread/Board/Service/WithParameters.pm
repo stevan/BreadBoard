@@ -44,15 +44,19 @@ __END__
 
 Bread::Board::Service::WithParameters
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<get>
+
+=item B<parameters>
+
+=item B<has_parameters>
+
+=item B<check_parameters>
 
 =back
 

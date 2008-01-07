@@ -25,15 +25,13 @@ __END__
 
 Bread::Board::ConstructorInjection
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<get>
 
 =back
 

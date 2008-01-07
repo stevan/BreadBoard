@@ -47,15 +47,23 @@ __END__
 
 Bread::Board::Service
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<name>
+
+=item B<is_locked>
+
+=item B<lock>
+
+=item B<unlock>
+
+=item B<lifecycle>
+
+=item B<get>
 
 =back
 

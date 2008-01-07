@@ -24,15 +24,15 @@ __END__
 
 Bread::Board::Literal
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<get>
+
+=item B<value>
 
 =back
 
