@@ -1,5 +1,13 @@
 Revision history for Perl extension Bread::Board
 
+0.03
+    * Bread::Board::Service::WithParameters
+      - fixed the parameter validation to 
+        use a custom cache key, this is so 
+        that it plays nicely with the new 
+        MooseX::Params::Validate
+        - added tests for this
+
 0.02 Tues. Jan. 8, 2008
     - forgot a dependency, whoops.
 

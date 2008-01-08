@@ -41,4 +41,5 @@ t/023_sugar.t
 t/024_sugar.t
 t/030_lifecycle_singleton.t
 t/040_circular_dependencies.t
+t/041_parameter_cache_handling.t
 t/pod.t

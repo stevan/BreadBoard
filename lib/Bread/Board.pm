@@ -15,7 +15,7 @@ use Bread::Board::Dependency;
 
 use Bread::Board::LifeCycle::Singleton;
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.03';
 our $AUTHORITY = 'cpan:STEVAN';
 
 my @exports = qw[

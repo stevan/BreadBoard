@@ -5,7 +5,7 @@ use MooseX::Params::Validate;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.02';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';
@@ -24,8 +24,18 @@ has 'parameters' => (
 
 sub check_parameters {
     my $self = shift;
-    return validate(\@_, %{$self->parameters})
-        if $self->has_parameters;
+    return validate(\@_, (
+        %{ $self->parameters },
+        # NOTE:
+        # cache the parameters in a per-service 
+        # basis, this should be more than adequate
+        # since each service can only have one set
+        # of parameters at a time. If this does end
+        # up breaking then we can give it a better 
+        # key at that point.
+        # - SL
+        (MX_PARAMS_VALIDATE_CACHE_KEY => Scalar::Util::refaddr($self))
+    )) if $self->has_parameters;
     return ();
 }
 

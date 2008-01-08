@@ -10,7 +10,7 @@ license 'perl';
 requires 'Moose'                    => '0.33';
 requires 'MooseX::Param'            => '0.02';
 requires 'MooseX::AttributeHelpers' => '0.07';
-requires 'MooseX::Params::Validate' => '0.03';
+requires 'MooseX::Params::Validate' => '0.04';
 requires 'Sub::Exporter'            => '0.972';
 requires 'Sub::Current'             => '0.02';
 
