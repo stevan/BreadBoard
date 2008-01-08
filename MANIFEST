@@ -42,4 +42,3 @@ t/024_sugar.t
 t/030_lifecycle_singleton.t
 t/040_circular_dependencies.t
 t/pod.t
-t/pod_coverage.t

@@ -1,5 +1,8 @@
 Revision history for Perl extension Bread::Board
 
+0.02 Tues. Jan. 8, 2008
+    - forgot a dependency, whoops.
+
 0.01 Mon. Jan. 7, 2008
     - Out with the old (IOC) and in 
       with the new (Bread::Board)
