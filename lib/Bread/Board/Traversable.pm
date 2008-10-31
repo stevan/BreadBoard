@@ -3,7 +3,7 @@ use Moose::Role;
 
 use Sub::Current;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.02';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'parent' => (
@@ -38,12 +38,29 @@ sub fetch {
 
     my $get_container_or_service = sub {
         my ($c, $name) = @_;
+        
+        if ($c->isa('Bread::Board::Dependency')) {
+            # make sure to evaluate this from the parent
+            return ROUTINE->($c->parent->parent, $name);
+        }        
+        
         if ($c->does('Bread::Board::Service::WithDependencies')) {
             return $c->get_dependency($name) if $c->has_dependency($name);
             confess "Could not find dependency ($name) from service " . $c->name;
         }
-        return $c->get_sub_container($name) if $c->has_sub_container($name);
-        return $c->get_service($name)       if $c->has_service($name);
+        
+        # name() is implemented in Service and Container
+        # get_sub_container and get_service is implemented in Container
+        # there must be a better way to do this
+        
+        if ($c->does('Bread::Board::Service')) {
+            return $c                           if $c->name eq $name;
+        } elsif ($c->isa('Bread::Board::Container')) {
+            return $c                           if $c->name eq $name;
+            return $c->get_sub_container($name) if $c->has_sub_container($name);
+            return $c->get_service($name)       if $c->has_service($name);
+        }        
+        
         confess "Could not find container or service for $name";
     };
 
