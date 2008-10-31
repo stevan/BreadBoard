@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.04
+0.04 Fri. Oct. 31, 2008
     * Bread::Board
       Bread::Board::Traversable
       - fix root path handling (thanks to Daisuke Maki)
