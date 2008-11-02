@@ -10,6 +10,10 @@ with 'Bread::Board::Service::WithClass',
      'Bread::Board::Service::WithDependencies',
      'Bread::Board::Service::WithParameters';
 
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
+
 sub get {
     my $self = shift;
     my $o = $self->class->new;

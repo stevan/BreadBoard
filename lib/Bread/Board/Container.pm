@@ -54,6 +54,10 @@ has 'sub_containers' => (
     }
 );
 
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
+
 sub add_service {
     my ($self, $service) = @_;
     (blessed $service && $service->does('Bread::Board::Service'))
