@@ -1,35 +1,38 @@
 package Bread::Board;
 use Moose;
-
-use Sub::Exporter;
-
 use Bread::Board::Types;
-
 use Bread::Board::ConstructorInjection;
 use Bread::Board::SetterInjection;
 use Bread::Board::BlockInjection;
 use Bread::Board::Literal;
-
 use Bread::Board::Container;
 use Bread::Board::Dependency;
-
 use Bread::Board::LifeCycle::Singleton;
+use Sub::Exporter -setup => {
+    exports => [ qw( as container depends_on service wire_names ) ],
+    groups  => { default => [':all'] }
+};
 
-our $VERSION   = '0.04';
 our $AUTHORITY = 'cpan:STEVAN';
+our $VERSION   = '0.04';
 
-my @exports = qw[
-    container
-    service
-    as
-    depends_on
-    wire_names
-];
+__PACKAGE__->meta->make_immutable;
 
-Sub::Exporter::setup_exporter({
-    exports => \@exports,
-    groups  => { default => \@exports }
-});
+no Moose;
+
+sub unimport {
+    my $package = caller(0);
+    foreach my $name qw( as container depends_on service wire_names ) {
+        no strict 'refs';
+
+        if ( defined &{ $package . '::' . $name } ) {
+            my $sub = \&{ $package . '::' . $name };
+            next unless \&{$name} == $sub;
+
+            delete ${ $package . '::' }{$name};
+        }
+    }
+}
 
 sub as (&) { $_[0] }
 
@@ -132,6 +135,8 @@ Bread::Board - A solderless way to wire up you application components
       );
 
   };
+
+  no Bread::Board; # removes keywords
 
   $c->fetch('application')->run;
 
