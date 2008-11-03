@@ -1,7 +1,8 @@
 Revision history for Perl extension Bread::Board
 
-0.05
-    - Applied immutablity to classes where applicable. This results in 
+0.05 Mon. Nov. 3, 2008
+    - Applied immutablity to classes where applicable, and vigorously unimport
+      Moose keywords when they are no longer needed. This results in 
       x 2 performance as far as defining a Bread::Board model (Daisuke Maki).
 
     * Bread::Board
