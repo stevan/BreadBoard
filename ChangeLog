@@ -1,5 +1,8 @@
 Revision history for Perl extension Bread::Board
 
+0.06 Mon. Nov. 3, 2008
+    - Forgot to update MANIFEST before uploading to CPAN.
+
 0.05 Mon. Nov. 3, 2008
     - Applied immutablity to classes where applicable, and vigorously unimport
       Moose keywords when they are no longer needed. This results in 

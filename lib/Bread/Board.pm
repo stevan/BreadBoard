@@ -14,7 +14,7 @@ use Sub::Exporter -setup => {
 };
 
 our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.05';
+our $VERSION   = '0.06';
 
 __PACKAGE__->meta->make_immutable;
 
