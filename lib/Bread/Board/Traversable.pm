@@ -51,7 +51,7 @@ sub _get_container_or_service {
     
     if ($c->isa('Bread::Board::Dependency')) {
         # make sure to evaluate this from the parent
-        return ROUTINE->($c->parent->parent, $name);
+        return _get_container_or_service($c->parent->parent, $name);
     }        
     
     if ($c->does('Bread::Board::Service::WithDependencies')) {
