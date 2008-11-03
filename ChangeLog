@@ -1,5 +1,17 @@
 Revision history for Perl extension Bread::Board
 
+0.05
+    - Applied immutablity to classes where applicable. This results in 
+      x 2 performance as far as defining a Bread::Board model (Daisuke Maki).
+
+    * Bread::Board
+      - Implemented unimport(), thus allowing you to remove keywords
+        exported by Bread::Board (Daisuke Maki).
+
+    * Bread::Board::Traversable
+      - Unrolled recursive calls to loops, and removed Sub::Current dependency
+        (Daisuke Maki)
+
 0.04 Fri. Oct. 31, 2008
     * Bread::Board
       Bread::Board::Traversable
