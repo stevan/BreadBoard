@@ -12,7 +12,6 @@ requires 'MooseX::Param'            => '0.02';
 requires 'MooseX::AttributeHelpers' => '0.07';
 requires 'MooseX::Params::Validate' => '0.04';
 requires 'Sub::Exporter'            => '0.972';
-requires 'Sub::Current'             => '0.02';
 
 # things the tests need
 build_requires 'Test::More'      => '0.62';

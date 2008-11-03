@@ -1,8 +1,6 @@
 package Bread::Board::Traversable;
 use Moose::Role;
 
-use Sub::Current;
-
 our $VERSION   = '0.02';
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -14,12 +12,14 @@ has 'parent' => (
     predicate   => 'has_parent',
 );
 
+no Moose::Role;
+
 sub get_root_container {
-    sub {
-        my $c = shift;
-        return $c unless $c->has_parent;
-        return ROUTINE->($c->parent)
-    }->(@_);
+    my $c = shift;
+    while ($c->has_parent) {
+        $c = $c->parent;
+    }
+    return $c;
 }
 
 sub fetch {
@@ -28,47 +28,50 @@ sub fetch {
     my $root = $path =~ /^\// ? $self->get_root_container : $self;
     my @path = grep { $_ } split /\// => $path;
 
-    ($root, @path) = sub {
-        my ($c, $h, @t) = @_;
-        return @_ if not(defined($h)) || $h ne '..' || not($c->has_parent);
-        return ROUTINE->($c->parent, @t);
-    }->($root, @path) if $path[0] eq '..';
+    if ($path[0] eq '..') {
+        my $c = $root;
+        do {
+            shift @path;
+            $c = $c->parent;
+        } while (defined $path[0] && $path[0] eq '..' && $c->has_parent);
+        $root = $c;
+    }
     
     return $root unless @path;
 
-    my $get_container_or_service = sub {
-        my ($c, $name) = @_;
-        
-        if ($c->isa('Bread::Board::Dependency')) {
-            # make sure to evaluate this from the parent
-            return ROUTINE->($c->parent->parent, $name);
-        }        
-        
-        if ($c->does('Bread::Board::Service::WithDependencies')) {
-            return $c->get_dependency($name) if $c->has_dependency($name);
-            confess "Could not find dependency ($name) from service " . $c->name;
-        }
-        
-        # name() is implemented in Service and Container
-        # get_sub_container and get_service is implemented in Container
-        # there must be a better way to do this
-        
-        if ($c->does('Bread::Board::Service')) {
-            return $c                           if $c->name eq $name;
-        } elsif ($c->isa('Bread::Board::Container')) {
-            return $c                           if $c->name eq $name;
-            return $c->get_sub_container($name) if $c->has_sub_container($name);
-            return $c->get_service($name)       if $c->has_service($name);
-        }        
-        
-        confess "Could not find container or service for $name";
-    };
+    my $c = $root;
+    while (my $h = shift @path) {
+        $c = _get_container_or_service($c, $h);
+    }
+    return $c;
+}
 
-    return sub {
-        my ($c, $h, @t) = @_;
-        return $c unless $h;
-        return ROUTINE->($get_container_or_service->($c, $h), @t);
-    }->($root, @path);
+sub _get_container_or_service {
+    my ($c, $name) = @_;
+    
+    if ($c->isa('Bread::Board::Dependency')) {
+        # make sure to evaluate this from the parent
+        return ROUTINE->($c->parent->parent, $name);
+    }        
+    
+    if ($c->does('Bread::Board::Service::WithDependencies')) {
+        return $c->get_dependency($name) if $c->has_dependency($name);
+        confess "Could not find dependency ($name) from service " . $c->name;
+    }
+    
+    # name() is implemented in Service and Container
+    # get_sub_container and get_service is implemented in Container
+    # there must be a better way to do this
+    
+    if ($c->does('Bread::Board::Service')) {
+        return $c                           if $c->name eq $name;
+    } elsif ($c->isa('Bread::Board::Container')) {
+        return $c                           if $c->name eq $name;
+        return $c->get_sub_container($name) if $c->has_sub_container($name);
+        return $c->get_service($name)       if $c->has_service($name);
+    }        
+    
+    confess "Could not find container or service for $name";
 }
 
 1;
