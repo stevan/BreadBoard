@@ -19,6 +19,10 @@ has 'class' => (
     predicate => 'has_class'
 );
 
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
+
 sub get { 
     my $self = shift;
     Class::MOP::load_class($self->class) if $self->has_class;

@@ -31,6 +31,8 @@ around 'get' => sub {
     return $self->instance;
 };
 
+no Moose::Role;
+
 1;
 
 __END__

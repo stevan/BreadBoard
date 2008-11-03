@@ -65,6 +65,8 @@ subtype 'Bread::Board::Service::Parameters' => as 'HashRef';
 coerce 'Bread::Board::Service::Parameters'
     => from 'ArrayRef'
         => via { +{ map { $_ => { optional => 0 } } @$_ } };
+
+no Moose::Util::TypeConstraints;
         
 1;
 

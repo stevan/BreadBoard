@@ -22,6 +22,13 @@ has 'parameters' => (
     }
 );
 
+before 'get' => sub {
+    my $self = shift;
+    $self->params({ %{ $self->params }, $self->check_parameters(@_) });    
+};
+
+no Moose::Role;
+
 sub check_parameters {
     my $self = shift;
     return validate(\@_, (
@@ -38,11 +45,6 @@ sub check_parameters {
     )) if $self->has_parameters;
     return ();
 }
-
-before 'get' => sub {
-    my $self = shift;
-    $self->params({ %{ $self->params }, $self->check_parameters(@_) });    
-};
 
 1;
 

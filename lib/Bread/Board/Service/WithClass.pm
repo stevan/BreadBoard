@@ -19,6 +19,8 @@ before 'get' => sub {
     Class::MOP::load_class((shift)->class)
 };
 
+no Moose::Role;
+
 1;
 
 __END__

@@ -29,6 +29,14 @@ has 'dependencies' => (
     }
 );
 
+around 'init_params' => sub {
+    my $next = shift;
+    my $self = shift;
+    +{ %{ $self->$next() }, $self->resolve_dependencies }
+};
+
+no Moose::Role;
+
 sub resolve_dependencies {
     my $self = shift;
     my %deps;
@@ -59,13 +67,6 @@ sub resolve_dependencies {
     }  
     return %deps;  
 }
-
-around 'init_params' => sub {
-    my $next = shift;
-    my $self = shift;
-    +{ %{ $self->$next() }, $self->resolve_dependencies }
-};
-
 
 1;
 

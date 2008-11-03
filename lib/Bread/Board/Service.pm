@@ -34,6 +34,8 @@ has 'lifecycle' => (
 
 requires 'get';
 
+no Moose::Role;
+
 sub lock   { (shift)->is_locked(1) }
 sub unlock { (shift)->is_locked(0) }
 

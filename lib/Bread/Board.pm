@@ -78,7 +78,6 @@ sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
 
 sub depends_on ($) {
     my $path = shift;
-#    $path =~ s{^(?!/)}{../../};
     Bread::Board::Dependency->new(service_path => $path);    
 }
 
