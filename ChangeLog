@@ -1,5 +1,9 @@
 Revision history for Perl extension Bread::Board
 
+0.07 Wed. Feb. 18, 2009
+    - Work with new MooseX::Params::Validate
+    - Specify MX::P::Validate version number in Makefile.PL
+
 0.06 Mon. Nov. 3, 2008
     - Forgot to update MANIFEST before uploading to CPAN.
 
