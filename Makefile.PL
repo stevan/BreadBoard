@@ -10,7 +10,7 @@ license 'perl';
 requires 'Moose'                    => '0.33';
 requires 'MooseX::Param'            => '0.02';
 requires 'MooseX::AttributeHelpers' => '0.07';
-requires 'MooseX::Params::Validate' => '0.04';
+requires 'MooseX::Params::Validate' => '0.09';
 requires 'Sub::Exporter'            => '0.972';
 
 # things the tests need

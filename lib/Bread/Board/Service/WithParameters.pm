@@ -1,7 +1,7 @@
 package Bread::Board::Service::WithParameters;
 use Moose::Role;
 use MooseX::AttributeHelpers;
-use MooseX::Params::Validate;
+use MooseX::Params::Validate qw(validated_hash);
 
 use Bread::Board::Types;
 
@@ -31,7 +31,7 @@ no Moose::Role;
 
 sub check_parameters {
     my $self = shift;
-    return validate(\@_, (
+    return validated_hash(\@_, (
         %{ $self->parameters },
         # NOTE:
         # cache the parameters in a per-service 
