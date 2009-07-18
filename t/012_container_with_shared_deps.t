@@ -10,14 +10,14 @@ use Test::Exception;
 BEGIN {
     use_ok('Bread::Board::Container');
     use_ok('Bread::Board::ConstructorInjection');
-    use_ok('Bread::Board::BlockInjection');    
+    use_ok('Bread::Board::BlockInjection');
     use_ok('Bread::Board::Literal');
 }
 
 {
     package DBH;
     use Moose;
-    has ['dsn', 'user', 'pass'] => (required => 1);
+    has ['dsn', 'user', 'pass'] => (is => 'ro', required => 1);
 }
 
 my $c = Bread::Board::Container->new(
@@ -39,14 +39,14 @@ my $c = Bread::Board::Container->new(
                 DBH->new(
                     dsn  => $s->param('dsn'),
                     user => $s->param('user'),
-                    pass => $s->param('pass'),                                        
+                    pass => $s->param('pass'),
                 )
             },
             dependencies => {
                 dsn  => Bread::Board::Dependency->new(service_path => '../../schema/dsn'),
                 user => Bread::Board::Dependency->new(service_path => '../../schema/user'),
                 pass => Bread::Board::Dependency->new(service_path => '../../schema/pass'),
-            },            
+            },
         )
     ]
 );

@@ -5,14 +5,14 @@ use MooseX::AttributeHelpers;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Traversable';
 
 has 'name' => (
-    is       => 'rw', 
-    isa      => 'Str', 
+    is       => 'rw',
+    isa      => 'Str',
     required => 1
 );
 
@@ -26,7 +26,7 @@ has 'services' => (
     trigger   => sub {
         my $self = shift;
         $_->parent($self) foreach values %{$self->services};
-    },    
+    },
     provides  => {
         'get'    => 'get_service',
         'exists' => 'has_service',
@@ -54,11 +54,6 @@ has 'sub_containers' => (
     }
 );
 
-__PACKAGE__->meta->make_immutable;
-
-no Moose;
-no Moose::Util::TypeConstraints;
-
 sub add_service {
     my ($self, $service) = @_;
     (blessed $service && $service->does('Bread::Board::Service'))
@@ -75,8 +70,10 @@ sub add_sub_container {
     $self->sub_containers->{$container->name} = $container;
 }
 
+__PACKAGE__->meta->make_immutable;
 
-1;
+no Moose; no Moose::Util::TypeConstraints; 1;
+
 __END__
 
 =pod
@@ -131,7 +128,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

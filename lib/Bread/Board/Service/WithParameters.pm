@@ -24,21 +24,19 @@ has 'parameters' => (
 
 before 'get' => sub {
     my $self = shift;
-    $self->params({ %{ $self->params }, $self->check_parameters(@_) });    
+    $self->params({ %{ $self->params }, $self->check_parameters(@_) });
 };
-
-no Moose::Role;
 
 sub check_parameters {
     my $self = shift;
     return validated_hash(\@_, (
         %{ $self->parameters },
         # NOTE:
-        # cache the parameters in a per-service 
+        # cache the parameters in a per-service
         # basis, this should be more than adequate
         # since each service can only have one set
         # of parameters at a time. If this does end
-        # up breaking then we can give it a better 
+        # up breaking then we can give it a better
         # key at that point.
         # - SL
         (MX_PARAMS_VALIDATE_CACHE_KEY => Scalar::Util::refaddr($self))
@@ -46,7 +44,7 @@ sub check_parameters {
     return ();
 }
 
-1;
+no Moose::Role; 1;
 
 __END__
 
@@ -84,7 +82,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

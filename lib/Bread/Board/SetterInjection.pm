@@ -3,16 +3,12 @@ use Moose;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service::WithClass',
      'Bread::Board::Service::WithDependencies',
      'Bread::Board::Service::WithParameters';
-
-__PACKAGE__->meta->make_immutable;
-
-no Moose;
 
 sub get {
     my $self = shift;
@@ -21,7 +17,9 @@ sub get {
     return $o;
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+
+no Moose; 1;
 
 __END__
 
@@ -53,7 +51,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

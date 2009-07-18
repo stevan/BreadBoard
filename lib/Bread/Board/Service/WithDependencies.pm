@@ -4,7 +4,7 @@ use Moose::Role;
 use Bread::Board::Types;
 use Bread::Board::Service::Deferred;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';
@@ -18,12 +18,12 @@ has 'dependencies' => (
     default   => sub { +{} },
     trigger   => sub {
         my $self = shift;
-        $_->parent($self) foreach values %{$self->dependencies};        
+        $_->parent($self) foreach values %{$self->dependencies};
     },
     provides  => {
         'set'    => 'add_dependency',
         'get'    => 'get_dependency',
-        'exists' => 'has_dependency',        
+        'exists' => 'has_dependency',
         'empty'  => 'has_dependencies',
         'kv'     => 'get_all_dependencies',
     }
@@ -35,40 +35,38 @@ around 'init_params' => sub {
     +{ %{ $self->$next() }, $self->resolve_dependencies }
 };
 
-no Moose::Role;
-
 sub resolve_dependencies {
     my $self = shift;
     my %deps;
     if ($self->has_dependencies) {
         foreach my $dep ($self->get_all_dependencies) {
             my ($key, $dependency) = @$dep;
-            
+
             my $service = $dependency->service;
-            
+
             # NOTE:
-            # this is what checks for 
+            # this is what checks for
             # circular dependencies
             if ($service->is_locked) {
-            
+
                 confess "You cannot defer a parameterized service"
-                    if $service->does('Bread::Board::Service::WithParameters') 
+                    if $service->does('Bread::Board::Service::WithParameters')
                     && $service->has_parameters;
-                
+
                 $deps{$key} = Bread::Board::Service::Deferred->new(service => $service);
             }
             else {
                 $service->lock;
                 $deps{$key} = eval { $service->get };
-                $service->unlock;            
+                $service->unlock;
                 if ($@) { die $@ }
             }
         }
-    }  
-    return %deps;  
+    }
+    return %deps;
 }
 
-1;
+no Moose::Role; 1;
 
 __END__
 
@@ -114,7 +112,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

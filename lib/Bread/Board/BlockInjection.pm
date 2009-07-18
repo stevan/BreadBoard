@@ -1,7 +1,7 @@
 package Bread::Board::BlockInjection;
 use Moose;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service::WithDependencies',
@@ -19,17 +19,16 @@ has 'class' => (
     predicate => 'has_class'
 );
 
-__PACKAGE__->meta->make_immutable;
 
-no Moose;
-
-sub get { 
+sub get {
     my $self = shift;
     Class::MOP::load_class($self->class) if $self->has_class;
-    $self->block->($self) 
+    $self->block->($self)
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+
+no Moose; 1;
 
 __END__
 
@@ -69,7 +68,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

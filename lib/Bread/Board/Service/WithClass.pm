@@ -4,7 +4,7 @@ use MooseX::AttributeHelpers;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';
@@ -19,9 +19,7 @@ before 'get' => sub {
     Class::MOP::load_class((shift)->class)
 };
 
-no Moose::Role;
-
-1;
+no Moose::Role; 1;
 
 __END__
 
@@ -55,7 +53,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

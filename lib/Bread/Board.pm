@@ -14,11 +14,7 @@ use Sub::Exporter -setup => {
 };
 
 our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.07';
-
-__PACKAGE__->meta->make_immutable;
-
-no Moose;
+our $VERSION   = '0.08';
 
 sub unimport {
     my $package = caller(0);
@@ -78,10 +74,12 @@ sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
 
 sub depends_on ($) {
     my $path = shift;
-    Bread::Board::Dependency->new(service_path => $path);    
+    Bread::Board::Dependency->new(service_path => $path);
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+
+no Moose; 1;
 
 __END__
 
@@ -106,22 +104,22 @@ Bread::Board - A solderless way to wire up you application components
               depends_on('log_file_name'),
           ]
       );
-      
+
       container 'Database' => as {
-          service 'dsn'      => "dbi:sqlite:dbname=my-app.db";    
+          service 'dsn'      => "dbi:sqlite:dbname=my-app.db";
           service 'username' => "user234";
-          service 'password' => "****";                                
-      
+          service 'password' => "****";
+
           service 'dbh' => (
               block => sub {
                   my $s = shift;
                   DBI->connect(
                       $s->param('dsn'),
                       $s->param('username'),
-                      $s->param('password'),                  
+                      $s->param('password'),
                   ) || die "Could not connect";
               },
-              dependencies => wire_names(qw[dsn username password])   
+              dependencies => wire_names(qw[dsn username password])
           );
       };
 
@@ -151,33 +149,33 @@ Bread::Board - A solderless way to wire up you application components
   | o o |  5 o-o-o-o-o   o-o-o-o-o 5  | o o |
   |     |  6 o-o-o-o-o   o-o-o-o-o 6  |     |
   | o o |  7 o-o-o-o-o   o-o-o-o-o 7  | o o |
-  | o o |  8 o-o-o-o-o   o-o-o-o-o 8  | o o | 
+  | o o |  8 o-o-o-o-o   o-o-o-o-o 8  | o o |
   | o o |  9 o-o-o-o-o   o-o-o-o-o 9  | o o |
   | o o | 10 o-o-o-o-o   o-o-o-o-o 10 | o o |
   | o o | 11 o-o-o-o-o   o-o-o-o-o 11 | o o |
-  |     | 12 o-o-o-o-o   o-o-o-o-o 12 |     | 
-  | o o | 13 o-o-o-o-o   o-o-o-o-o 13 | o o | 
-  | o o | 14 o-o-o-o-o   o-o-o-o-o 14 | o o | 
-  | o o | 15 o-o-o-o-o   o-o-o-o-o 15 | o o | 
-  | o o | 16 o-o-o-o-o   o-o-o-o-o 16 | o o | 
-  | o o | 17 o-o-o-o-o   o-o-o-o-o 17 | o o | 
-  |     | 18 o-o-o-o-o   o-o-o-o-o 18 |     | 
-  | o o | 19 o-o-o-o-o   o-o-o-o-o 19 | o o | 
-  | o o | 20 o-o-o-o-o   o-o-o-o-o 20 | o o | 
+  |     | 12 o-o-o-o-o   o-o-o-o-o 12 |     |
+  | o o | 13 o-o-o-o-o   o-o-o-o-o 13 | o o |
+  | o o | 14 o-o-o-o-o   o-o-o-o-o 14 | o o |
+  | o o | 15 o-o-o-o-o   o-o-o-o-o 15 | o o |
+  | o o | 16 o-o-o-o-o   o-o-o-o-o 16 | o o |
+  | o o | 17 o-o-o-o-o   o-o-o-o-o 17 | o o |
+  |     | 18 o-o-o-o-o   o-o-o-o-o 18 |     |
+  | o o | 19 o-o-o-o-o   o-o-o-o-o 19 | o o |
+  | o o | 20 o-o-o-o-o   o-o-o-o-o 20 | o o |
   | o o | 21 o-o-o-o-o   o-o-o-o-o 21 | o o |
   | o o | 22 o-o-o-o-o   o-o-o-o-o 22 | o o |
-  | o o | 22 o-o-o-o-o   o-o-o-o-o 22 | o o | 
-  |     | 23 o-o-o-o-o   o-o-o-o-o 23 |     | 
-  | o o | 24 o-o-o-o-o   o-o-o-o-o 24 | o o | 
-  | o o | 25 o-o-o-o-o   o-o-o-o-o 25 | o o | 
-  | o o | 26 o-o-o-o-o   o-o-o-o-o 26 | o o | 
-  | o o | 27 o-o-o-o-o   o-o-o-o-o 27 | o o | 
-  | o o | 28 o-o-o-o-o ^ o-o-o-o-o 28 | o o | 
+  | o o | 22 o-o-o-o-o   o-o-o-o-o 22 | o o |
+  |     | 23 o-o-o-o-o   o-o-o-o-o 23 |     |
+  | o o | 24 o-o-o-o-o   o-o-o-o-o 24 | o o |
+  | o o | 25 o-o-o-o-o   o-o-o-o-o 25 | o o |
+  | o o | 26 o-o-o-o-o   o-o-o-o-o 26 | o o |
+  | o o | 27 o-o-o-o-o   o-o-o-o-o 27 | o o |
+  | o o | 28 o-o-o-o-o ^ o-o-o-o-o 28 | o o |
   +-----------------------------------------+
 
-More docs to come, this is a very early release of this module. 
+More docs to come, this is a very early release of this module.
 Basically, if you don't grok the SYNOPSIS then check back later
-when the docs are written (or feel free to read the tests, the 
+when the docs are written (or feel free to read the tests, the
 F<t/02*_sugar.t> tests are the most illustrative IMO).
 
 =head1 EXPORTED FUNCTIONS
@@ -208,18 +206,18 @@ F<t/02*_sugar.t> tests are the most illustrative IMO).
 
 =head1 ACKNOWLEDGEMENTS
 
-Chuck "sprongie" Adams, for testing/using early (pre-release) 
+Chuck "sprongie" Adams, for testing/using early (pre-release)
 versions of this module, and some good suggestions for naming
 it.
 
-Matt "mst" Trout, for finally coming up with the best name 
-for this module. 
+Matt "mst" Trout, for finally coming up with the best name
+for this module.
 
-=head1 SEE ALSO 
+=head1 SEE ALSO
 
 =over 4
 
-=item L<IOC> 
+=item L<IOC>
 
 Bread::Board is basically my re-write of IOC.
 
@@ -239,7 +237,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

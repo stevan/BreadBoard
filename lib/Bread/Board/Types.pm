@@ -4,7 +4,7 @@ use Moose::Util::TypeConstraints;
 use Bread::Board::Service;
 use Bread::Board::Dependency;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 enum 'Bread::Board::Service::LifeCycles' => qw[
@@ -20,44 +20,44 @@ subtype 'Bread::Board::Container::SubContainerList'
 coerce 'Bread::Board::Container::SubContainerList'
     => from 'ArrayRef[Bread::Board::Container]'
         => via { +{ map { $_->name => $_ } @$_ } };
-        
+
 subtype 'Bread::Board::Container::ServiceList'
     => as 'HashRef[Bread::Board::Service]';
 
 coerce 'Bread::Board::Container::ServiceList'
     => from 'ArrayRef[Bread::Board::Service]'
-        => via { +{ map { $_->name => $_ } @$_ } };        
+        => via { +{ map { $_->name => $_ } @$_ } };
 
 ## for Bread::Board::Service::WithDependencies ...
 
-subtype 'Bread::Board::Service::Dependencies' 
+subtype 'Bread::Board::Service::Dependencies'
     => as 'HashRef[Bread::Board::Dependency]';
 
 coerce 'Bread::Board::Service::Dependencies'
     => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency]'
-        => via { 
-            +{ 
-                map { 
+        => via {
+            +{
+                map {
                     $_ => ($_[0]->{$_}->isa('Bread::Board::Dependency')
                             ? $_[0]->{$_}
                             : Bread::Board::Dependency->new(service => $_[0]->{$_}))
-                } keys %{$_[0]} 
-            } 
+                } keys %{$_[0]}
+            }
         }
     => from 'ArrayRef[Bread::Board::Service | Bread::Board::Dependency]'
         => via {
-            # auto-wire the dependencies with 
-            # the service name if we get them 
+            # auto-wire the dependencies with
+            # the service name if we get them
             # as an array
-            +{ 
-                map { 
+            +{
+                map {
                     ($_->isa('Bread::Board::Dependency')
-                        ? ($_->service_name => $_) 
+                        ? ($_->service_name => $_)
                         : ($_->name         => Bread::Board::Dependency->new(service => $_)))
-                } @{$_[0]} 
-            }            
+                } @{$_[0]}
+            }
         };
-    
+
 ## for Bread::Board::Service::WithParameters ...
 
 subtype 'Bread::Board::Service::Parameters' => as 'HashRef';
@@ -66,9 +66,7 @@ coerce 'Bread::Board::Service::Parameters'
     => from 'ArrayRef'
         => via { +{ map { $_ => { optional => 0 } } @$_ } };
 
-no Moose::Util::TypeConstraints;
-        
-1;
+no Moose::Util::TypeConstraints; 1;
 
 __END__
 
@@ -92,7 +90,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

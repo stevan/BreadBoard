@@ -3,11 +3,11 @@ use Moose::Role;
 
 with 'Bread::Board::LifeCycle';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'instance' => (
-    is        => 'rw', 
+    is        => 'rw',
     isa       => 'Any',
     predicate => 'has_instance',
     clearer   => 'flush_instance'
@@ -16,24 +16,22 @@ has 'instance' => (
 around 'get' => sub {
     my $next = shift;
     my $self = shift;
-    
+
     # return it if we got it ...
     return $self->instance if $self->has_instance;
-    
+
     # otherwise fetch it ...
     my $instance = $self->$next(@_);
-    
-    # if we get a copy, and our copy 
+
+    # if we get a copy, and our copy
     # has not already been set ...
     $self->instance($instance) unless $self->has_instance;
-    
+
     # return whatever we have ...
     return $self->instance;
 };
 
-no Moose::Role;
-
-1;
+no Moose::Role; 1;
 
 __END__
 
@@ -71,7 +69,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

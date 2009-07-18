@@ -1,5 +1,16 @@
 Revision history for Perl extension Bread::Board
 
+0.08
+    - updating dates on all files
+
+    * Bread::Board::LifeCycle::Singleton::WithParameters
+      - new module added to support the idea of a singleton
+        lifecycle keyed on the parameters rather then just
+        a per-instance item.
+
+    * Bread::Board::Traversable
+      - fixed the is_weak_ref mis-spelling
+
 0.07 Wed. Feb. 18, 2009
     - Work with new MooseX::Params::Validate
     - Specify MX::P::Validate version number in Makefile.PL
@@ -9,7 +20,7 @@ Revision history for Perl extension Bread::Board
 
 0.05 Mon. Nov. 3, 2008
     - Applied immutablity to classes where applicable, and vigorously unimport
-      Moose keywords when they are no longer needed. This results in 
+      Moose keywords when they are no longer needed. This results in
       x 2 performance as far as defining a Bread::Board model (Daisuke Maki).
 
     * Bread::Board
@@ -25,20 +36,20 @@ Revision history for Perl extension Bread::Board
       Bread::Board::Traversable
       - fix root path handling (thanks to Daisuke Maki)
         - added tests for this
-    
+
     * Bread::Board::Dumper
       - Simple utility for dumping containers
         (thanks to Daisuke Maki)
-    
+
     * t/
-      - fixing the plans so that new versions of 
+      - fixing the plans so that new versions of
         Test::More stop complaining
 
 0.03 Tues. Jan. 8, 2008
     * Bread::Board::Service::WithParameters
-      - fixed the parameter validation to 
-        use a custom cache key, this is so 
-        that it plays nicely with the new 
+      - fixed the parameter validation to
+        use a custom cache key, this is so
+        that it plays nicely with the new
         MooseX::Params::Validate
         - added tests for this
 
@@ -46,5 +57,5 @@ Revision history for Perl extension Bread::Board
     - forgot a dependency, whoops.
 
 0.01 Mon. Jan. 7, 2008
-    - Out with the old (IOC) and in 
+    - Out with the old (IOC) and in
       with the new (Bread::Board)

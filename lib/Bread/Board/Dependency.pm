@@ -3,13 +3,13 @@ use Moose;
 
 use Bread::Board::Service;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Traversable';
 
 has 'service_path' => (
-    is        => 'ro', 
+    is        => 'ro',
     isa       => 'Str',
     predicate => 'has_service_path'
 );
@@ -33,7 +33,7 @@ has 'service' => (
     default  => sub {
         my $self = shift;
         ($self->has_service_path)
-            || confess "Could not fetch service without service path";        
+            || confess "Could not fetch service without service path";
         $self->fetch($self->service_path);
     },
     handles  => [ 'get', 'is_locked', 'lock', 'unlock' ]
@@ -41,9 +41,7 @@ has 'service' => (
 
 __PACKAGE__->meta->make_immutable;
 
-no Moose;
-
-1;
+no Moose; 1;
 
 __END__
 
@@ -89,7 +87,7 @@ Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 

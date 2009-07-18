@@ -1,4 +1,4 @@
-Bread::Board version 0.03
+Bread::Board version 0.08
 ===========================
 
 See the individual module documentation for more information
@@ -9,19 +9,19 @@ To install this module type the following:
 
    perl Makefile.PL
    make
-   make test 
+   make test
    make install
 
 DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-    Moose              
+    Moose
     MooseX::Param
     MooseX::AttributeHelpers
     MooseX::Params::Validate
-    Sub::Exporter 
-    Sub::Current            
+    Sub::Exporter
+    Sub::Current
 
 COPYRIGHT AND LICENCE
 
@@ -30,5 +30,5 @@ Copyright (C) 2007-2009 Infinity Interactive, Inc.
 http://www.iinteractive.com
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
+it under the same terms as Perl itself.
 
