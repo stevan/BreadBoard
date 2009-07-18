@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.08
+0.08 Sat. July 18, 2009
     - updating dates on all files
 
     * Bread::Board::LifeCycle::Singleton::WithParameters
