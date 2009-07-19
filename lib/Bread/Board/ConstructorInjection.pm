@@ -12,7 +12,14 @@ with 'Bread::Board::Service::WithClass',
 
 sub get {
     my $self = shift;
-    $self->class->new( %{ $self->params } );
+
+    my $constructor = eval {
+        $self->class->meta->constructor_name;
+    };
+
+    $constructor ||= 'new';
+
+    $self->class->$constructor( %{ $self->params } );
 }
 
 __PACKAGE__->meta->make_immutable;

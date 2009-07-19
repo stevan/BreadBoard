@@ -9,6 +9,7 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 has 'instances' => (
     metaclass => 'Collection::Hash',
+    traits    => [ 'NoClone' ],
     is        => 'rw',
     isa       => 'HashRef',
     lazy      => 1,

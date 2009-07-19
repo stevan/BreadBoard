@@ -18,6 +18,7 @@ has 'name' => (
 
 has 'services' => (
     metaclass => 'Collection::Hash',
+    traits    => ['Clone'],
     is        => 'rw',
     isa       => 'Bread::Board::Container::ServiceList',
     coerce    => 1,

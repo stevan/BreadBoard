@@ -7,11 +7,12 @@ all_from 'lib/Bread/Board.pm';
 license 'perl';
 
 # prereqs
-requires 'Moose'                    => '0.33';
+requires 'Moose'                    => '0.87';
 requires 'MooseX::Param'            => '0.02';
-requires 'MooseX::AttributeHelpers' => '0.07';
-requires 'MooseX::Params::Validate' => '0.09';
-requires 'Sub::Exporter'            => '0.972';
+requires 'MooseX::Clone'            => '0.04';
+requires 'MooseX::AttributeHelpers' => '0.21';
+requires 'MooseX::Params::Validate' => '0.12';
+requires 'Sub::Exporter'            => '0.982';
 
 # things the tests need
 build_requires 'Test::More'      => '0.62';

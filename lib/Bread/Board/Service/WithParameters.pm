@@ -12,6 +12,7 @@ with 'Bread::Board::Service';
 
 has 'parameters' => (
     metaclass => 'Collection::Hash',
+    traits    => ['Copy'],
     is        => 'ro',
     isa       => 'Bread::Board::Service::Parameters',
     lazy      => 1,

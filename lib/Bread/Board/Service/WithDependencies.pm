@@ -11,6 +11,7 @@ with 'Bread::Board::Service';
 
 has 'dependencies' => (
     metaclass => 'Collection::Hash',
+    traits    => ['Clone'],
     is        => 'rw',
     isa       => 'Bread::Board::Service::Dependencies',
     lazy      => 1,

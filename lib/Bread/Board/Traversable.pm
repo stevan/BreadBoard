@@ -4,6 +4,8 @@ use Moose::Role;
 our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
+with 'MooseX::Clone';
+
 has 'parent' => (
     is        => 'rw',
     isa       => 'Bread::Board::Traversable',

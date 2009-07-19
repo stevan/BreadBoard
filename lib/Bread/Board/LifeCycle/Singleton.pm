@@ -7,6 +7,7 @@ our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'instance' => (
+    traits    => [ 'NoClone' ],
     is        => 'rw',
     isa       => 'Any',
     predicate => 'has_instance',
