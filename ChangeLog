@@ -1,7 +1,9 @@
 Revision history for Perl extension Bread::Board
 
 0.09
-    Add cloning support to
+    Add cloning support for containers and services
+    (thanks to jrockway for this)
+      - adding tests for this
 
     * Bread::Board::ConstructorInjection
       - use meta->constructor_name instead of "new"
