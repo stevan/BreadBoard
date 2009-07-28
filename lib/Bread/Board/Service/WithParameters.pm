@@ -5,7 +5,7 @@ use MooseX::Params::Validate qw(validated_hash);
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';
@@ -23,9 +23,25 @@ has 'parameters' => (
     }
 );
 
+has '_parameter_keys_to_remove' => (
+    is        => 'rw',
+    isa       => 'ArrayRef',
+    clearer   => '_clear_parameter_keys_to_remove',
+    predicate => '_has_parameter_keys_to_remove',
+);
+
 before 'get' => sub {
     my $self = shift;
-    $self->params({ %{ $self->params }, $self->check_parameters(@_) });
+    my %params = $self->check_parameters(@_);
+    $self->_parameter_keys_to_remove( [ keys %params ] );
+    $self->params({ %{ $self->params }, %params });
+};
+
+after 'get' => sub {
+    my $self = shift;
+    return unless $self->_has_parameter_keys_to_remove;
+    map { delete $self->params->{$_} } @{ $self->_parameter_keys_to_remove };
+    $self->_clear_parameter_keys_to_remove;
 };
 
 sub check_parameters {
