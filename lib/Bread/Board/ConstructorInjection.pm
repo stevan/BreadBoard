@@ -3,7 +3,7 @@ use Moose;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.08';
+our $VERSION   = '0.09';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service::WithClass',
@@ -13,9 +13,7 @@ with 'Bread::Board::Service::WithClass',
 sub get {
     my $self = shift;
 
-    my $constructor = eval {
-        $self->class->meta->constructor_name;
-    };
+    my $constructor = eval { $self->class->meta->constructor_name };
 
     $constructor ||= 'new';
 

@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.09
+0.09 Wed. July 29, 2009
     Add cloning support for containers and services
     (thanks to jrockway for this)
       - adding tests for this
@@ -8,6 +8,10 @@ Revision history for Perl extension Bread::Board
     * Bread::Board::ConstructorInjection
       - use meta->constructor_name instead of "new"
         if possible (jrockway)
+
+    * Bread::Board::Service::WithParameters
+      - fixing a leak where we would hold onto
+        parameters that were passed into get()
 
 0.08 Sat. July 18, 2009
     - updating dates on all files

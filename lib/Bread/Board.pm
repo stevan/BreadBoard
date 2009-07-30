@@ -14,7 +14,7 @@ use Sub::Exporter -setup => {
 };
 
 our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.08';
+our $VERSION   = '0.09';
 
 sub unimport {
     my $package = caller(0);
