@@ -1,7 +1,7 @@
 package Bread::Board::Dumper;
 use Moose;
 
-our $VERSION   = '0.09';
+our $VERSION   = '0.10';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub dump {

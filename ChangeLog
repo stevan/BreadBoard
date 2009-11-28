@@ -1,5 +1,9 @@
 Revision history for Perl extension Bread::Board
 
+0.10
+    - fixing the SYNOPSIS so that it will actually
+      run (thanks to zby for spotting this)
+
 0.09 Wed. July 29, 2009
     Add cloning support for containers and services
     (thanks to jrockway for this)

@@ -1,5 +1,6 @@
 package Bread::Board;
 use Moose;
+
 use Bread::Board::Types;
 use Bread::Board::ConstructorInjection;
 use Bread::Board::SetterInjection;
@@ -8,13 +9,14 @@ use Bread::Board::Literal;
 use Bread::Board::Container;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
+
 use Sub::Exporter -setup => {
     exports => [ qw( as container depends_on service wire_names ) ],
     groups  => { default => [':all'] }
 };
 
 our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.09';
+our $VERSION   = '0.10';
 
 sub unimport {
     my $package = caller(0);
@@ -135,7 +137,7 @@ Bread::Board - A solderless way to wire up you application components
 
   no Bread::Board; # removes keywords
 
-  $c->fetch('application')->run;
+  $c->fetch('application')->get->run;
 
 =head1 DESCRIPTION
 
@@ -205,6 +207,9 @@ F<t/02*_sugar.t> tests are the most illustrative IMO).
 =back
 
 =head1 ACKNOWLEDGEMENTS
+
+Thanks to Daisuke Maki for his contributions and for really
+pushing the development of this module along.
 
 Chuck "sprongie" Adams, for testing/using early (pre-release)
 versions of this module, and some good suggestions for naming
