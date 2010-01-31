@@ -10,27 +10,13 @@ use Bread::Board::Container;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
 
-use Sub::Exporter -setup => {
-    exports => [ qw( as container depends_on service wire_names ) ],
-    groups  => { default => [':all'] }
-};
+use Moose::Exporter;
+Moose::Exporter->setup_import_methods(
+    as_is => [qw( as container depends_on service wire_names )],
+);
 
 our $AUTHORITY = 'cpan:STEVAN';
 our $VERSION   = '0.10';
-
-sub unimport {
-    my $package = caller(0);
-    foreach my $name qw( as container depends_on service wire_names ) {
-        no strict 'refs';
-
-        if ( defined &{ $package . '::' . $name } ) {
-            my $sub = \&{ $package . '::' . $name };
-            next unless \&{$name} == $sub;
-
-            delete ${ $package . '::' }{$name};
-        }
-    }
-}
 
 sub as (&) { $_[0] }
 

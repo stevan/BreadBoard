@@ -1,5 +1,7 @@
 Revision history for Perl extension Bread::Board
 
+    - import strict and warnings into the caller upon import (Florian Ragwitz)
+
 0.10
     - fixing the SYNOPSIS so that it will actually
       run (thanks to zby for spotting this)
