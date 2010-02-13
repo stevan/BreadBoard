@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 use inc::Module::Install 0.91;
+use Module::Install::AuthorRequires;
+use Module::Install::AuthorTests;
 
 name 'Bread-Board';
 all_from 'lib/Bread/Board.pm';
@@ -19,6 +21,7 @@ build_requires 'Test::More'      => '0.62';
 build_requires 'Test::Exception' => '0.21';
 
 tests('t/*.t');
+author_tests('t/author/*.t');
 
 WriteAll();
 
