@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use inc::Module::Install;
+use inc::Module::Install 0.91;
 
 name 'Bread-Board';
 all_from 'lib/Bread/Board.pm';
