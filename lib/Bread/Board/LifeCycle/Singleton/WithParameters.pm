@@ -4,7 +4,7 @@ use MooseX::AttributeHelpers;
 
 with 'Bread::Board::LifeCycle';
 
-our $VERSION   = '0.10';
+our $VERSION   = '0.11';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'instances' => (

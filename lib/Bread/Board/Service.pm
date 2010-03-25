@@ -1,7 +1,7 @@
 package Bread::Board::Service;
 use Moose::Role;
 
-our $VERSION   = '0.10';
+our $VERSION   = '0.11';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'MooseX::Param',

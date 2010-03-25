@@ -4,7 +4,7 @@ use Moose::Util::TypeConstraints;
 use Bread::Board::Service;
 use Bread::Board::Dependency;
 
-our $VERSION   = '0.10';
+our $VERSION   = '0.11';
 our $AUTHORITY = 'cpan:STEVAN';
 
 enum 'Bread::Board::Service::LifeCycles' => qw[

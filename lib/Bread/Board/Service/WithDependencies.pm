@@ -4,7 +4,7 @@ use Moose::Role;
 use Bread::Board::Types;
 use Bread::Board::Service::Deferred;
 
-our $VERSION   = '0.10';
+our $VERSION   = '0.11';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';

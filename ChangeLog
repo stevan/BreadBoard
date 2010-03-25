@@ -1,5 +1,9 @@
 Revision history for Perl extension Bread::Board
 
+0.11 Thu. Mar. 25, 2010
+    * Much improved documentation.
+    * Fixed inc/ to include all used Module-Install extensions.
+
 0.10 Mon. Feb. 22, 2010
     * Bread::Board
       - import strict and warnings into the caller
