@@ -12,7 +12,7 @@ use Bread::Board::LifeCycle::Singleton;
 
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
-    as_is => [qw( as container depends_on service wire_names )],
+    as_is => [qw( as container depends_on service wire_names include )],
 );
 
 our $AUTHORITY = 'cpan:STEVAN';
@@ -40,6 +40,8 @@ sub container ($;$) {
     }
     return $c;
 }
+
+sub include ($) { do shift }
 
 sub service ($@) {
     my $name = shift;
@@ -320,6 +322,8 @@ Setter injection actually creates the object without passing any arguments to th
 
 You might have been wondering about the fact we didn't specify Bread::Board::Dependency objects in our dependency HASH, but instead supplied Bread::Board::Literal instances. Bread::Board::Literal is just another Service type that simply holds a literal value, or a constant. When dependencies are specified like this, Bread::Board internally converts them into Bread::Board::Dependency whose service is already resolved to that service.
 
+=back
+
 =head2 Hierarchal Containers
 
 Up until now, we have see basic containers which only have a single level of components. As you application grows larger it may become useful to have a more hierarchal approach to your containers. Bread::Board::Container supports this behavior through it's many subcontainer methods. Here is an example of how we might re-arrange the previous examples using subcontainers.
@@ -446,8 +450,6 @@ So, up until now we have been creating all our Bread::Board objects by hand. As 
 
 Hopefully this has helped to introduce you the concepts in Bread::Board and give you an idea of what it might be able to provide you and your application.
 
-=back
-
 =head1 EXPORTED FUNCTIONS
 
 =over 4
@@ -461,6 +463,8 @@ Hopefully this has helped to introduce you the concepts in Bread::Board and give
 =item I<depends_on ($service_name)>
 
 =item I<wire_names (@service_names)>
+
+=item I<include ($file)>
 
 =back
 
