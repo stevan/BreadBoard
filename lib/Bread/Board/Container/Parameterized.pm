@@ -12,7 +12,7 @@ has 'name' => (
     required => 1
 );
 
-has 'param_names' => (
+has 'allowed_parameter_names' => (
     is       => 'ro',
     isa      => 'ArrayRef',
     required => 1,
@@ -48,15 +48,27 @@ has 'container' => (
 );
 
 sub create {
-    my ($self, @params) = @_;
+    my ($self, %params) = @_;
 
-    my $clone = $self->container->clone( name => join "|" => $self->name, @params );
+    my @allowed_names = sort @{ $self->allowed_parameter_names };
+    my @given_names   = sort keys %params;
 
-    my @param_name = @{ $self->param_names };
+    (scalar @allowed_names == scalar @given_names)
+        || confess "You did not pass the correct number of parameters";
 
-    foreach my $param ( @params ) {
-        my $cloned_param = $param->clone( name => shift @param_name );
-        $clone->add_sub_container( $cloned_param );
+    ((join "" => @allowed_names) eq (join "" => @given_names))
+        || confess "Incorrect parameter list, got: ("
+                 . (join "" => @given_names)
+                 . ") expected: ("
+                 . (join "" => @allowed_names)
+                 . ")";
+
+    my $clone = $self->container->clone( name => join "|" => $self->name, @given_names );
+
+    foreach my $key ( @given_names ) {
+        $clone->add_sub_container(
+            $params{ $key }->clone( name => $key )
+        );
     }
 
     $clone;

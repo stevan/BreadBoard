@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Exception;
 
 BEGIN {
     use_ok('Bread::Board');
@@ -23,7 +24,6 @@ BEGIN {
 
     has 'log_handle' => ( is => 'ro', isa => 'Object', required => 1 );
 }
-
 
 my $simple_logger = container 'SimpleLogger' => as {
     service 'handle' => (
@@ -51,6 +51,10 @@ my $db_logger = container 'DatabaseLogger' => [ 'DBConnInfo' ] => as {
 };
 isa_ok($db_logger, 'Bread::Board::Container::Parameterized');
 
+dies_ok {
+    $db_logger->fetch('handle')
+} '... cannot call fetch on a parameterized container';
+
 my $app = container 'Application' => [ 'Logger' ] => as {
     service 'app' => (
         class        => 'My::Application',
@@ -61,12 +65,16 @@ my $app = container 'Application' => [ 'Logger' ] => as {
 };
 isa_ok($app, 'Bread::Board::Container::Parameterized');
 
-my $simple_app = $app->create( $simple_logger );
+dies_ok {
+    $app->fetch('handle')
+} '... cannot call fetch on a parameterized container';
+
+my $simple_app = $app->create( Logger => $simple_logger );
 isa_ok($simple_app, 'Bread::Board::Container');
 
 isa_ok($simple_app->fetch('app')->get->log_handle, 'My::Simple::Logger');
 
-my $db_app = $app->create( $db_logger->create( $db_conn_info ) );
+my $db_app = $app->create( Logger => $db_logger->create( DBConnInfo => $db_conn_info ) );
 isa_ok($db_app, 'Bread::Board::Container');
 
 isa_ok($db_app->fetch('app')->get->log_handle, 'My::Database::Logger');

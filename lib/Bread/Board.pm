@@ -28,10 +28,15 @@ sub set_root_container {
     $CC = shift;
 }
 
-sub container ($;@) {
+sub container ($;$$) {
     my $name = shift;
     my $c;
-    if ( scalar @_ == 1 ) {
+    if ( scalar @_ == 0 ) {
+        return Bread::Board::Container->new(
+            name => $name
+        );
+    }
+    elsif ( scalar @_ == 1 ) {
         $c = Bread::Board::Container->new(
             name => $name
         );
@@ -39,8 +44,8 @@ sub container ($;@) {
     else {
         my $param_names = shift;
         $c = Bread::Board::Container::Parameterized->new(
-            name        => $name,
-            param_names => $param_names,
+            name                    => $name,
+            allowed_parameter_names => $param_names,
         )
     }
     my $body = shift;
