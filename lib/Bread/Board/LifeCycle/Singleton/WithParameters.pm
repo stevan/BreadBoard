@@ -1,6 +1,5 @@
 package Bread::Board::LifeCycle::Singleton::WithParameters;
 use Moose::Role;
-use MooseX::AttributeHelpers;
 
 with 'Bread::Board::LifeCycle';
 
@@ -8,17 +7,16 @@ our $VERSION   = '0.11';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'instances' => (
-    metaclass => 'Collection::Hash',
-    traits    => [ 'NoClone' ],
+    traits    => [ 'Hash', 'NoClone' ],
     is        => 'rw',
     isa       => 'HashRef',
     lazy      => 1,
     default   => sub { +{} },
     clearer   => 'flush_instances',
-    provides  => {
-        'exists' => 'has_instance_at_key',
-        'get'    => 'get_instance_at_key',
-        'set'    => 'set_instance_at_key',
+    handles  => {
+        'has_instance_at_key' => 'exists',
+        'get_instance_at_key' => 'get',
+        'set_instance_at_key' => 'set',
     }
 );
 

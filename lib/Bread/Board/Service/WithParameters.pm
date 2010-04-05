@@ -1,6 +1,5 @@
 package Bread::Board::Service::WithParameters;
 use Moose::Role;
-use MooseX::AttributeHelpers;
 use MooseX::Params::Validate qw(validated_hash);
 
 use Bread::Board::Types;
@@ -11,15 +10,14 @@ our $AUTHORITY = 'cpan:STEVAN';
 with 'Bread::Board::Service';
 
 has 'parameters' => (
-    metaclass => 'Collection::Hash',
-    traits    => ['Copy'],
+    traits    => [ 'Hash', 'Copy' ],
     is        => 'ro',
     isa       => 'Bread::Board::Service::Parameters',
     lazy      => 1,
     coerce    => 1,
     default   => sub { +{} },
-    provides  => {
-        'empty'  => 'has_parameters',
+    handles   => {
+        'has_parameters' => 'count'
     }
 );
 

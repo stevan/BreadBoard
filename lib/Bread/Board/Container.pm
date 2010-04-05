@@ -1,7 +1,5 @@
 package Bread::Board::Container;
 use Moose;
-use Moose::Util::TypeConstraints;
-use MooseX::AttributeHelpers;
 
 use Bread::Board::Types;
 
@@ -17,8 +15,7 @@ has 'name' => (
 );
 
 has 'services' => (
-    metaclass => 'Collection::Hash',
-    traits    => ['Clone'],
+    traits    => [ 'Hash', 'Clone' ],
     is        => 'rw',
     isa       => 'Bread::Board::Container::ServiceList',
     coerce    => 1,
@@ -28,16 +25,16 @@ has 'services' => (
         my $self = shift;
         $_->parent($self) foreach values %{$self->services};
     },
-    provides  => {
-        'get'    => 'get_service',
-        'exists' => 'has_service',
-        'keys'   => 'get_service_list',
-        'empty'  => 'has_services',
+    handles  => {
+        'get_service'      => 'get',
+        'has_service'      => 'exists',
+        'get_service_list' => 'keys',
+        'has_services'     => 'count',
     }
 );
 
 has 'sub_containers' => (
-    metaclass => 'Collection::Hash',
+    traits    => [ 'Hash' ],
     is        => 'rw',
     isa       => 'Bread::Board::Container::SubContainerList',
     coerce    => 1,
@@ -47,11 +44,11 @@ has 'sub_containers' => (
         my $self = shift;
         $_->parent($self) foreach values %{$self->sub_containers};
     },
-    provides  => {
-        'get'    => 'get_sub_container',
-        'exists' => 'has_sub_container',
-        'keys'   => 'get_sub_container_list',
-        'empty'  => 'has_sub_containers',
+    handles  => {
+        'get_sub_container'      => 'get',
+        'has_sub_container'      => 'exists',
+        'get_sub_container_list' => 'keys',
+        'has_sub_containers'     => 'count',
     }
 );
 
@@ -73,7 +70,7 @@ sub add_sub_container {
 
 __PACKAGE__->meta->make_immutable;
 
-no Moose; no Moose::Util::TypeConstraints; 1;
+no Moose; 1;
 
 __END__
 

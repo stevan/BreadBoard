@@ -10,8 +10,7 @@ our $AUTHORITY = 'cpan:STEVAN';
 with 'Bread::Board::Service';
 
 has 'dependencies' => (
-    metaclass => 'Collection::Hash',
-    traits    => ['Clone'],
+    traits    => [ 'Hash', 'Clone' ],
     is        => 'rw',
     isa       => 'Bread::Board::Service::Dependencies',
     lazy      => 1,
@@ -21,12 +20,12 @@ has 'dependencies' => (
         my $self = shift;
         $_->parent($self) foreach values %{$self->dependencies};
     },
-    provides  => {
-        'set'    => 'add_dependency',
-        'get'    => 'get_dependency',
-        'exists' => 'has_dependency',
-        'empty'  => 'has_dependencies',
-        'kv'     => 'get_all_dependencies',
+    handles  => {
+        'add_dependency'       => 'set',
+        'get_dependency'       => 'get',
+        'has_dependency'       => 'exists',
+        'has_dependencies'     => 'count',
+        'get_all_dependencies' => 'kv',
     }
 );
 

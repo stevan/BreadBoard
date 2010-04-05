@@ -12,7 +12,6 @@ requires 'Moose'                    => '0.87';
 requires 'Class::MOP'               => '0.91';
 requires 'MooseX::Param'            => '0.02';
 requires 'MooseX::Clone'            => '0.04';
-requires 'MooseX::AttributeHelpers' => '0.21';
 requires 'MooseX::Params::Validate' => '0.12';
 
 # things the tests need
