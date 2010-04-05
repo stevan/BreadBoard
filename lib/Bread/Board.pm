@@ -7,6 +7,7 @@ use Bread::Board::SetterInjection;
 use Bread::Board::BlockInjection;
 use Bread::Board::Literal;
 use Bread::Board::Container;
+use Bread::Board::Container::Parameterized;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
 
@@ -27,9 +28,22 @@ sub set_root_container {
     $CC = shift;
 }
 
-sub container ($;$) {
-    my ($name, $body) = @_;
-    my $c = Bread::Board::Container->new(name => $name);
+sub container ($;@) {
+    my $name = shift;
+    my $c;
+    if ( scalar @_ == 1 ) {
+        $c = Bread::Board::Container->new(
+            name => $name
+        );
+    }
+    else {
+        my $param_names = shift;
+        $c = Bread::Board::Container::Parameterized->new(
+            name        => $name,
+            param_names => $param_names,
+        )
+    }
+    my $body = shift;
     if (defined $CC) {
         $CC->add_sub_container($c);
     }
