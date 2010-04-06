@@ -79,10 +79,7 @@ my $FormBuilder = container 'Form' => [ 'Fields' ] => as {
                 state  => $s->param('state'),
                 fields => [
                     map {
-                        my $service = $c->fetch( $_ );
-                        $service->isa('Bread::Board::Literal')
-                            ? ()
-                            : $service->get;
+                        $c->fetch( $_ )->get;
                     } reverse sort $c->get_service_list
                 ]
             );
