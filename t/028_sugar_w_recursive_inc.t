@@ -20,19 +20,7 @@ BEGIN {
     has 'logger' => (is => 'ro', isa => 'FileLogger', required => 1);
 }
 
-my $c = container 'MyApp' => as {
-
-    service 'log_file' => "logfile.log";
-
-    include "$FindBin::Bin/lib/logger.bb";
-
-    service 'application' => (
-        class        => 'MyApplication',
-        dependencies => {
-            logger => depends_on('logger'),
-        }
-    );
-};
+my $c = include "$FindBin::Bin/lib/my_app.bb";
 
 my $logger = $c->fetch('logger')->get;
 isa_ok($logger, 'FileLogger');

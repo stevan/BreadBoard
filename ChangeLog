@@ -6,6 +6,10 @@ Revision history for Perl extension Bread::Board
         an external file within your Bread::Board
         configuration
           - added test for this
+      - added support for parameterized containers
+
+    + Bread::Board::Container::Parameterized
+      - added this module and tests
 
 0.11 Thu. Mar. 25, 2010
     * Much improved documentation.
