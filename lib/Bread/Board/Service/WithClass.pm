@@ -4,7 +4,7 @@ use MooseX::AttributeHelpers;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.11';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';

@@ -8,11 +8,11 @@ all_from 'lib/Bread/Board.pm';
 license 'perl';
 
 # prereqs
-requires 'Moose'                    => '0.87';
-requires 'Class::MOP'               => '0.91';
+requires 'Moose'                    => '1.00';
+requires 'Class::MOP'               => '1.00';
 requires 'MooseX::Param'            => '0.02';
-requires 'MooseX::Clone'            => '0.04';
-requires 'MooseX::Params::Validate' => '0.12';
+requires 'MooseX::Clone'            => '0.05';
+requires 'MooseX::Params::Validate' => '0.14';
 
 # things the tests need
 build_requires 'Test::More'      => '0.62';

@@ -3,7 +3,7 @@ use Moose;
 
 use Bread::Board::Container;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'name' => (
