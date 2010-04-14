@@ -32,16 +32,19 @@ sub container ($;$$) {
     my $name = shift;
     my $c;
     if ( scalar @_ == 0 ) {
+        return $name if blessed $name && $name->isa('Bread::Board::Container');
         return Bread::Board::Container->new(
             name => $name
         );
     }
     elsif ( scalar @_ == 1 ) {
-        $c = Bread::Board::Container->new(
-            name => $name
-        );
+        $c = blessed $name && $name->isa('Bread::Board::Container')
+            ? $name
+            : Bread::Board::Container->new( name => $name );
     }
     else {
+        (blessed $name && $name->isa('Bread::Board::Container'))
+            || confess 'container($object, ...) is not supported for parameterized containers';
         my $param_names = shift;
         $c = Bread::Board::Container::Parameterized->new(
             name                    => $name,

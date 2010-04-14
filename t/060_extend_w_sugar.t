@@ -28,27 +28,35 @@ BEGIN {
 
     extends 'Bread::Board::Container';
 
+    has 'log_file_name' => (
+        is      => 'ro',
+        isa     => 'Str',
+        default => 'logfile.log',
+    );
+
     sub BUILD {
         my $self = shift;
 
-        local $Bread::Board::CC = $self;
+        container $self => as {
 
-        service 'log_file' => "logfile.log";
+            service 'log_file' => $self->log_file_name;
 
-        service 'logger' => (
-            class        => 'FileLogger',
-            lifecycle    => 'Singleton',
-            dependencies => {
-                log_file => depends_on('log_file'),
-            }
-        );
+            service 'logger' => (
+                class        => 'FileLogger',
+                lifecycle    => 'Singleton',
+                dependencies => {
+                    log_file => depends_on('log_file'),
+                }
+            );
 
-        service 'application' => (
-            class        => 'MyApplication',
-            dependencies => {
-                logger => depends_on('logger'),
-            }
-        );
+            service 'application' => (
+                class        => 'MyApplication',
+                dependencies => {
+                    logger => depends_on('logger'),
+                }
+            );
+
+        };
     }
 }
 
@@ -56,7 +64,7 @@ my $c1 = My::App->new( name => 'MyApp1' );
 isa_ok($c1, 'My::App');
 isa_ok($c1, 'Bread::Board::Container');
 
-my $c2 = My::App->new( name => 'MyApp2' );
+my $c2 = My::App->new( name => 'MyApp2', log_file_name => 'another_logfile.log' );
 isa_ok($c2, 'My::App');
 isa_ok($c2, 'Bread::Board::Container');
 
@@ -81,10 +89,10 @@ is($app1->logger, $logger1, '... got the right logger (singleton)');
 my $logger2 = $c2->fetch('logger')->get;
 isa_ok($logger2, 'FileLogger');
 
-is($logger2->log_file, 'logfile.log', '... got the right logfile dep');
+is($logger2->log_file, 'another_logfile.log', '... got the right logfile dep');
 
 is($c2->fetch('logger/log_file')->service, $c2->fetch('log_file'), '... got the right value');
-is($c2->fetch('logger/log_file')->get, 'logfile.log', '... got the right value');
+is($c2->fetch('logger/log_file')->get, 'another_logfile.log', '... got the right value');
 
 my $app2 = $c2->fetch('application')->get;
 isa_ok($app2, 'MyApplication');
