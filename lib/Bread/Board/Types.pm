@@ -1,6 +1,8 @@
 package Bread::Board::Types;
 use Moose::Util::TypeConstraints;
 
+use Scalar::Util qw(blessed);
+
 use Bread::Board::Service;
 use Bread::Board::Dependency;
 
@@ -44,13 +46,16 @@ coerce 'Bread::Board::Service::Dependencies'
                 } keys %{$_[0]}
             }
         }
-    => from 'ArrayRef[Bread::Board::Service | Bread::Board::Dependency]'
+    => from 'ArrayRef[Bread::Board::Service | Bread::Board::Dependency | Str]'
         => via {
             # auto-wire the dependencies with
             # the service name if we get them
             # as an array
             +{
                 map {
+                    if (!blessed($_)) {
+                        $_ = Bread::Board::Dependency->new(service_path => $_);
+                    }
                     ($_->isa('Bread::Board::Dependency')
                         ? ($_->service_name => $_)
                         : ($_->name         => Bread::Board::Dependency->new(service => $_)))
