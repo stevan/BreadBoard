@@ -1,0 +1,34 @@
+
+=pod
+
+=head1 NAME
+
+Bread::Board::Manual::Concepts::Advanced - An overview of some of the more advanced Bread::Board concepts
+
+=head1 INTRODUCTION
+
+=head1 ADVANCED CONCEPTS
+
+=head2 Subclassing
+
+Bread::Board was built from the very start to be an open system and
+to allow for the subclassing of all it's internal components.
+
+=head2 Parameterized Containers
+
+I<TODO>
+
+=head1 AUTHOR
+
+Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2010 Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

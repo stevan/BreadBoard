@@ -1,0 +1,40 @@
+
+=pod
+
+=head1 NAME
+
+Bread::Board::Manual - A manual for Bread::Board
+
+=head1 INTRODUCTION
+
+
+
+=head1 SECTIONS
+
+=over 4
+
+=item L<Bread::Board::Manual::Concepts>
+
+This is perhaps the best place to start, it will introduce you to
+the basic concepts that make up Bread::Board.
+
+=item L<Bread::Board::Manual::HowAndWhy>
+
+=item L<Bread::Board::Manual::Concepts::Advanced>
+
+=back
+
+=head1 AUTHOR
+
+Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2010 Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

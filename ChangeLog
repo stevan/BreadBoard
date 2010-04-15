@@ -5,11 +5,20 @@ Revision history for Perl extension Bread::Board
       - added the `include` keyword which will evaluate
         an external file within your Bread::Board
         configuration
-          - added test for this
+          - added tests for this
       - added support for parameterized containers
+          - added tests for this
+      - the 'container' keyword will now accept an
+        instance of Bread::Board::Container instead
+        of the name, this makes subclassing easier
+          - added tests for this
 
     + Bread::Board::Container::Parameterized
       - added this module and tests
+
+    + Bread::Baord::Manual
+      - moved, re-organizad and added too the docs
+        that were previously in Bread::Board.pm
 
 0.11 Thu. Mar. 25, 2010
     * Much improved documentation.
