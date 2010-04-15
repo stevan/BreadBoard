@@ -7,8 +7,6 @@ Bread::Board::Manual - A manual for Bread::Board
 
 =head1 INTRODUCTION
 
-
-
 =head1 SECTIONS
 
 =over 4
@@ -20,7 +18,15 @@ the basic concepts that make up Bread::Board.
 
 =item L<Bread::Board::Manual::HowAndWhy>
 
+Once you have a grasp of the basic concepts, read this document to
+help understand why Bread::Board can be useful to you and how you
+can go about using it in your applications.
+
 =item L<Bread::Board::Manual::Concepts::Advanced>
+
+Bread::Board is an extensible and open system, this document will
+explore how you can extend Bread::Board and get greater re-use of
+your components.
 
 =back
 

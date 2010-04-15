@@ -7,6 +7,20 @@ Bread::Board::Manual::Concepts::Advanced - An overview of some of the more advan
 
 =head1 INTRODUCTION
 
+In the L<Bread::Board::Manual::Concepts> document we attempted to
+explain the conceptual foundations of Bread::Board. In that we exposed
+you to the idea of a container and a service and showed how they
+could be used. In that document we built a heirarchal container
+which organized different sets of services into what could be seen
+as subsystems within an overall application. While this alone has
+plenty of value, you might be asking yourself, what about re-use?
+Bread::Board already encourages decoupled object design by removing
+the need to manually wire your application components together, but
+what about re-using Bread::Board compontents themselves?
+
+This document will illustrate some of the more advanced concepts in
+Bread::Board with the specific focus on re-use and extension.
+
 =head1 ADVANCED CONCEPTS
 
 =head2 Subclassing
@@ -16,7 +30,42 @@ to allow for the subclassing of all it's internal components.
 
 =head2 Parameterized Containers
 
-I<TODO>
+  my $simple_logger = container 'SimpleLogger' => as {
+      service 'handle' => (
+          class => 'My::Simple::Logger'
+      );
+  };
+
+  my $db_conn_info = container 'DatabaseConnection' => as {
+      service 'dsn'      => 'dbi:mysql:foo';
+      service 'username' => 'bar';
+      service 'password' => '***';
+  };
+
+  my $db_logger = container 'DatabaseLogger' => [ 'DBConnInfo' ] => as {
+      service 'handle' => (
+          class        => 'My::Database::Logger',
+          dependencies => {
+              dsn      => depends_on('DBConnInfo/dsn'),
+              username => depends_on('DBConnInfo/username'),
+              password => depends_on('DBConnInfo/password'),
+          }
+      );
+  };
+
+  my $app = container 'Application' => [ 'Logger' ] => as {
+      service 'app' => (
+          class        => 'My::Application',
+          dependencies => {
+              log_handle => depends_on('Logger/handle')
+          }
+      );
+  };
+
+  my $simple_app = $app->create( Logger => $simple_logger );
+
+  my $db_app = $app->create( Logger => $db_logger->create( DBConnInfo => $db_conn_info ) );
+
 
 =head1 AUTHOR
 

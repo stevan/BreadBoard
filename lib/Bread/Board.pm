@@ -153,6 +153,13 @@ Bread::Board - A solderless way to wire up you application components
 
 =head1 DESCRIPTION
 
+Bread::Board is an inversion of control framework with a focus on
+dependency injection and lifecycle management. It's goal is to
+help you write more decoupled objects and components by removing
+the need for you to manually wire those objects/components together.
+
+Want to know more? See the L<Bread::Board::Manual>.
+
   +-----------------------------------------+
   |          A B C D E   F G H I J          |
   |-----------------------------------------|
@@ -187,13 +194,13 @@ Bread::Board - A solderless way to wire up you application components
   | o o | 28 o-o-o-o-o ^ o-o-o-o-o 28 | o o |
   +-----------------------------------------+
 
-Want to know more? See the L<Bread::Board::Manual>.
-
 =head1 EXPORTED FUNCTIONS
 
 =over 4
 
 =item I<container ($name, &body)>
+
+=item I<container ($container_instance, &body)>
 
 =item I<container ($name, [ @parameters ], &body)>
 
@@ -206,16 +213,6 @@ Want to know more? See the L<Bread::Board::Manual>.
 =item I<wire_names (@service_names)>
 
 =item I<include ($file)>
-
-=back
-
-=head1 METHODS
-
-=over 4
-
-=item B<set_root_container ($container)>
-
-=item B<meta>
 
 =back
 
