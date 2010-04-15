@@ -29,22 +29,24 @@ sub set_root_container {
 }
 
 sub container ($;$$) {
-    my $name = shift;
+    my $name        = shift;
+    my $name_is_obj = blessed $name && $name->isa('Bread::Board::Container') ? 1 : 0;
+
     my $c;
     if ( scalar @_ == 0 ) {
-        return $name if blessed $name && $name->isa('Bread::Board::Container');
+        return $name if $name_is_obj;
         return Bread::Board::Container->new(
             name => $name
         );
     }
     elsif ( scalar @_ == 1 ) {
-        $c = blessed $name && $name->isa('Bread::Board::Container')
+        $c = $name_is_obj
             ? $name
             : Bread::Board::Container->new( name => $name );
     }
     else {
-        (blessed $name && $name->isa('Bread::Board::Container'))
-            || confess 'container($object, ...) is not supported for parameterized containers';
+        confess 'container($object, ...) is not supported for parameterized containers'
+            if $name_is_obj;
         my $param_names = shift;
         $c = Bread::Board::Container::Parameterized->new(
             name                    => $name,
