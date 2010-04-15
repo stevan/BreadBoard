@@ -101,7 +101,7 @@ __END__
 
 =head1 NAME
 
-Bread::Board - A solderless way to wire up you application components
+Bread::Board - A solderless way to wire up your application components
 
 =head1 SYNOPSIS
 
