@@ -7,6 +7,46 @@ Bread::Board::Manual - A manual for Bread::Board
 
 =head1 INTRODUCTION
 
+As we have said, Bread::Board is an inversion of control
+framework with a focus on dependency injection and lifecycle
+management. The goal that Bread::Board strives towards is
+to promote more decoupled designs. It does this by removing
+the need for your objects to be concerned with resolving
+and/or creating their dependencies as well as knowing (or
+caring) what thier lifecycle is.
+
+It should be noted that Bread::Board and IoC in general is not
+universally useful. Smaller applications and one-off scripts would
+be overburdened by the abstractions of Bread::Board. But the larger
+your application becomes, the more something like Bread::Board
+can help.
+
+As the complexity of your application grows, the management of
+resources and their dependencies becomes more of a burden.
+Making sure all your components are properly initialized,
+in the right order and at all times that you need them, can
+become a twisty maze. Bread::Board is intented to help you
+manage this twisty maze and remove the need for you to
+manage this manually.
+
+Take your typical Catalyst application, the Catalyst framework
+itself contains it's own mini IoC framework through the
+component subsystem. Catalyst will manage your models and views
+making sure that they will be available when you need them in
+the controllers. Catalyst makes all this easy to manage through
+it's configuration system. This is great inside your Catalyst
+application, but what about outside of it? Any sufficiently
+complex web application will have a set of scripts and/or
+command-line applications to help support it. At this point
+you are left to your own devices and must manage these
+components and their dependency chains on your own.
+
+By decoupling IoC into it's own stand-alone subsystem it
+becomes possible to get that same ease-of-use you get inside
+a Catalyst application, outside of it.
+
+This is what Bread::Board aims to provide.
+
 =head1 SECTIONS
 
 =over 4
@@ -15,12 +55,6 @@ Bread::Board::Manual - A manual for Bread::Board
 
 This is perhaps the best place to start, it will introduce you to
 the basic concepts that make up Bread::Board.
-
-=item L<Bread::Board::Manual::HowAndWhy>
-
-Once you have a grasp of the basic concepts, read this document to
-help understand why Bread::Board can be useful to you and how you
-can go about using it in your applications.
 
 =item L<Bread::Board::Manual::Concepts::Advanced>
 
