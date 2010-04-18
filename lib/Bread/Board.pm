@@ -65,7 +65,12 @@ sub container ($;$$) {
     return $c;
 }
 
-sub include ($) { do shift }
+sub include ($) {
+    my $file = shift;
+    (-e $file)
+        || confess "Cannot include ($file) because it was not found";
+    do $file;
+}
 
 sub service ($@) {
     my $name = shift;

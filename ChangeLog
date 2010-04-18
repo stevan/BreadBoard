@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.12
+0.12 Sun. April, 18, 2010
     * Bread::Board
       - added the `include` keyword which will evaluate
         an external file within your Bread::Board

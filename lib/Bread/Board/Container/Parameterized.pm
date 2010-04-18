@@ -84,19 +84,27 @@ __END__
 
 =head1 NAME
 
-Bread::Board::Container::Parameterized - A Moosey solution to this problem
-
-=head1 SYNOPSIS
-
-  use Bread::Board::Container::Parameterized;
+Bread::Board::Container::Parameterized - A parameterized container
 
 =head1 DESCRIPTION
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item B<name>
+
+=item B<allowed_parameter_names>
+
+=item B<container>
+
+=back
 
 =head1 METHODS
 
 =over 4
 
-=item B<>
+=item B<create ( %params )>
 
 =back
 
