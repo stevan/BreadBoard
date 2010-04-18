@@ -67,9 +67,14 @@ sub container ($;$$) {
 
 sub include ($) {
     my $file = shift;
-    (-e $file)
-        || confess "Cannot include ($file) because it was not found";
-    do $file;
+    if (my $ret = do $file) {
+        return $ret;
+    }
+    else {
+        confess "Couldn't compile $file: $@" if $@;
+        confess "Couldn't open $file for reading: $!" if $!;
+        confess "Unknown error when compiling $file";
+    }
 }
 
 sub service ($@) {

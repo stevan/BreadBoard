@@ -4,11 +4,21 @@ use strict;
 use warnings;
 use FindBin;
 
-use Test::More tests => 8;
+use Test::More tests => 10;
+use Test::Exception;
 
 BEGIN {
     use_ok('Bread::Board');
 }
+
+
+throws_ok { local $SIG{__WARN__} = sub { }; include "$FindBin::Bin/lib/bad.bb" }
+          qr/Couldn't compile.*bad\.bb.*syntax error.*function_doesnt_exist/,
+          "we get appropriate errors for invalid files";
+
+throws_ok { include "$FindBin::Bin/lib/doesnt_exist.bb" }
+          qr/Couldn't open.*doesnt_exist\.bb.*for reading/,
+          "we get appropriate errors for files that don't exist";
 
 {
     package FileLogger;
