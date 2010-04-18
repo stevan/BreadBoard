@@ -62,8 +62,14 @@ sub add_service {
 
 sub add_sub_container {
     my ($self, $container) = @_;
-    (blessed $container && $container->isa('Bread::Board::Container'))
-        || confess "You must pass in a Bread::Board::Container instance, not $container";
+    (
+        blessed $container &&
+        (
+            $container->isa('Bread::Board::Container')
+            ||
+            $container->isa('Bread::Board::Container::Parameterized')
+        )
+    ) || confess "You must pass in a Bread::Board::Container instance, not $container";
     $container->parent($self);
     $self->sub_containers->{$container->name} = $container;
 }
