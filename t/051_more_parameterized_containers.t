@@ -42,7 +42,7 @@ BEGIN {
 
     has 'validations' => (
         is       => 'ro',
-        isa      => 'Regexp',
+        isa      => 'RegexpRef',
         required => 1,
     );
 
@@ -95,8 +95,8 @@ my $fields = container 'Fields' => [ 'Model' ] => as {
     service 'username' => (
         class      => 'My::Form::Field::Text',
         parameters => {
-            name        => { isa => 'Str',    default => 'username'          },
-            validations => { isa => 'Regexp', default => qr/^[a-zA-Z0-9_]*$/ },
+            name        => { isa => 'Str',       default => 'username'          },
+            validations => { isa => 'RegexpRef', default => qr/^[a-zA-Z0-9_]*$/ },
         }
     );
 
