@@ -19,7 +19,7 @@ when you use it.
 
 =head1 CONCEPTS
 
-=head1 What is Inversion of Control?
+=head2 What is Inversion of Control?
 
 Inversion of Control (or IoC) is the very simple idea of releasing
 control of some part of your application over to some other part
@@ -34,7 +34,7 @@ and asks another question, and so on until it is done. Now consider
 the GUI approach for the same application; the application displays
 a screen and goes into an event loop, users actions are processed
 with event handlers and callback functions. The GUI framework has
-inverted the control of the application flow and releived your
+inverted the control of the application flow and relieved your
 code from having to deal with it.
 
 IoC is also sometimes referred to as 'Dependency Injection' or the
@@ -62,7 +62,7 @@ Bread::Board and how it relates to the concept of IoC.
 
 The central part of just about any IoC framework is the container.
 A container's responsibilities are roughly to dispense services and
-to handle the resolution of said services's dependency relationships.
+to handle the resolution of said service's dependency relationships.
 
 First we can start with a simple container for our services to
 live in. We give the container a name so that we can address it
@@ -193,7 +193,7 @@ not adapt itself well to perl.
 
 While not in the 'official' 3 types (mostly because its not
 possible in Java), but found in a few Ruby IoC frameworks,
-BlockInjection is by far the most versitile type. It simply
+BlockInjection is by far the most versatile type. It simply
 requires a subroutine and a name and you do all the rest of
 it yourself.
 
@@ -266,7 +266,7 @@ corresponding setter method must exist. This style has been
 popularized by the Spring java framework. I will be honest,
 I don't find this type of injection as useful as block of
 constructor, but it can come in handy if your object prefers
-you to call setters to initailize it. Here is a fairly contrived
+you to call setters to initialize it. Here is a fairly contrived
  example using the L<JSON> module.
 
   $c->add_service(
@@ -412,7 +412,7 @@ it is possible to address services outside of your container
 using path notation. In this case the 'authenticator' service
 makes the assumption that it's parent container has both a
 'database' and a 'logging' sub-container and they contain a
-'db_conn' and 'logger' service respecitively. And as is shown
+'db_conn' and 'logger' service respectively. And as is shown
 in the 'app' service, it is also possible to address services
 using an absolute path notation.
 

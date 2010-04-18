@@ -13,21 +13,22 @@ management. The goal that Bread::Board strives towards is
 to promote more decoupled designs. It does this by removing
 the need for your objects to be concerned with resolving
 and/or creating their dependencies as well as knowing (or
-caring) what thier lifecycle is.
+caring) what their lifecycle is.
 
-It should be noted that Bread::Board and IoC in general is not
+=head2 Why should I use Bread::Board
+
+First, it should be noted that Bread::Board and IoC are not
 universally useful. Smaller applications and one-off scripts would
 be overburdened by the abstractions of Bread::Board. But the larger
 your application becomes, the more something like Bread::Board
 can help.
 
-As the complexity of your application grows, the management of
-resources and their dependencies becomes more of a burden.
-Making sure all your components are properly initialized,
-in the right order and at all times that you need them, can
-become a twisty maze. Bread::Board is intented to help you
-manage this twisty maze and remove the need for you to
-manage this manually.
+As applications grow so the management of resources and their
+dependencies becomes more of a burden. Making sure all your
+components are properly initialized, in the right order and at all
+times that you need them, can become a twisty maze. Bread::Board
+is intended to help you manage this twisty maze and remove the need
+for you to manage this manually.
 
 Take your typical Catalyst application, the Catalyst framework
 itself contains it's own mini IoC framework through the

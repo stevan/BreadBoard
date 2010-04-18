@@ -10,13 +10,13 @@ Bread::Board::Manual::Concepts::Advanced - An overview of some of the more advan
 In the L<Bread::Board::Manual::Concepts> document we attempted to
 explain the conceptual foundations of Bread::Board. In that we exposed
 you to the idea of a container and a service and showed how they
-could be used. In that document we built a heirarchal container
+could be used. In that document we built a hierarchal container
 which organized different sets of services into what could be seen
 as subsystems within an overall application. While this alone has
 plenty of value, you might be asking yourself, what about re-use?
 Bread::Board already encourages decoupled object design by removing
 the need to manually wire your application components together, but
-what about re-using Bread::Board compontents themselves?
+what about re-using Bread::Board components themselves?
 
 This document will illustrate some of the more advanced concepts in
 Bread::Board with the specific focus on re-use and extension.
@@ -69,9 +69,8 @@ build a container specific to your application.
       };
   }
 
-Then inside your application you can simply create an
-instance of the container and instantiate an instance
-of the application.
+Then you can simply create an instance of the container
+and instantiate an instance of the application.
 
   my $c = My::Application::Container->new(
       log_file_name => 'other_logfile.log'
@@ -83,9 +82,11 @@ It is also possible to extend/specialize a
 L<Bread::Board::Service> type to customize it for your
 needs.
 
+More to come later.
+
 =head2 Parameterized Containers
 
-Extending containers is just one way of re-use, just like
+Extending containers is just one form of re-use, just like
 extending a class in plain old OOP. But Bread::Board also
 provides another means of re-use, and that is parameterized
 containers.
@@ -121,7 +122,7 @@ requirements.
       service 'password' => '***';
   };
 
-This container fufills the bare minimum, but this could have
+The above container fulfills the bare minimum, but this could have
 just as easily have been a much more complex container which
 also had a service for a L<DBIx::Class> schema, or a L<KiokuDB>
 directory object. As long as the container provided the
@@ -132,9 +133,14 @@ Now, a parameterized container is not a usable container, you
 must create an instance of it. That is as simple as calling the
 C<create> method, like so.
 
-  my $log_handle = $db_logger->create(
+  my $my_db_logger = $db_logger->create(
       DBConnInfo => $db_conn_info
   );
+
+After which you can use it just like any other Bread::Board
+container would be used.
+
+  my $log_handle = $my_db_logger->fetch('handle')->get;
 
 Parameterized containers can also be nested, here is an example
 of an Application container that expects a Logger.
@@ -157,9 +163,9 @@ using the DatabaseLogger.
       )
   );
 
-And of course, since the Logger is a parameter we could just
-as easily pass in a simpler logger in a test environment for
-example. Here is what that would look like.
+And of course, since the Logger is a parameter we could just as
+easily pass in a simpler screen logger for a test environment or
+something. Here is what that would look like.
 
   my $simple_logger = container 'SimpleLogger' => as {
       service 'handle' => (
