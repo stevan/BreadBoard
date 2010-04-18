@@ -1,5 +1,13 @@
 Revision history for Perl extension Bread::Board
 
+0.13
+    * Bread::Board::Container
+      Bread::Board::Container::Parameterized
+      - it is now possible to store parameterized
+        containers within regular containers and
+        have them behave properly
+          - added tests for this
+
 0.12 Sun. April, 18, 2010
     * Bread::Board
       - added the `include` keyword which will evaluate
