@@ -1,6 +1,5 @@
 package Bread::Board::Service::WithClass;
 use Moose::Role;
-use MooseX::AttributeHelpers;
 
 use Bread::Board::Types;
 

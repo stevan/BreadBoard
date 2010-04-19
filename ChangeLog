@@ -1,6 +1,11 @@
 Revision history for Perl extension Bread::Board
 
 0.13
+    * Bread::Board
+      - making the include keyword handle
+        compilation errors better (doy)
+          - added test for this
+
     * Bread::Board::Container
       Bread::Board::Container::Parameterized
       - it is now possible to store parameterized
