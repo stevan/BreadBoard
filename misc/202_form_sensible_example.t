@@ -1,5 +1,14 @@
 #!/usr/bin/perl
 
+=pod
+
+jayk is working on fixing the Select, so we need
+to wait until that is done before we can finish
+this example.
+
+=cut
+
+
 use strict;
 use warnings;
 
@@ -120,14 +129,24 @@ BEGIN {
     }
 }
 
+# this would actually wrap the
+# $c->model('DBIC') or something
+# in order to get the DBIC schema
+# object
 my $Model = container 'Model' => as { service 'schema' => My::Model->new };
 
+# perhaps create this in a early part
+# of a catalyst dispatch chain
 my $Form = $FormBuilder->create(
     Fields => $Fields->create(
         Model => $Model
     )
 );
 
+# then in the actual action code
+# you would create the form instance
+# and pass the state (which is
+# basically $c->req->parameters)
 my $f = $Form->fetch('Form')->get(
     name  => 'test',
     state => {
