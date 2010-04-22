@@ -1,0 +1,81 @@
+
+=pod
+
+=head1 NAME
+
+Bread::Board::Manual::Example::FormSensible - A Moosey solution to this problem
+
+=head1 SYNOPSIS
+
+  my $FormBuilder = container 'Form' => [ 'Fields' ] => as {
+      service 'form' => (
+          class => 'My::Form',
+          block => sub {
+              my $s = shift;
+              my $c = $s->parent->get_sub_container('Fields');
+              return My::Form->new(
+                  state  => $s->param('state'),
+                  fields => [
+                      map {
+                          $c->fetch( $_ )->get;
+                      } reverse sort $c->get_service_list
+                  ]
+              );
+          },
+          parameters => {
+              state => { isa => 'HashRef' }
+          }
+      );
+  };
+
+  my $fields = container 'Fields' => [ 'Model' ] => as {
+      service 'username' => (
+          class      => 'My::Form::Field::Text',
+          parameters => {
+              name        => { isa => 'Str',       default => 'username'          },
+              validations => { isa => 'RegexpRef', default => qr/^[a-zA-Z0-9_]*$/ },
+          }
+      );
+
+      service 'states' => (
+          class => 'My::Form::Field::Select',
+          block => sub {
+              my $s = shift;
+              My::Form::Field::Select->new(
+                  name    => 'states',
+                  options => $s->param('schema')->get_all_states,
+              );
+          },
+          dependencies => {
+              schema => depends_on('Model/schema') ,
+          },
+      );
+
+  };
+
+  my $model = container 'Model' => as {
+      service 'schema' => My::Model->new;
+  };
+
+  my $form = $FormBuilder->create( Fields => $fields->create( Model => $model ) );
+
+  my $f = $form->fetch('form')->get(
+      state => { username => 'stevan', state => 'CT' }
+  );
+
+=head1 DESCRIPTION
+
+=head1 AUTHOR
+
+Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2010 Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

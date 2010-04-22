@@ -1,0 +1,107 @@
+
+=pod
+
+=head1 NAME
+
+Bread::Board::Manual::Example::LogDispatch - A Moosey solution to this problem
+
+=head1 SYNOPSIS
+
+  my $c = container 'Logging' => as {
+      service 'Logger' => (
+          block => sub {
+              my $s       = shift;
+              my $c       = $s->parent;
+              my $outputs = $c->get_sub_container('Outputs');
+              my $log     = Log::Dispatch->new;
+              foreach my $name ( $outputs->get_service_list ) {
+                  $log->add(
+                      $outputs->get_service( $name )->get
+                  );
+              }
+              $log;
+          }
+      );
+
+      container 'Outputs' => as {
+          service 'File' => (
+              block => sub {
+                  Log::Dispatch::File->new(
+                      name      => 'file',
+                      min_level => 'debug',
+                      filename  => 'logfile'
+                  )
+              }
+          );
+          service 'Screen' => (
+              block => sub {
+                  Log::Dispatch::Screen->new(
+                      name      => 'screen',
+                      min_level => 'warning',
+                  )
+              }
+          );
+      };
+  };
+
+  my $logger = $c->fetch('Logging/Logger')->get;
+
+=head1 DESCRIPTION
+
+=head2 As a Parameterized Container
+
+  my $logging = container 'Logging' => [ 'Outputs' ] as {
+      service 'Logger' => (
+          block => sub {
+              my $s       = shift;
+              my $c       = $s->parent;
+              my $outputs = $c->get_sub_container('Outputs');
+              my $log     = Log::Dispatch->new;
+              foreach my $name ( $outputs->get_service_list ) {
+                  $log->add(
+                      $outputs->get_service( $name )->get
+                  );
+              }
+              $log;
+          }
+      );
+  };
+
+
+  my $outputs = container 'Outputs' => as {
+      service 'File' => (
+          block => sub {
+              Log::Dispatch::File->new(
+                  name      => 'file',
+                  min_level => 'debug',
+                  filename  => 'logfile'
+              )
+          }
+      );
+      service 'Screen' => (
+          block => sub {
+              Log::Dispatch::Screen->new(
+                  name      => 'screen',
+                  min_level => 'warning',
+              )
+          }
+      );
+  };
+
+  my $c  = $logging->create( Outputs => $outputs );
+  my $ld = $c->fetch('Logging/Logger')->get;
+
+=head1 AUTHOR
+
+Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2010 Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
