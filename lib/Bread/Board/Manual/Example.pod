@@ -6,6 +6,10 @@ Bread::Board::Manual::Example - A set of examples of Bread::Board usage
 
 =head1 DESCRIPTION
 
+The goal of this set of documents it to provide examples of how you
+can use Bread::Board in different situations. It is still pretty
+raw and sparse right now, but more will come soon.
+
 =head1 AUTHOR
 
 Stevan Little E<lt>stevan.little@iinteractive.comE<gt>

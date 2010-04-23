@@ -13,6 +13,11 @@ Revision history for Perl extension Bread::Board
         have them behave properly
           - added tests for this
 
+    * Bread::Board::Manual::Example::*
+      - adding some examples of ways to use
+        Bread::Board to the manual
+          - added tests to confirm they work
+
 0.12 Sun. April, 18, 2010
     * Bread::Board
       - added the `include` keyword which will evaluate

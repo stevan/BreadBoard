@@ -1,14 +1,5 @@
 #!/usr/bin/perl
 
-=pod
-
-jayk is working on fixing the Select, so we need
-to wait until that is done before we can finish
-this example.
-
-=cut
-
-
 use strict;
 use warnings;
 
@@ -17,8 +8,8 @@ use Test::Exception;
 use Test::Moose;
 
 BEGIN {
-    eval "use Form::Sensible";
-    plan skip_all => "This test requires Form::Sensible to be installed" if $@;
+    eval "use Form::Sensible  0.11220";
+    plan skip_all => "This test requires Form::Sensible  0.11220 to be installed" if $@;
     use_ok('Bread::Board');
 }
 
@@ -119,16 +110,6 @@ my $Fields = container 'Fields' => [ 'Model' ] => as {
 
 };
 
-BEGIN {
-    sub Form::Sensible::Field::Select::add_option {
-        my ($self, $value, $display_name) = @_;
-        push @{ $self->_options }, {
-            name  => $display_name,
-            value => $value
-        };
-    }
-}
-
 # this would actually wrap the
 # $c->model('DBIC') or something
 # in order to get the DBIC schema
@@ -159,4 +140,9 @@ isa_ok($f, 'Form::Sensible::Form');
 
 my $result = $f->validate;
 
+ok( $result->is_valid, '... our form validated' );
+
+
 done_testing;
+
+

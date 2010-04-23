@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-Bread::Board::Manual::Example::LogDispatch - A Moosey solution to this problem
+Bread::Board::Manual::Example::LogDispatch - An example of composing a dynamic Log::Dispatch object.
 
 =head1 SYNOPSIS
 
@@ -48,7 +48,24 @@ Bread::Board::Manual::Example::LogDispatch - A Moosey solution to this problem
 
 =head1 DESCRIPTION
 
-=head2 As a Parameterized Container
+This example was inspired by a discussion I had with Jay Shirley.
+He wanted to know an easy way to have a dynamic list of output
+types for his Log::Dispatch object.
+
+Often with Bread::Board you will be wiring up components that
+are of a fixed type and set, but this is not always the case.
+It is in these cases when you can simply use the Bread::Board
+objects themselves to fetch your dependencies.
+
+The value passed into the block of a BlockInjection service
+is the service itself. Calling the C<parent> method on that
+service will give you the container that service is in. From
+there you can introspect the other containers and services
+any which way you want to.
+
+This example can be made even more dynamic if you build the
+'Logging' component as a parameterized container whose parameter
+is the 'Ouputs' container. Here is what that would look like.
 
   my $logging = container 'Logging' => [ 'Outputs' ] as {
       service 'Logger' => (
@@ -90,6 +107,11 @@ Bread::Board::Manual::Example::LogDispatch - A Moosey solution to this problem
 
   my $c  = $logging->create( Outputs => $outputs );
   my $ld = $c->fetch('Logging/Logger')->get;
+
+This example illustrates how when a parameterized container is
+instantiated, the parameters become sub-containers of the
+resulting container. This makes it just as easy to fetch
+the 'Outputs' container and use it inside the 'Logger' service.
 
 =head1 AUTHOR
 
