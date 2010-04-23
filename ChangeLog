@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.13
+0.13 Fri. April 23, 2010
     * Bread::Board
       - making the include keyword handle
         compilation errors better (doy)
@@ -18,7 +18,7 @@ Revision history for Perl extension Bread::Board
         Bread::Board to the manual
           - added tests to confirm they work
 
-0.12 Sun. April, 18, 2010
+0.12 Sun. April 18, 2010
     * Bread::Board
       - added the `include` keyword which will evaluate
         an external file within your Bread::Board

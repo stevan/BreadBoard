@@ -3,7 +3,7 @@ use Moose::Role;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.12';
+our $VERSION   = '0.13';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';

@@ -1,4 +1,4 @@
-Bread::Board version 0.12
+Bread::Board version 0.13
 ===========================
 
 See the individual module documentation for more information
@@ -19,6 +19,7 @@ This module requires these other modules and libraries:
     Moose
     MooseX::Param
     MooseX::Params::Validate
+    MooseX::Clone
     Sub::Exporter
 
 COPYRIGHT AND LICENCE

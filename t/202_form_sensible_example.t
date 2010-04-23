@@ -8,7 +8,7 @@ use Test::Exception;
 use Test::Moose;
 
 BEGIN {
-    eval "use Form::Sensible  0.11220";
+    eval "use Form::Sensible 0.11220";
     plan skip_all => "This test requires Form::Sensible  0.11220 to be installed" if $@;
     use_ok('Bread::Board');
 }
