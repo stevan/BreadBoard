@@ -10,6 +10,24 @@ The goal of this set of documents it to provide examples of how you
 can use Bread::Board in different situations. It is still pretty
 raw and sparse right now, but more will come soon.
 
+Each example attempts to show a real world problem and how one might
+go about solving it with Bread::Board. These examples are currently
+are  born out of discussions I had with people about how they might
+be able to utilize Bread::Board.
+
+=over 4
+
+=item L<Bread::Board::Manual::Example::LogDispatch>
+
+An example of how to get more dynamic behavior for your dependencies.
+
+=item L<Bread::Board::Manual::Example::FormSensible>
+
+An example of using parameterized containers and dynamic dependencies
+together to build a set of re-usable components within an application.
+
+=back
+
 =head1 AUTHOR
 
 Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
