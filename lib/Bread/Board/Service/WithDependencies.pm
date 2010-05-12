@@ -1,10 +1,13 @@
 package Bread::Board::Service::WithDependencies;
 use Moose::Role;
 
+use Try::Tiny;
+
 use Bread::Board::Types;
 use Bread::Board::Service::Deferred;
+use Bread::Board::Service::Deferred::Thunk;
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';
@@ -56,10 +59,26 @@ sub resolve_dependencies {
                 $deps{$key} = Bread::Board::Service::Deferred->new(service => $service);
             }
             else {
-                $service->lock;
-                $deps{$key} = eval { $service->get };
-                $service->unlock;
-                if ($@) { die $@ }
+                # since we can't pass in parameters here,
+                # we return a deferred thunk and you can do
+                # with it what you will.
+                if ( $service->does('Bread::Board::Service::WithParameters') && $service->has_parameters ) {
+                    $deps{$key} = Bread::Board::Service::Deferred::Thunk->new(
+                        thunk => sub {
+                            my %params = @_;
+                            $service->lock;
+                            return try { $service->get( %params ) }
+                               finally { $service->unlock }
+                                 catch { die $_ }
+                        }
+                    );
+                }
+                else {
+                    $service->lock;
+                    try     { $deps{$key} = $service->get }
+                    finally { $service->unlock }
+                    catch   { die $_ };
+                }
             }
         }
     }

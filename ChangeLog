@@ -1,5 +1,20 @@
 Revision history for Perl extension Bread::Board
 
+0.14
+    - now using Try::Tiny for all exception
+      handling (except the Deferred service)
+
+    * Bread::Board::Service::WithDependencies
+      - if you want to depend on a parameterized
+        service, now you can and it will return
+        a Bread::Board::Service::Deferred::Thunk
+        that you can call ->resolve on and pass
+        in the parameters for it.
+        - added tests for this
+
+    * Bread::Board::Service::Deferred::Thunk
+      - added this + tests for it
+
 0.13 Fri. April 23, 2010
     * Bread::Board
       - making the include keyword handle

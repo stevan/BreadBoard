@@ -1,24 +1,20 @@
-package Bread::Board::Service::WithClass;
-use Moose::Role;
-
-use Bread::Board::Types;
+package Bread::Board::Service::Deferred::Thunk;
+use Moose;
 
 our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:STEVAN';
 
-with 'Bread::Board::Service';
-
-has 'class' => (
-    is       => 'rw',
-    isa      => 'Str',
+has 'thunk' => (
+    traits   => [ 'Code' ],
+    is       => 'bare',
+    isa      => 'CodeRef',
     required => 1,
+    handles  => {
+        'resolve' => 'execute'
+    }
 );
 
-before 'get' => sub {
-    Class::MOP::load_class((shift)->class)
-};
-
-no Moose::Role; 1;
+1;
 
 __END__
 
@@ -26,19 +22,11 @@ __END__
 
 =head1 NAME
 
-Bread::Board::Service::WithClass
+Bread::Board::Service::Deferred::Thunk
 
 =head1 DESCRIPTION
 
-=head1 METHODS
-
-=over 4
-
-=item B<class>
-
-=item B<get>
-
-=back
+No user servicable parts. Read the source if you are interested.
 
 =head1 BUGS
 

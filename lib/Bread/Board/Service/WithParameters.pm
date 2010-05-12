@@ -4,7 +4,7 @@ use MooseX::Params::Validate qw(validated_hash);
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';

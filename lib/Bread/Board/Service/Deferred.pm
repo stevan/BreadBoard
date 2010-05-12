@@ -1,7 +1,7 @@
 package Bread::Board::Service::Deferred;
 use Moose ();
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:STEVAN';
 
 use overload 

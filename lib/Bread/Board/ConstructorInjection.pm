@@ -1,9 +1,11 @@
 package Bread::Board::ConstructorInjection;
 use Moose;
 
+use Try::Tiny;
+
 use Bread::Board::Types;
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service::WithClass',
@@ -20,7 +22,7 @@ has 'constructor_name' => (
 sub _build_constructor_name {
     my $self = shift;
 
-    eval { $self->class->meta->constructor_name } || 'new';
+    try { $self->class->meta->constructor_name } || 'new';
 }
 
 sub get {
