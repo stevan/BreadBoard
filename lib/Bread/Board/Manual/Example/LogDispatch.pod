@@ -44,7 +44,7 @@ Bread::Board::Manual::Example::LogDispatch - An example of composing a dynamic L
       };
   };
 
-  my $logger = $c->fetch('Logging/Logger')->get;
+  my $logger = $c->resolve( service => 'Logging/Logger' );
 
 =head1 DESCRIPTION
 
@@ -106,7 +106,7 @@ is the 'Ouputs' container. Here is what that would look like.
   };
 
   my $c  = $logging->create( Outputs => $outputs );
-  my $ld = $c->fetch('Logging/Logger')->get;
+  my $ld = $c->resolve( service => 'Logging/Logger' );
 
 This example illustrates how when a parameterized container is
 instantiated, the parameters become sub-containers of the

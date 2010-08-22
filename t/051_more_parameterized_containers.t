@@ -125,8 +125,11 @@ isa_ok($model, 'Bread::Board::Container');
 my $form = $FormBuilder->create( Fields => $fields->create( Model => $model ) );
 isa_ok($form, 'Bread::Board::Container');
 
-my $f = $form->fetch('form')->get(
-    state => { username => 'stevan', state => 'CT' }
+my $f = $form->resolve(
+    service    => 'form',
+    parameters => {
+        state => { username => 'stevan', state => 'CT' }
+    }
 );
 isa_ok($f, 'My::Form');
 

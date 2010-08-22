@@ -113,9 +113,12 @@ Bread::Board::Manual::Example::FormSensible - A Form::Sensible and Catalyst exam
           )
       );
 
-      my $f = $Form->fetch('Form')->get(
-          name  => 'foo',
-          state => $c->req->parameters
+      my $f = $Form->resolve(
+          service    => 'Form',
+          parameters => {
+              name  => 'foo',
+              state => $c->req->parameters
+          }
       );
 
       my $result = $f->validate;

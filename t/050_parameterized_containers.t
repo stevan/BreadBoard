@@ -69,15 +69,19 @@ dies_ok {
     $app->fetch('handle')
 } '... cannot call fetch on a parameterized container';
 
+dies_ok {
+    $app->resolve( service => 'handle')
+} '... cannot call resolve on a parameterized container';
+
 my $simple_app = $app->create( Logger => $simple_logger );
 isa_ok($simple_app, 'Bread::Board::Container');
 
-isa_ok($simple_app->fetch('app')->get->log_handle, 'My::Simple::Logger');
+isa_ok($simple_app->resolve( service => 'app' )->log_handle, 'My::Simple::Logger');
 
 my $db_app = $app->create( Logger => $db_logger->create( DBConnInfo => $db_conn_info ) );
 isa_ok($db_app, 'Bread::Board::Container');
 
-isa_ok($db_app->fetch('app')->get->log_handle, 'My::Database::Logger');
+isa_ok($db_app->resolve( service => 'app' )->log_handle, 'My::Database::Logger');
 
 done_testing;
 

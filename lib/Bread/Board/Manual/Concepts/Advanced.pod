@@ -76,7 +76,7 @@ and instantiate an instance of the application.
       log_file_name => 'other_logfile.log'
   );
 
-  my $app = $c->fetch('application')->get;
+  my $app = $c->resolve( service => 'application');
 
 It is also possible to extend/specialize a
 L<Bread::Board::Service> type to customize it for your
@@ -140,7 +140,9 @@ C<create> method, like so.
 After which you can use it just like any other Bread::Board
 container would be used.
 
-  my $log_handle = $my_db_logger->fetch('handle')->get;
+  my $log_handle = $my_db_logger->resolve(
+      service => 'handle'
+  );
 
 Parameterized containers can also be nested, here is an example
 of an Application container that expects a Logger.

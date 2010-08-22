@@ -93,7 +93,7 @@ lives_ok {
 
 my $authenticator;
 lives_ok {
-    $authenticator = $c->fetch('authenticator')->get
+    $authenticator = $c->resolve( service => 'authenticator' )
 } '... and the container compiled correctly';
 
 

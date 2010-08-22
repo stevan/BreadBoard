@@ -159,7 +159,13 @@ Bread::Board - A solderless way to wire up your application components
 
   no Bread::Board; # removes keywords
 
-  $c->fetch('application')->get->run;
+  # get an instance of MyApplication
+  # from the container
+  my $app = $c->resolve( service => 'application' );
+
+  # now user your MyApplication
+  # as you normally would ...
+  $app->run;
 
 =head1 DESCRIPTION
 

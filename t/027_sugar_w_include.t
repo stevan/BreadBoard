@@ -44,7 +44,7 @@ my $c = container 'MyApp' => as {
     );
 };
 
-my $logger = $c->fetch('logger')->get;
+my $logger = $c->resolve( service => 'logger' );
 isa_ok($logger, 'FileLogger');
 
 is($logger->log_file, 'logfile.log', '... got the right logfile dep');
@@ -52,7 +52,7 @@ is($logger->log_file, 'logfile.log', '... got the right logfile dep');
 is($c->fetch('logger/log_file')->service, $c->fetch('log_file'), '... got the right value');
 is($c->fetch('logger/log_file')->get, 'logfile.log', '... got the right value');
 
-my $app = $c->fetch('application')->get;
+my $app = $c->resolve( service => 'application' );
 isa_ok($app, 'MyApplication');
 
 isa_ok($app->logger, 'FileLogger');

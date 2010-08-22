@@ -106,7 +106,7 @@ isa_ok($c, 'Bread::Board::Container');
 
 # test the first one
 
-my $logger = $c->fetch('logger')->get;
+my $logger = $c->resolve( service => 'logger' );
 isa_ok($logger, 'FileLogger');
 
 is($logger->log_file, 'logfile.log', '... got the right logfile dep');
@@ -114,12 +114,12 @@ is($logger->log_file, 'logfile.log', '... got the right logfile dep');
 is($c->fetch('logger/log_file')->service, $c->fetch('log_file'), '... got the right value');
 is($c->fetch('logger/log_file')->get, 'logfile.log', '... got the right value');
 
-my $dbh = $c->fetch('db_conn')->get;
+my $dbh = $c->resolve( service => 'db_conn' );
 isa_ok($dbh, 'DBH');
 
 is($dbh->dsn, 'dbi:mysql:test', '... got the right dsn');
 
-my $app = $c->fetch('application')->get;
+my $app = $c->resolve( service => 'application' );
 isa_ok($app, 'MyApplication');
 
 isa_ok($app->logger, 'FileLogger');

@@ -90,7 +90,14 @@ object.
 
   my $logger = $logger_service->get;
 
-Its just that simple.
+Or if we want to make this even simpler we can use the C<resolve> method
+of the container object.
+
+  my $logger = $c->resolve( service => 'logger' );
+
+The C<resolve> method will look up the service asked for and return the
+instance, which is basically equivalent to the chained C<fetch> and C<get>
+calls above.
 
 =head2 Dependency Management
 

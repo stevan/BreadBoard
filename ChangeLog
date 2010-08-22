@@ -1,6 +1,15 @@
 Revision history for Perl extension Bread::Board
 
 0.14
+    * Bread::Board::Container
+      - added the ->resolve method to replace
+        the ->fetch($service)->get pattern
+        that annoys mst so much.
+        - adjusted all the tests to account
+          for this change.
+        - adjusted all the docs to now use
+          this approach instead
+
     - now using Try::Tiny for all exception
       handling (except the Deferred service)
 

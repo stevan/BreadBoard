@@ -43,9 +43,8 @@ has 'container' => (
     ]]
 );
 
-sub fetch {
-    die "Cannot fetch from a parameterized container";
-}
+sub fetch   { die "Cannot fetch from a parameterized container";   }
+sub resolve { die "Cannot resolve from a parameterized container"; }
 
 sub create {
     my ($self, %params) = @_;

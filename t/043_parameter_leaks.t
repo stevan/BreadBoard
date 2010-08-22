@@ -41,7 +41,7 @@ my $c = container 'MyApp' => as {
     {
         my $foo;
         lives_ok {
-            $foo = $c->fetch('foo')->get(bar => $bar);
+            $foo = $c->resolve( service => 'foo', parameters => { bar => $bar } );
         } '... got the service correctly';
         isa_ok($foo, 'Foo');
         is($foo->bar, $bar, '... got the right parameter value');

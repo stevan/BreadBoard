@@ -70,7 +70,7 @@ isa_ok($c2, 'Bread::Board::Container');
 
 # test the first one
 
-my $logger1 = $c1->fetch('logger')->get;
+my $logger1 = $c1->resolve( service => 'logger' );
 isa_ok($logger1, 'FileLogger');
 
 is($logger1->log_file, 'logfile.log', '... got the right logfile dep');
@@ -78,7 +78,7 @@ is($logger1->log_file, 'logfile.log', '... got the right logfile dep');
 is($c1->fetch('logger/log_file')->service, $c1->fetch('log_file'), '... got the right value');
 is($c1->fetch('logger/log_file')->get, 'logfile.log', '... got the right value');
 
-my $app1 = $c1->fetch('application')->get;
+my $app1 = $c1->resolve( service => 'application' );
 isa_ok($app1, 'MyApplication');
 
 isa_ok($app1->logger, 'FileLogger');
@@ -86,7 +86,7 @@ is($app1->logger, $logger1, '... got the right logger (singleton)');
 
 # test the second one
 
-my $logger2 = $c2->fetch('logger')->get;
+my $logger2 = $c2->resolve( service => 'logger' );
 isa_ok($logger2, 'FileLogger');
 
 is($logger2->log_file, 'another_logfile.log', '... got the right logfile dep');
@@ -94,7 +94,7 @@ is($logger2->log_file, 'another_logfile.log', '... got the right logfile dep');
 is($c2->fetch('logger/log_file')->service, $c2->fetch('log_file'), '... got the right value');
 is($c2->fetch('logger/log_file')->get, 'another_logfile.log', '... got the right value');
 
-my $app2 = $c2->fetch('application')->get;
+my $app2 = $c2->resolve( service => 'application' );
 isa_ok($app2, 'MyApplication');
 
 isa_ok($app2->logger, 'FileLogger');

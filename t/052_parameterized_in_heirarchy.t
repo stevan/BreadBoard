@@ -49,7 +49,7 @@ dies_ok {
     $utils->fetch('Utils/Database/handle');
 } '... cannot fetch within a parameterized container';
 
-my $dbh = $db->create( DBConnInfo => $db_conn_info )->fetch('handle')->get;
+my $dbh = $db->create( DBConnInfo => $db_conn_info )->resolve( service => 'handle' );
 isa_ok($dbh, 'My::Database::Handle');
 
 done_testing;

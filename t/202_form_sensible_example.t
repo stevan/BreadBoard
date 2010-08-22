@@ -128,12 +128,15 @@ my $Form = $FormBuilder->create(
 # you would create the form instance
 # and pass the state (which is
 # basically $c->req->parameters)
-my $f = $Form->fetch('Form')->get(
-    name  => 'test',
-    state => {
-        username     => 'stevan',
-        password     => '****',
-        access_level => [ 'admin' ]
+my $f = $Form->resolve(
+    service    => 'Form',
+    parameters => {
+        name  => 'test',
+        state => {
+            username     => 'stevan',
+            password     => '****',
+            access_level => [ 'admin' ]
+        }
     }
 );
 isa_ok($f, 'Form::Sensible::Form');

@@ -1,5 +1,6 @@
 package Bread::Board::Container;
 use Moose;
+use MooseX::Params::Validate;
 
 use Bread::Board::Types;
 
@@ -74,6 +75,32 @@ sub add_sub_container {
     $self->sub_containers->{$container->name} = $container;
 }
 
+sub resolve {
+    my ($self, %params) = validated_hash(\@_,
+        service    => { isa => 'Str',     optional => 1 },
+        parameters => { isa => 'HashRef', optional => 1 },
+    );
+
+    if (my $service_path = $params{'service'}) {
+        my $service = $self->fetch( $service_path );
+
+        # NOTE:
+        # we might want to allow Bread::Board::Service::Deferred::Thunk
+        # objects as well, but I am not sure that is a valid use case
+        # for this, so for now we just don't go there.
+        # - SL
+        ($service->does('Bread::Board::Service'))
+            || confess "You can only resolve services, $service is not a Bread::Board::Service";
+
+        return $service->get(
+            (exists $params{'parameters'} ? %{ $params{'parameters'} } : ())
+        );
+    }
+    else {
+        confess "Cannot call resolve without telling it what to resolve.";
+    }
+}
+
 __PACKAGE__->meta->make_immutable;
 
 no Moose; 1;
@@ -117,6 +144,10 @@ Bread::Board::Container
 =item B<services>
 
 =item B<sub_containers>
+
+=item B<fetch ( $service_name )>
+
+=item B<resolve ( ?service => $service_name, ?parameters => { ... } )>
 
 =back
 

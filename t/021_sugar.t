@@ -6,14 +6,14 @@ use warnings;
 use Test::More tests => 8;
 
 BEGIN {
-    use_ok('Bread::Board');     
+    use_ok('Bread::Board');
 }
 
 {
     package FileLogger;
     use Moose;
     has 'log_file' => (is => 'ro', required => 1);
-    
+
     package MyApplication;
     use Moose;
     has 'logger' => (is => 'ro', isa => 'FileLogger', required => 1);
@@ -21,30 +21,30 @@ BEGIN {
 
 sub loggers {
     service 'log_file' => "logfile.log";
-    
+
     service 'logger' => (
         class        => 'FileLogger',
         lifecycle    => 'Singleton',
         dependencies => {
             log_file => depends_on('log_file'),
         }
-    );    
+    );
 }
 
 my $c = container 'MyApp' => as {
-    
+
     loggers(); # reuse baby !!!
-    
+
     service 'application' => (
         class        => 'MyApplication',
         dependencies => {
             logger => depends_on('logger'),
-        }        
+        }
     );
-    
+
 };
 
-my $logger = $c->fetch('logger')->get;
+my $logger = $c->resolve( service => 'logger' );
 isa_ok($logger, 'FileLogger');
 
 is($logger->log_file, 'logfile.log', '... got the right logfile dep');
@@ -52,7 +52,7 @@ is($logger->log_file, 'logfile.log', '... got the right logfile dep');
 is($c->fetch('logger/log_file')->service, $c->fetch('log_file'), '... got the right value');
 is($c->fetch('logger/log_file')->get, 'logfile.log', '... got the right value');
 
-my $app = $c->fetch('application')->get;
+my $app = $c->resolve( service => 'application' );
 isa_ok($app, 'MyApplication');
 
 isa_ok($app->logger, 'FileLogger');
