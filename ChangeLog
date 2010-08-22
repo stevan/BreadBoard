@@ -3,7 +3,7 @@ Revision history for Perl extension Bread::Board
 0.14
     * Bread::Board::Container
       - added the ->resolve method to replace
-        the ->fetch($service)->get pattern
+        the ->fetch( $service )->get pattern
         that annoys mst so much.
         - adjusted all the tests to account
           for this change.
@@ -17,7 +17,7 @@ Revision history for Perl extension Bread::Board
       - if you want to depend on a parameterized
         service, now you can and it will return
         a Bread::Board::Service::Deferred::Thunk
-        that you can call ->resolve on and pass
+        that you can call ->inflate on and pass
         in the parameters for it.
         - added tests for this
 

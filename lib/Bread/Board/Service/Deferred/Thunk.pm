@@ -10,7 +10,7 @@ has 'thunk' => (
     isa      => 'CodeRef',
     required => 1,
     handles  => {
-        'resolve' => 'execute'
+        'inflate' => 'execute'
     }
 );
 

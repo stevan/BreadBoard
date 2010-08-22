@@ -38,7 +38,7 @@ my $c = container 'Views' => as {
             my $s = shift;
             '<html>' .
             '<body>' .
-                $s->param('user_view')->resolve(
+                $s->param('user_view')->inflate(
                     user => $s->param('page')->user
                 ) .
             '</body>' .
