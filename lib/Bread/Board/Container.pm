@@ -1,5 +1,6 @@
 package Bread::Board::Container;
 use Moose;
+use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Params::Validate;
 
 use Bread::Board::Types;
@@ -53,24 +54,17 @@ has 'sub_containers' => (
     }
 );
 
-has 'typemap' => (
+has 'type_mappings' => (
     traits  => [ 'Hash' ],
     is      => 'rw',
     isa     => 'Bread::Board::Container::ServiceList',
     lazy    => 1,
     default => sub{ +{} },
     handles => {
-        'add_type_mapping_for' => 'set',
         'get_type_mapping_for' => 'get',
         'has_type_mapping_for' => 'exists',
     }
 );
-
-# TODO:
-# perhaps we should add a check to
-# make sure that any type added is
-# a valid Moose type.
-# - SL
 
 sub add_service {
     my ($self, $service) = @_;
@@ -94,6 +88,20 @@ sub add_sub_container {
     $self->sub_containers->{$container->name} = $container;
 }
 
+sub add_type_mapping_for {
+    my ($self, $type, $service) = @_;
+
+    my $type_constraint = find_type_constraint( $type );
+
+    (defined $type_constraint)
+        || confess "You must pass a valid Moose type, and it must exist already";
+
+    (blessed $service && $service->does('Bread::Board::Service'))
+        || confess "You must pass in a Bread::Board::Service instance, not $service";
+
+    $self->type_mappings->{ $type_constraint->name } = $service;
+}
+
 sub resolve {
     my ($self, %params) = validated_hash(\@_,
         service    => { isa => 'Str',     optional => 1 },
@@ -101,9 +109,12 @@ sub resolve {
         parameters => { isa => 'HashRef', optional => 1 },
     );
 
-    my $service;
+    my %parameters = exists $params{'parameters'}
+        ? %{ $params{'parameters'} }
+        : ();
+
     if (my $service_path = $params{'service'}) {
-        $service = $self->fetch( $service_path );
+        my $service = $self->fetch( $service_path );
         # NOTE:
         # we might want to allow Bread::Board::Service::Deferred::Thunk
         # objects as well, but I am not sure that is a valid use case
@@ -113,25 +124,26 @@ sub resolve {
             || confess "You can only resolve services, "
                      . (defined $service ? $service : 'undef')
                      . " is not a Bread::Board::Service";
+        return $service->get( %parameters );
     }
     elsif (my $type = $params{'type'}) {
+
         ($self->has_type_mapping_for( $type ))
             || confess "Could not find a mapped service for type ($type)";
-        $service = $self->get_type_mapping_for( $type );
-        # TODO:
-        # perhaps we should do a type check here
-        # that will tell us if all is well.
-        # - SL
+
+        my $service = $self->get_type_mapping_for( $type );
+        my $result  = $service->get( %parameters );
+
+        (find_type_constraint( $type )->check( $result ))
+            || confess "The result of the service for type ($type) did not"
+                     . " pass the type constraint with $result";
+
+        return $result;
     }
     else {
         confess "Cannot call resolve without telling it what to resolve.";
     }
 
-    return $service->get(
-        (exists $params{'parameters'}
-            ? %{ $params{'parameters'} }
-            : ())
-    );
 }
 
 __PACKAGE__->meta->make_immutable;
