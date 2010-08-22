@@ -85,7 +85,7 @@ sub service ($@) {
     }
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
-        my $type   = $params{type} || (exists $params{block} ? 'Block' : 'Constructor');
+        my $type   = $params{service_type} || (exists $params{block} ? 'Block' : 'Constructor');
         $s =  "Bread::Board::${type}Injection"->new(name => $name, %params);
     }
     else {
