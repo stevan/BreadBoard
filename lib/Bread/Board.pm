@@ -132,7 +132,8 @@ sub typemap ($@) {
 sub infer {
     my %params = @_;
     Bread::Board::Service::Inferred->new(
-        service_args => \%params
+        current_container => $CC,
+        service_args      => \%params
     );
 }
 

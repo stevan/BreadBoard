@@ -26,6 +26,10 @@ BEGIN {
     };
 
     {
+        my $foo = $c->resolve( service => 'Foo::Role::__AUTO__' );
+        isa_ok($foo, 'My::Foo');
+    }
+    {
         my $foo = $c->resolve( type => 'Foo::Role' );
         isa_ok($foo, 'My::Foo');
     }
@@ -38,6 +42,10 @@ BEGIN {
         typemap 'My::Foo' => infer();
     };
 
+    {
+        my $foo = $c->resolve( service => 'My::Foo::__AUTO__' );
+        isa_ok($foo, 'My::Foo');
+    }
     {
         my $foo = $c->resolve( type => 'My::Foo' );
         isa_ok($foo, 'My::Foo');

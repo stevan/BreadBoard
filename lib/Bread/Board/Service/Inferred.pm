@@ -7,6 +7,12 @@ our $AUTHORITY = 'cpan:STEVAN';
 use Bread::Board::Types;
 use Bread::Board::ConstructorInjection;
 
+has 'current_container' => (
+    is       => 'ro',
+    isa      => 'Bread::Board::Container',
+    required => 1,
+);
+
 has 'service_args' => (
     is      => 'ro',
     isa     => 'HashRef',
@@ -28,20 +34,66 @@ sub infer_service {
         $params{'class'} = $type;
     }
 
-    my $meta = $params{'class'}->meta;
-
-    my @attributes = grep { $_->is_required } $meta->get_all_attributes;
+    my @attributes = grep {
+        # TODO:
+        # check to make sure we
+        # are dealing with Moose
+        # attributes here, and ...
+        $_->is_required
+        &&
+        # We also need to make sure
+        # that there is a type constraint
+        # that we can work with and not
+        # just a type constraint.
+        # - SL
+        $_->has_type_constraint
+    } $params{'class'}->meta->get_all_attributes;
 
     $params{'dependencies'} = {
         map {
-            $_->name,
-            Bread::Board::Service::Inferred->new->infer_service(
-                $_->type_constraint->name
-            )
+            my $name = $_->name;
+            my $type = $_->type_constraint;
+
+            # TODO:
+            # We need to be checking for
+            # an existing type-mapping here
+            # before we actually go about
+            # making one.
+            # - SL
+
+            # TODO:
+            # We need to inspect the
+            # type more and probably
+            # call something other then
+            # just ->name on it.
+            # - SL
+            my $service = Bread::Board::Service::Inferred->new(
+                current_container => $self->current_container
+            )->infer_service(
+                $type->name
+            );
+            # TODO:
+            # we should also be adding
+            # this service to the typemapping.
+            # - SL
+
+            ($name, $service);
         } @attributes
     };
 
-    Bread::Board::ConstructorInjection->new( name => ($type . '::__AUTO__'), %params );
+    # NOTE:
+    # this is always going to be
+    # constructor injection because
+    # that is what we do when we
+    # infer. No other type of
+    # injection makes sense here.
+    # - SL
+    my $service = Bread::Board::ConstructorInjection->new(
+        name => ($type . '::__AUTO__'),
+        %params
+    );
+
+    $self->current_container->add_service( $service );
 }
 
 __PACKAGE__->meta->make_immutable;

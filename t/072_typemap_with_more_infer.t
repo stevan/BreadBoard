@@ -25,11 +25,20 @@ BEGIN {
 
 # don't give infer enough information
 # and make it figure it out for itself
+# including inferring the embedded object
 {
     my $c = container 'MyTestContainer' => as {
         typemap 'My::Foo' => infer();
     };
 
+    {
+        my $foo = $c->resolve( service => 'My::Foo::__AUTO__' );
+        isa_ok($foo, 'My::Foo');
+        isa_ok($foo->bar, 'My::Bar');
+
+        my $bar = $c->resolve( service => 'My::Bar::__AUTO__' );
+        isa_ok($bar, 'My::Bar');
+    }
     {
         my $foo = $c->resolve( type => 'My::Foo' );
         isa_ok($foo, 'My::Foo');
