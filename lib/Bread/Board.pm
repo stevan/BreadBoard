@@ -10,10 +10,20 @@ use Bread::Board::Container;
 use Bread::Board::Container::Parameterized;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
+use Bread::Board::Service::Inferred;
 
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
-    as_is => [qw( as container depends_on service wire_names include )],
+    as_is => [qw[
+        as
+        container
+        depends_on
+        service
+        wire_names
+        include
+        typemap
+        infer
+    ]],
 );
 
 our $AUTHORITY = 'cpan:STEVAN';
@@ -86,12 +96,44 @@ sub service ($@) {
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
         my $type   = $params{service_type} || (exists $params{block} ? 'Block' : 'Constructor');
-        $s =  "Bread::Board::${type}Injection"->new(name => $name, %params);
+        $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
     }
     else {
         confess "I don't understand @_";
     }
     $CC->add_service($s);
+}
+
+sub typemap ($@) {
+    my $type = shift;
+
+    (scalar @_ == 1)
+        || confess "Too many (or too few) arguments to typemap";
+
+    my $service;
+    if (blessed $_[0]) {
+        if ($_[0]->does('Bread::Board::Service')) {
+            $service = $_[0];
+        }
+        elsif ($_[0]->isa('Bread::Board::Service::Inferred')) {
+            $service = $_[0]->infer_service( $type );
+        }
+        else {
+            confess "No idea what to do with a " . $_[0];
+        }
+    }
+    else {
+        $service = $CC->fetch( $_[0] );
+    }
+
+    $CC->add_type_mapping_for( $type, $service );
+}
+
+sub infer {
+    my %params = @_;
+    Bread::Board::Service::Inferred->new(
+        service_args => \%params
+    );
 }
 
 sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
@@ -222,9 +264,11 @@ Want to know more? See the L<Bread::Board::Manual>.
 
 =item I<as (&body)>
 
-=item I<service ($name, $literal|%service_description)>
+=item I<service ($name, $literal | %service_description)>
 
-=item I<depends_on ($service_name)>
+=item I<typemap ($type, $service | $service_path)>
+
+=item I<depends_on ($service_path)>
 
 =item I<wire_names (@service_names)>
 
