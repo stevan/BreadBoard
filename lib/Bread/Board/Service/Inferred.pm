@@ -73,9 +73,13 @@ sub infer_service {
         $_->is_required && $_->has_type_constraint
     } $meta->get_all_attributes;
 
-    my %dependencies;
+    $params{'dependencies'} ||= {};
+
     foreach my $attribute (@attributes) {
-        my $name            = $attribute->name;
+        my $name = $attribute->name;
+
+        next if exists $params{'dependencies'}->{ $name };
+
         my $type_constraint = $attribute->type_constraint;
         my $type_name       = $type_constraint->isa('Moose::Meta::TypeConstraint::Class')
             ? $type_constraint->class
@@ -93,10 +97,8 @@ sub infer_service {
             );
         }
 
-        $dependencies{ $name } = $service;
+        $params{'dependencies'}->{ $name } = $service;
     }
-
-    $params{'dependencies'} = \%dependencies;
 
     # NOTE:
     # this is always going to be

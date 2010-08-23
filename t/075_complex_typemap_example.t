@@ -61,7 +61,7 @@ my $c = container 'Automat' => as {
 
     # ask the container to infer the
     # entire service ...
-    typemap 'My::Application'  => infer;
+    typemap 'My::Application' => infer;
 };
 
 my $app = $c->resolve( type => 'My::Application' );
