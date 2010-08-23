@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Moose;
 
 BEGIN {
     use_ok('Bread::Board');
@@ -25,10 +26,12 @@ BEGIN {
         typemap 'Foo::Role' => infer( class => 'My::Foo' );
     };
 
-    {
-        my $foo = $c->resolve( service => 'Foo::Role::__AUTO__' );
-        isa_ok($foo, 'My::Foo');
-    }
+    ok($c->has_type_mapping_for('Foo::Role'), '... have a type mapping for Foo::Role');
+    does_ok(
+        $c->get_type_mapping_for('Foo::Role'),
+        'Bread::Board::Service'
+    );
+
     {
         my $foo = $c->resolve( type => 'Foo::Role' );
         isa_ok($foo, 'My::Foo');
@@ -39,13 +42,15 @@ BEGIN {
 # and make it figure it out for itself
 {
     my $c = container 'MyTestContainer' => as {
-        typemap 'My::Foo' => infer();
+        typemap 'My::Foo' => infer;
     };
 
-    {
-        my $foo = $c->resolve( service => 'My::Foo::__AUTO__' );
-        isa_ok($foo, 'My::Foo');
-    }
+    ok($c->has_type_mapping_for('My::Foo'), '... have a type mapping for My::Foo');
+    does_ok(
+        $c->get_type_mapping_for('My::Foo'),
+        'Bread::Board::Service'
+    );
+
     {
         my $foo = $c->resolve( type => 'My::Foo' );
         isa_ok($foo, 'My::Foo');
