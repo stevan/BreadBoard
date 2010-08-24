@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.14
+0.14 Tues. Aug. 24, 2010
     * Bread::Board::Container
       - added the ->resolve method to replace
         the ->fetch( $service )->get pattern
