@@ -75,11 +75,34 @@ my $c = container 'Initech' => as {
     );
 
     typemap 'KeyCardUUID' => 'keycard_uuid_generator';
-    typemap 'Employee'    => infer;
+    typemap 'Employee'    => infer(
+        parameters => {
+            first_name => { isa => 'Str' },
+            last_name  => { isa => 'Str' },
+        }
+    );
 };
 
-my $micheal = $c->resolve( type => 'Employee' );
-my $samir   = $c->resolve( type => 'Employee' );
+my $micheal = $c->resolve(
+    type       => 'Employee',
+    parameters => {
+        first_name => 'Micheal',
+        last_name  => 'Bolton'
+    }
+);
+my $samir = $c->resolve(
+    type       => 'Employee',
+    parameters => {
+        first_name => 'Samir',
+        last_name  => 'Something'
+    }
+);
+
+is($micheal->first_name, 'Micheal', '... got the right first name');
+is($micheal->last_name, 'Bolton', '... got the right last name');
+
+is($samir->first_name, 'Samir', '... got the right first name');
+is($samir->last_name, 'Something', '... got the right last name');
 
 isnt($micheal, $samir, '... two different employees');
 isnt($micheal->cubicle, $samir->cubicle, '... two different cubicles');
