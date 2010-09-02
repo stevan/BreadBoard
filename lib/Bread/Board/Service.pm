@@ -32,6 +32,9 @@ has 'lifecycle' => (
     }
 );
 
+# TODO - add this to MX::Param
+sub clear_params { delete $_[0]->{params} }
+
 requires 'get';
 
 sub lock   { (shift)->is_locked(1) }

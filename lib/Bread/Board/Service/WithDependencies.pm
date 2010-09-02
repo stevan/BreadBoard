@@ -38,6 +38,8 @@ around 'init_params' => sub {
     +{ %{ $self->$next() }, $self->resolve_dependencies }
 };
 
+after 'get' => sub { (shift)->clear_params };
+
 sub resolve_dependencies {
     my $self = shift;
     my %deps;
