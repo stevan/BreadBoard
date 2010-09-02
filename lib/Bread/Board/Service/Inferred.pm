@@ -38,7 +38,7 @@ sub infer_service {
     ($type_constraint->isa('Moose::Meta::TypeConstraint::Class')
         ||
     $type_constraint->is_subtype_of('Object'))
-        || confess "Only class types, or subtypes of Object can be inferred";
+        || confess "Only class types, role types, or subtypes of Object can be inferred";
 
     my %params = %{ $self->service_args };
 
@@ -67,7 +67,10 @@ sub infer_service {
     };
 
     ($meta->isa('Moose::Meta::Class'))
-        || confess "We can only infer Moose classes";
+        || confess "We can only infer Moose classes"
+                 . ($meta->isa('Moose::Meta::Role')
+                        ? (', ' . $meta->name . ' is a role and therefore not concrete enough')
+                        : '');
 
     my @attributes = grep {
         $_->is_required && $_->has_type_constraint

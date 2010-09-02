@@ -37,8 +37,8 @@ BEGIN {
     package My::Application;
     use Moose;
 
-    has 'logger' => (is => 'ro', isa => 'Logger::Role', required => 1);
-    has 'dbh'    => (is => 'ro', isa => 'My::DBI', required => 1);
+    has 'logger' => (is => 'ro', does => 'Logger::Role', required => 1);
+    has 'dbh'    => (is => 'ro', isa  => 'My::DBI',      required => 1);
 }
 
 my $c = container 'Automat' => as {
