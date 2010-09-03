@@ -4,13 +4,27 @@ use Moose::Role;
 our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:STEVAN';
 
-with 'MooseX::Param',
-     'Bread::Board::Traversable';
+with 'Bread::Board::Traversable';
 
 has 'name' => (
     is       => 'rw',
     isa      => 'Str',
     required => 1
+);
+
+has 'params' => (
+    traits   => [ 'Hash' ],
+    is       => 'rw',
+    isa      => 'HashRef',
+    lazy     => 1,
+    builder  => 'init_params',
+    clearer  => 'clear_params',
+    handles  => {
+        get_param      => 'get',
+        get_param_keys => 'keys',
+        _clear_param   => 'delete',
+        _set_param     => 'set',
+    }
 );
 
 has 'is_locked' => (
@@ -32,8 +46,19 @@ has 'lifecycle' => (
     }
 );
 
-# TODO - add this to MX::Param
-sub clear_params { delete $_[0]->{params} }
+sub init_params { +{} }
+sub param {
+    my $self = shift;
+    return $self->get_param_keys     if scalar @_ == 0;
+    return $self->get_param( $_[0] ) if scalar @_ == 1;
+    ((scalar @_ % 2) == 0)
+        || confess "parameter assignment must be an even numbered list";
+    my %new = @_;
+    while (my ($key, $value) = each %new) {
+        $self->set_param( $key => $value );
+    }
+    return;
+}
 
 requires 'get';
 
