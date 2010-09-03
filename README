@@ -17,7 +17,6 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
     Moose
-    MooseX::Param
     MooseX::Params::Validate
     MooseX::Clone
     Sub::Exporter

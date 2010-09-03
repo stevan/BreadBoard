@@ -38,7 +38,7 @@ before 'get' => sub {
 after 'get' => sub {
     my $self = shift;
     return unless $self->_has_parameter_keys_to_remove;
-    map { delete $self->params->{$_} } @{ $self->_parameter_keys_to_remove };
+    map { $self->_clear_param( $_ ) } @{ $self->_parameter_keys_to_remove };
     $self->_clear_parameter_keys_to_remove;
 };
 

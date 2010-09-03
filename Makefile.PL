@@ -10,7 +10,6 @@ license 'perl';
 # prereqs
 requires 'Moose'                    => '1.00';
 requires 'Class::MOP'               => '1.00';
-requires 'MooseX::Param'            => '0.02';
 requires 'MooseX::Clone'            => '0.05';
 requires 'MooseX::Params::Validate' => '0.14';
 

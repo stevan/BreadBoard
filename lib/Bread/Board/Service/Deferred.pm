@@ -4,24 +4,24 @@ use Moose ();
 our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:STEVAN';
 
-use overload 
+use overload
     # cover your basic operatins ...
     'bool' => sub { 1 },
     '""'   => sub {
         $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get);
         if (my $func = overload::Method($_[0], '""')) {
-            return $_[0]->$func();            
+            return $_[0]->$func();
         }
-        return overload::StrVal($_[0]); 
+        return overload::StrVal($_[0]);
     },
     # cover your basic dereferncers
-    '%{}' => sub { 
+    '%{}' => sub {
         return $_[0] if (caller)[0] eq 'Bread::Board::Service::Deferred';
-        $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get); 
-        $_[0] 
+        $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get);
+        $_[0]
     },
     '@{}' => sub { $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get); $_[0] },
-    '${}' => sub { $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get); $_[0] },             
+    '${}' => sub { $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get); $_[0] },
     '&{}' => sub { $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get); $_[0] },
     '*{}' => sub { $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get); $_[0] },
     ## and as a last ditch resort ...
@@ -33,34 +33,34 @@ use overload
         }
         Carp::confess "Could not find a method for overloaded '$_[3]' operator";
     }
-;             
+;
 
-sub new { 
+sub new {
     my ($class, %params) = @_;
     (Scalar::Util::blessed($params{service}) && $params{service}->does('Bread::Board::Service'))
         || Carp::confess "You can only defer Bread::Board::Service instances";
-    bless { service => $params{service} } => $class; 
+    bless { service => $params{service} } => $class;
 }
 
 sub meta {
     if ($_[0]->{service}->can('class')) {
         my $class = $_[0]->{service}->class;
         return $class->meta;
-    }    
+    }
     $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get);
-    (shift)->meta;    
+    (shift)->meta;
 }
 
-sub can { 
+sub can {
     if ($_[0]->{service}->can('class')) {
         my $class = $_[0]->{service}->class;
         return $class->can($_[1]);
-    }    
+    }
     $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get);
     (shift)->can(shift);
 }
 
-sub isa { 
+sub isa {
     if ($_[0]->{service}->can('class')) {
         my $class = $_[0]->{service}->class;
         return 1 if $class eq $_[1];
@@ -76,7 +76,7 @@ sub AUTOLOAD {
     my ($subname) = our $AUTOLOAD =~ /([^:]+)$/;
     $_[0] = (eval { $_[0]->{service}->instance } || $_[0]->{service}->get);
     my $func = $_[0]->can($subname);
-    (ref($func) eq 'CODE') 
+    (ref($func) eq 'CODE')
         || Carp::confess "You cannot call '$subname'";
     goto &$func;
 }
