@@ -22,6 +22,12 @@ has 'service_args' => (
     default => sub { +{} }
 );
 
+has 'infer_params' => (
+    is      => 'ro',
+    isa     => 'Bool',
+    default => sub { 0 },
+);
+
 sub infer_service {
     my $self              = shift;
     my $type              = shift;
@@ -38,7 +44,8 @@ sub infer_service {
     ($type_constraint->isa('Moose::Meta::TypeConstraint::Class')
         ||
     $type_constraint->is_subtype_of('Object'))
-        || confess "Only class types, role types, or subtypes of Object can be inferred";
+        || confess 'Only class types, role types, or subtypes of Object can be inferred. '
+                 . 'I don\'t know what to do with type (' . $type_constraint->name . ')';
 
     my %params = %{ $self->service_args };
 
@@ -93,14 +100,30 @@ sub infer_service {
             $service = $current_container->get_type_mapping_for( $type_name )
         }
         else {
-            $service = Bread::Board::Service::Inferred->new(
-                current_container => $self->current_container
-            )->infer_service(
-                $type_name
-            );
+
+            if (
+                $type_constraint->isa('Moose::Meta::TypeConstraint::Class')
+                    ||
+                $type_constraint->is_subtype_of('Object')
+            ) {
+                $service = Bread::Board::Service::Inferred->new(
+                    current_container => $self->current_container
+                )->infer_service(
+                    $type_name
+                );
+            } else {
+                if ($self->infer_params) {
+                    $params{'parameters'}->{ $name } = { isa => $type_name };
+                }
+                else {
+                    confess 'Only class types, role types, or subtypes of Object can be inferred. '
+                             . 'I don\'t know what to do with type (' . $type_name . ')';
+                }
+            }
         }
 
-        $params{'dependencies'}->{ $name } = $service;
+        $params{'dependencies'}->{ $name } = $service
+            if defined $service;
     }
 
     # NOTE:

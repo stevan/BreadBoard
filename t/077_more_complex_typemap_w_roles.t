@@ -71,6 +71,7 @@ BEGIN {
     has [ 'first_name', 'last_name' ] => (
         is       => 'ro',
         isa      => 'Str',
+        required => 1,
     );
 
     has 'work_area' => (
@@ -90,36 +91,22 @@ BEGIN {
 my $c = container 'Initech' => as {
 
     # Employees ...
-
     typemap 'Desk'     => infer( class => 'CheapMetalDesk' );
     typemap 'Chair'    => infer( class => 'CheapOfficeChair' );
     typemap 'WorkArea' => infer( class => 'Cubicle' );
 
-    typemap 'Employee'    => infer(
-        parameters => {
-            first_name => { isa => 'Str' },
-            last_name  => { isa => 'Str' },
-        }
-    );
-
     # Managers ...
-
     service 'managers_desk'  => (class => 'NiceWoodenDesk');
     service 'managers_chair' => (class => 'AeronChair');
-
-    typemap 'Office' => infer(
+    typemap 'Office'         => infer(
         dependencies => {
             desk  => depends_on('managers_desk'),
             chair => depends_on('managers_chair')
         }
     );
 
-    typemap 'Manager'    => infer(
-        parameters => {
-            first_name => { isa => 'Str' },
-            last_name  => { isa => 'Str' },
-        }
-    );
+    typemap 'Employee' => infer;
+    typemap 'Manager'  => infer;
 };
 
 my $micheal = $c->resolve(

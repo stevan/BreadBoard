@@ -51,6 +51,7 @@ BEGIN {
     has [ 'first_name', 'last_name' ] => (
         is       => 'ro',
         isa      => 'Str',
+        required => 1,
     );
 
     has 'keycard' => (
@@ -75,12 +76,7 @@ my $c = container 'Initech' => as {
     );
 
     typemap 'KeyCardUUID' => 'keycard_uuid_generator';
-    typemap 'Employee'    => infer(
-        parameters => {
-            first_name => { isa => 'Str' },
-            last_name  => { isa => 'Str' },
-        }
-    );
+    typemap 'Employee'    => infer;
 };
 
 my $micheal = $c->resolve(

@@ -133,7 +133,8 @@ sub infer {
     my %params = @_;
     Bread::Board::Service::Inferred->new(
         current_container => $CC,
-        service_args      => \%params
+        service_args      => \%params,
+        infer_params      => 1,
     );
 }
 
