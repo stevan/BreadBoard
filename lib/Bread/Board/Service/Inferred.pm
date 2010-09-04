@@ -116,10 +116,13 @@ sub infer_service {
     );
 
     # NOTE:
-    # I dont think I should do this
-    # the service is basically anon
+    # We need to do this so that
+    # anything created by a typemap
+    # can still also refer back to
+    # an actual service in the parent
+    # container.
     # - SL
-    #$self->current_container->add_service( $service );
+    $self->current_container->add_service( $service );
 
     $service;
 }

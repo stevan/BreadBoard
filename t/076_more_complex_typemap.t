@@ -59,7 +59,7 @@ BEGIN {
         required => 1,
     );
 
-    has 'cubicle' => (
+    has 'work_area' => (
         is       => 'ro',
         isa      => 'Cubicle',
         required => 1,
@@ -98,16 +98,24 @@ my $samir = $c->resolve(
     }
 );
 
+isa_ok($micheal, 'Employee');
 is($micheal->first_name, 'Micheal', '... got the right first name');
 is($micheal->last_name, 'Bolton', '... got the right last name');
+isa_ok($micheal->work_area, 'Cubicle');
+isa_ok($micheal->work_area->desk, 'Desk');
+isa_ok($micheal->work_area->chair, 'Chair');
 
+isa_ok($samir, 'Employee');
 is($samir->first_name, 'Samir', '... got the right first name');
 is($samir->last_name, 'Something', '... got the right last name');
+isa_ok($samir->work_area, 'Cubicle');
+isa_ok($samir->work_area->desk, 'Desk');
+isa_ok($samir->work_area->chair, 'Chair');
 
 isnt($micheal, $samir, '... two different employees');
-isnt($micheal->cubicle, $samir->cubicle, '... two different cubicles');
-isnt($micheal->cubicle->chair, $samir->cubicle->chair, '... two different cubicle chairs');
-isnt($micheal->cubicle->desk, $samir->cubicle->desk, '... two different cubicle desks');
+isnt($micheal->work_area, $samir->work_area, '... two different work_areas');
+isnt($micheal->work_area->chair, $samir->work_area->chair, '... two different work_area chairs');
+isnt($micheal->work_area->desk, $samir->work_area->desk, '... two different work_area desks');
 isnt($micheal->keycard, $samir->keycard, '... two different keycards');
 isnt($micheal->keycard->uuid, $samir->keycard->uuid, '... two different keycard uuids');
 

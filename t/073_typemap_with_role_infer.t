@@ -61,12 +61,13 @@ BEGIN {
 }
 
 {
-    throws_ok {
+    eval {
         container 'MyTestContainer' => as {
             typemap 'My::Foo' => infer;
         }
-    } qr/We can only infer Moose classes\, Bar\:\:Role is a role/,
-    '... we can detect the role and error accordingly';
+    };
+    my $e = $@;
+    like($e, qr/We can only infer Moose classes\, Bar\:\:Role is a role/, '... needs the param');
 }
 
 done_testing;
