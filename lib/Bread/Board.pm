@@ -270,6 +270,8 @@ Want to know more? See the L<Bread::Board::Manual>.
 
 =item I<typemap ($type, $service | $service_path)>
 
+=item I<infer (?%hints)>
+
 =item I<depends_on ($service_path)>
 
 =item I<wire_names (@service_names)>

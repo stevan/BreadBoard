@@ -6,7 +6,6 @@ Revision history for Perl extension Bread::Board
         and implemented it internally so that
         we have more control
 
-0.15
     * Bread::Board
       - added the typemap and infer keyword
         to help in the mapping of types and
