@@ -120,7 +120,7 @@ my $samir = $c->resolve(
     type       => 'Employee',
     parameters => {
         first_name => 'Samir',
-        last_name  => 'Something'
+        last_name  => 'Nagheenanajar'
     }
 );
 
@@ -139,7 +139,7 @@ isa_ok($micheal->work_area->chair, 'CheapOfficeChair');
 
 isa_ok($samir, 'Employee');
 is($samir->first_name, 'Samir', '... got the right first name');
-is($samir->last_name, 'Something', '... got the right last name');
+is($samir->last_name, 'Nagheenanajar', '... got the right last name');
 
 does_ok($samir->work_area, 'WorkArea');
 isa_ok($samir->work_area, 'Cubicle');
@@ -160,13 +160,13 @@ isnt($micheal->work_area->desk, $samir->work_area->desk, '... two different cubi
 my $lundberg = $c->resolve(
     type       => 'Manager',
     parameters => {
-        first_name => 'Dean',
+        first_name => 'Bill',
         last_name  => 'Lundberg'
     }
 );
 
 isa_ok($lundberg, 'Manager');
-is($lundberg->first_name, 'Dean', '... got the right first name');
+is($lundberg->first_name, 'Bill', '... got the right first name');
 is($lundberg->last_name, 'Lundberg', '... got the right last name');
 
 does_ok($lundberg->work_area, 'WorkArea');

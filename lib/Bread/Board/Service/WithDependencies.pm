@@ -7,7 +7,7 @@ use Bread::Board::Types;
 use Bread::Board::Service::Deferred;
 use Bread::Board::Service::Deferred::Thunk;
 
-our $VERSION   = '0.14';
+our $VERSION   = '0.15';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';

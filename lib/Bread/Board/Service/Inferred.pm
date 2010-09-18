@@ -2,7 +2,7 @@ package Bread::Board::Service::Inferred;
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.15';
 our $AUTHORITY = 'cpan:STEVAN';
 
 use Try::Tiny;
@@ -160,21 +160,13 @@ __END__
 
 =head1 NAME
 
-Bread::Board::Service::Inferred - A Moosey solution to this problem
-
-=head1 SYNOPSIS
-
-  use Bread::Board::Service::Inferred;
+Bread::Board::Service::Inferred
 
 =head1 DESCRIPTION
 
-=head1 METHODS
+CAUTION, EXPERIMENTAL FEATURE.
 
-=over 4
-
-=item B<>
-
-=back
+Docs to come, as well as refactoring.
 
 =head1 BUGS
 

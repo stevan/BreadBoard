@@ -6,7 +6,7 @@ use Scalar::Util qw(blessed);
 use Bread::Board::Service;
 use Bread::Board::Dependency;
 
-our $VERSION   = '0.14';
+our $VERSION   = '0.15';
 our $AUTHORITY = 'cpan:STEVAN';
 
 enum 'Bread::Board::Service::LifeCycles' => qw[
@@ -36,13 +36,18 @@ subtype 'Bread::Board::Service::Dependencies'
     => as 'HashRef[Bread::Board::Dependency]';
 
 coerce 'Bread::Board::Service::Dependencies'
-    => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency]'
+    => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency | Str]'
         => via {
             +{
                 map {
-                    $_ => ($_[0]->{$_}->isa('Bread::Board::Dependency')
-                            ? $_[0]->{$_}
-                            : Bread::Board::Dependency->new(service => $_[0]->{$_}))
+
+                    my $dep = $_[0]->{$_};
+                    if (!blessed($dep)) {
+                        $dep = Bread::Board::Dependency->new(service_path => $dep);
+                    }
+                    ($_ => ($dep->isa('Bread::Board::Dependency')
+                            ? $dep
+                            : Bread::Board::Dependency->new(service => $dep)))
                 } keys %{$_[0]}
             }
         }

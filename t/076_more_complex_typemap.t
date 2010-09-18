@@ -90,7 +90,7 @@ my $samir = $c->resolve(
     type       => 'Employee',
     parameters => {
         first_name => 'Samir',
-        last_name  => 'Something'
+        last_name  => 'Nagheenanajar'
     }
 );
 
@@ -103,7 +103,7 @@ isa_ok($micheal->work_area->chair, 'Chair');
 
 isa_ok($samir, 'Employee');
 is($samir->first_name, 'Samir', '... got the right first name');
-is($samir->last_name, 'Something', '... got the right last name');
+is($samir->last_name, 'Nagheenanajar', '... got the right last name');
 isa_ok($samir->work_area, 'Cubicle');
 isa_ok($samir->work_area->desk, 'Desk');
 isa_ok($samir->work_area->chair, 'Chair');

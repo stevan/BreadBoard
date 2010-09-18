@@ -6,6 +6,13 @@ Revision history for Perl extension Bread::Board
         and implemented it internally so that
         we have more control
 
+    * Bread::Board::Types
+      - the Bread::Board::Service::Dependencies
+        type now can also coerce ArrayRef[Str]
+        and HashRef[Str] types correctly (doy)
+
+    !! NEW EXPERIMENTAL FEATURE !!
+
     * Bread::Board
       - added the typemap and infer keyword
         to help in the mapping of types and
