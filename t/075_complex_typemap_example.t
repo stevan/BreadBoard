@@ -22,6 +22,8 @@ BEGIN {
 
     with 'Logger::Role';
 
+    has 'level' => ( is => 'ro', isa => 'Str', default => 'warn' );
+
     sub log {}
 
     package My::DBI;
@@ -64,11 +66,29 @@ my $c = container 'Automat' => as {
     typemap 'My::Application' => infer;
 };
 
-my $app = $c->resolve( type => 'My::Application' );
-isa_ok($app, 'My::Application');
-isa_ok($app->logger, 'My::Logger');
-isa_ok($app->dbh, 'My::DBI');
-is($app->dbh->dsn, 'dbi:sqlite:test', '... got the right DSN too');
+# check the inference from the top level Application ...
+{
+    my $app = $c->resolve( type => 'My::Application' );
+    isa_ok($app, 'My::Application');
 
+    isa_ok($app->logger, 'My::Logger');
+    does_ok($app->logger, 'Logger::Role');
+    is($app->logger->level, 'warn', '... got the default level');
+
+    isa_ok($app->dbh, 'My::DBI');
+    is($app->dbh->dsn, 'dbi:sqlite:test', '... got the right DSN too');
+}
+
+# check the inference from the logger object
+# and its optional 'level' parameter
+{
+    my $logger = $c->resolve(
+        type       => 'Logger::Role',
+        parameters => { level => 'debug' }
+    );
+    isa_ok($logger, 'My::Logger');
+    does_ok($logger, 'Logger::Role');
+    is($logger->level, 'debug', '... got the custom level');
+}
 
 done_testing;

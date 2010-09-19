@@ -64,7 +64,7 @@ sub resolve_dependencies {
                 # since we can't pass in parameters here,
                 # we return a deferred thunk and you can do
                 # with it what you will.
-                if ( $service->does('Bread::Board::Service::WithParameters') && $service->has_parameters ) {
+                if ( $service->does('Bread::Board::Service::WithParameters') && $service->has_required_parameters ) {
                     $deps{$key} = Bread::Board::Service::Deferred::Thunk->new(
                         thunk => sub {
                             my %params = @_;

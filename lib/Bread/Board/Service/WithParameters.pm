@@ -59,6 +59,11 @@ sub check_parameters {
     return ();
 }
 
+sub has_required_parameters {
+    my $self = shift;
+    scalar grep { ! $_->{optional} } values %{ $self->parameters };
+}
+
 no Moose::Role; 1;
 
 __END__
@@ -80,6 +85,8 @@ Bread::Board::Service::WithParameters
 =item B<parameters>
 
 =item B<has_parameters>
+
+=item B<has_required_parameters>
 
 =item B<check_parameters>
 

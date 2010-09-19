@@ -11,6 +11,15 @@ Revision history for Perl extension Bread::Board
         type now can also coerce ArrayRef[Str]
         and HashRef[Str] types correctly (doy)
 
+    * Bread::Board::Service::WithDependencies
+      - we now only create a ::Deferred::Thunk
+        object if we have non-optional params
+    * Bread::Board::Service::WithParameters
+      - added the has_required_parameters
+        method, to see if there are any
+        non-optional parameters
+        - added tests for both the above
+
     !! NEW EXPERIMENTAL FEATURE !!
 
     * Bread::Board
