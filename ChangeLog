@@ -36,6 +36,10 @@ Revision history for Perl extension Bread::Board
     * Bread::Board::Service::Inferred
       - added this and tests for it
 
+    * Bread::Board::Manual::Concepts::Typemap
+      - added this to help explain the
+        typemap feature
+
 0.14 Tues. Aug. 24, 2010
     * Bread::Board::Container
       - added the ->resolve method to replace

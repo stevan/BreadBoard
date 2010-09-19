@@ -268,117 +268,17 @@ Want to know more? See the L<Bread::Board::Manual>.
 
 =item I<service ($name, $literal | %service_description)>
 
-=item I<typemap ($type, $service | $service_path)>
-
-=item I<infer (?%hints)>
-
 =item I<depends_on ($service_path)>
 
 =item I<wire_names (@service_names)>
 
+=item I<typemap ($type, $service | $service_path)>
+
+=item I<infer (?%hints)>
+
 =item I<include ($file)>
 
 =back
-
-=head1 EXAMPLE USING TYPEMAP
-
-A new (read: experimental) feature of Bread::Board is typemapped services.
-These are services which are mapped to a particular type rather then just
-a name. This feature has the potential to make obsolete a large amount of the
-Bread::Board configuration by simply asking Bread::Board to figure things
-out on it's own. Here is a small example of how this works.
-
-  # define the classes making sure
-  # to specify required items and
-  # their types
-
-  {
-      package Desk;
-      use Moose;
-
-      package Chair;
-      use Moose;
-
-      package Cubicle;
-      use Moose;
-
-      has 'desk'  => ( is => 'ro', isa => 'Desk',  required => 1 );
-      has 'chair' => ( is => 'ro', isa => 'Chair', required => 1 );
-
-      package Employee;
-      use Moose;
-
-      has [ 'first_name', 'last_name' ] => (
-          is       => 'ro',
-          isa      => 'Str',
-          required => 1,
-      );
-
-      has 'work_area' => ( is => 'ro', isa => 'Cubicle', required => 1 );
-  }
-
-  # now create the container, and
-  # map the Employee type and ask
-  # Bread::Board to infer all the
-  # other relationships
-
-  my $c = container 'Initech' => as {
-      typemap 'Employee' => infer;
-  };
-
-  # now you can create new Employee objects
-  # by calling ->resolve with the type and
-  # supplying the required parameters (see
-  # below for details).
-
-  my $micheal = $c->resolve(
-      type       => 'Employee',
-      parameters => {
-          first_name => 'Micheal',
-          last_name  => 'Bolton'
-      }
-  );
-
-  my $cube = $micheal->work_area; # this will be a Cubicle object
-  $cube->desk;  # this will be a Desk object
-  $cube->chair; # this will be a Chair object
-
-In the above example, we created a number of Moose classes that had
-specific required relationships. When we called C<infer> for the
-B<Employee> object, Bread::Board figured out those relationships
-and set up dependencies and parameters accordingly.
-
-For the C<work_area> object, we saw the B<Cubicle> type and then
-basically called C<infer> on the B<Cubicle> object. We then saw
-the B<Desk> and B<Chair> objects and called C<infer> on those as well.
-The result of this recursive inferrence was that the B<Employee>,
-B<Cubicle>, B<Desk> and B<Chair> relationships were modeled in
-Bread::Board as dependent services.
-
-Bread::Board also took it one step further.
-
-We were able to resolve the B<Cubicle>, B<Desk> and B<Chair> types
-automatically because they were already defined by Moose as subtypes
-of the I<Object> type. We knew that it could introspect those classes
-and get more information. However, this was not the case with the
-I<first_name> and I<last_name> attributes of the B<Employee> object.
-In that case, we determined that we couldn't resolve those objects and
-(because it was a top-level inferrence) instead turned them into required
-parameters for the inferred B<Employee> service.
-
-And lastly, with a top-level inferrence (not one caused by recursion)
-Bread::Board will also look at all the remaining non-required attributes
-and turn them into optional parameters (see F<t/076_more_complex_typemap.t>
-for an example of this).
-
-This example should give a good basic overview of this feature and more
-details can be found in the test suite. These show examples of how to
-typemap roles to concrete classes and how to supply hints to C<infer>
-to help Bread::Board figure out specific details.
-
-As I mentioned above, this feature should be considered experimental
-and we are still working out details and writing tests for it. Any
-contributions are welcome.
 
 =head1 ACKNOWLEDGEMENTS
 

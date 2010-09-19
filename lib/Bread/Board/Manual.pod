@@ -44,9 +44,9 @@ components and their dependency chains on your own.
 
 By decoupling IoC into it's own stand-alone subsystem it
 becomes possible to get that same ease-of-use you get inside
-a Catalyst application, outside of it.
+something like a Catalyst application, outside of it.
 
-This is what Bread::Board aims to provide.
+This, in a nutshell, is what Bread::Board aims to provide.
 
 =head1 SECTIONS
 
@@ -57,11 +57,24 @@ This is what Bread::Board aims to provide.
 This is perhaps the best place to start, it will introduce you to
 the basic concepts that make up Bread::Board.
 
+=item L<Bread::Board::Manual::Concepts::Typemap>
+
+With Bread::Board you provide names for your service so that you
+can find them later. This document explores the new (read: experimental)
+typemap feature which allows you to map services to types as well.
+
 =item L<Bread::Board::Manual::Concepts::Advanced>
 
 Bread::Board is an extensible and open system, this document will
 explore how you can extend Bread::Board and get greater re-use of
 your components.
+
+=item L<Bread::Board::Manual::Example>
+
+This is a set of examples meant to show how Bread::Board can be
+used in real-world scenarios. It is recommended that you read the
+above documentation first as many of these examples use the concepts
+discussed in them.
 
 =back
 
