@@ -366,6 +366,11 @@ In that case, we determined that we couldn't resolve those objects and
 (because it was a top-level inferrence) instead turned them into required
 parameters for the inferred B<Employee> service.
 
+And lastly, with a top-level inferrence (not one caused by recursion)
+Bread::Board will also look at all the remaining non-required attributes
+and turn them into optional parameters (see F<t/076_more_complex_typemap.t>
+for an example of this).
+
 This example should give a good basic overview of this feature and more
 details can be found in the test suite. These show examples of how to
 typemap roles to concrete classes and how to supply hints to C<infer>

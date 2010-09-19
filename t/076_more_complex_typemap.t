@@ -12,6 +12,9 @@ BEGIN {
 }
 
 {
+    package Stapler;
+    use Moose;
+
     package Desk;
     use Moose;
 
@@ -54,6 +57,12 @@ BEGIN {
         required => 1,
     );
 
+    has 'stapler' => (
+        is        => 'ro',
+        isa       => 'Stapler',
+        predicate => 'has_stapler'
+    );
+
     has 'keycard' => (
         is       => 'ro',
         isa      => 'KeyCard',
@@ -86,6 +95,7 @@ my $micheal = $c->resolve(
         last_name  => 'Bolton'
     }
 );
+
 my $samir = $c->resolve(
     type       => 'Employee',
     parameters => {
@@ -100,6 +110,7 @@ is($micheal->last_name, 'Bolton', '... got the right last name');
 isa_ok($micheal->work_area, 'Cubicle');
 isa_ok($micheal->work_area->desk, 'Desk');
 isa_ok($micheal->work_area->chair, 'Chair');
+ok(!$micheal->has_stapler, '... Micheal doesnt have a stapler');
 
 isa_ok($samir, 'Employee');
 is($samir->first_name, 'Samir', '... got the right first name');
@@ -107,6 +118,7 @@ is($samir->last_name, 'Nagheenanajar', '... got the right last name');
 isa_ok($samir->work_area, 'Cubicle');
 isa_ok($samir->work_area->desk, 'Desk');
 isa_ok($samir->work_area->chair, 'Chair');
+ok(!$samir->has_stapler, '... Samir doesnt have a stapler');
 
 isnt($micheal, $samir, '... two different employees');
 isnt($micheal->work_area, $samir->work_area, '... two different work_areas');
@@ -114,5 +126,31 @@ isnt($micheal->work_area->chair, $samir->work_area->chair, '... two different wo
 isnt($micheal->work_area->desk, $samir->work_area->desk, '... two different work_area desks');
 isnt($micheal->keycard, $samir->keycard, '... two different keycards');
 isnt($micheal->keycard->uuid, $samir->keycard->uuid, '... two different keycard uuids');
+
+my $milton = $c->resolve(
+    type       => 'Employee',
+    parameters => {
+        first_name => 'Milton',
+        last_name  => 'Waddams',
+        stapler    => Stapler->new
+    }
+);
+
+isa_ok($milton, 'Employee');
+is($milton->first_name, 'Milton', '... got the right first name');
+is($milton->last_name, 'Waddams', '... got the right last name');
+isa_ok($milton->work_area, 'Cubicle');
+isa_ok($milton->work_area->desk, 'Desk');
+isa_ok($milton->work_area->chair, 'Chair');
+ok($milton->has_stapler, '... Milton does have a stapler');
+
+foreach ( $micheal, $samir ) {
+    isnt($milton, $_, '... two different employees');
+    isnt($milton->work_area, $_->work_area, '... two different work_areas');
+    isnt($milton->work_area->chair, $_->work_area->chair, '... two different work_area chairs');
+    isnt($milton->work_area->desk, $_->work_area->desk, '... two different work_area desks');
+    isnt($milton->keycard, $_->keycard, '... two different keycards');
+    isnt($milton->keycard->uuid, $_->keycard->uuid, '... two different keycard uuids');
+}
 
 done_testing;

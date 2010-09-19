@@ -79,13 +79,14 @@ sub infer_service {
                         ? (', ' . $meta->name . ' is a role and therefore not concrete enough')
                         : '');
 
-    my @attributes = grep {
+    my @required_attributes = grep {
         $_->is_required && $_->has_type_constraint
     } $meta->get_all_attributes;
 
     $params{'dependencies'} ||= {};
+    $params{'parameters'}   ||= {};
 
-    foreach my $attribute (@attributes) {
+    foreach my $attribute (@required_attributes) {
         my $name = $attribute->name;
 
         next if exists $params{'dependencies'}->{ $name };
@@ -124,6 +125,19 @@ sub infer_service {
 
         $params{'dependencies'}->{ $name } = $service
             if defined $service;
+    }
+
+    if ( $self->infer_params ) {
+        map {
+            $params{'parameters'}->{ $_->name } = {
+                optional => 1,
+                ($_->has_type_constraint
+                    ? ( isa => $_->type_constraint )
+                    : ())
+            };
+        } grep {
+            ( not $_->is_required )
+        } $meta->get_all_attributes
     }
 
     # NOTE:
