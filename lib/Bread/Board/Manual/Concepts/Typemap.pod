@@ -18,6 +18,9 @@ out on it's own. Here is a small example of how this works.
   # their types
 
   {
+      package Stapler;
+      use Moose;
+
       package Desk;
       use Moose;
 
@@ -38,6 +41,8 @@ out on it's own. Here is a small example of how this works.
           isa      => 'Str',
           required => 1,
       );
+
+      has 'stapler' => ( is => 'rw', isa => 'Stapler', predicate => 'has_stapler' );
 
       has 'work_area' => ( is => 'ro', isa => 'Cubicle', required => 1 );
   }
@@ -68,6 +73,24 @@ out on it's own. Here is a small example of how this works.
   $cube->desk;  # this will be a Desk object
   $cube->chair; # this will be a Chair object
 
+  $micheal->has_stapler; # this is false
+
+  # We can create another Employee object
+  # and this time we pass in the optional
+  # parameter for the non-required 'stapler'
+  # attribute
+
+  my $milton = $c->resolve(
+      type       => 'Employee',
+      parameters => {
+          first_name => 'Milton',
+          last_name  => 'Waddams',
+          stapler    => Stapler->new
+      }
+  );
+
+  $milton->has_stapler; # this is true
+
 In the above example, we created a number of Moose classes that had
 specific required relationships. When we called C<infer> for the
 B<Employee> object, Bread::Board figured out those relationships
@@ -93,13 +116,16 @@ parameters for the inferred B<Employee> service.
 
 And lastly, with a top-level inferrence (not one caused by recursion)
 Bread::Board will also look at all the remaining non-required attributes
-and turn them into optional parameters (see F<t/076_more_complex_typemap.t>
-for an example of this).
+and turn them into optional parameters. In this case we have a C<stapler>
+attribute that is not required and so is listed as an optional parameter,
+meaning that it is not required, but still subject to type checking.
+
+=head1 CONCLUSION
 
 This example should give a good basic overview of this feature and more
-details can be found in the test suite. These show examples of how to
-typemap roles to concrete classes and how to supply hints to C<infer>
-to help Bread::Board figure out specific details.
+details can be found in the test suite (F<t/07*.t>). These show examples
+of how to typemap roles to concrete classes and how to supply hints to
+C<infer> to help Bread::Board figure out specific details.
 
 As I mentioned above, this feature should be considered experimental
 and we are still working out details and writing tests for it. Any
