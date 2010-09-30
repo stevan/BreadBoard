@@ -31,8 +31,8 @@ use overload
         if (my $func = overload::Method($_[0], $_[3])) {
             return $_[0]->$func($_[1]);
         }
-        Carp::confess "Could not find a method for overloaded '$_[3]' operator";
-    }
+        return $_[0]; # if all else fails, just return the object
+    },
 ;
 
 sub new {

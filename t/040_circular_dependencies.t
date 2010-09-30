@@ -82,12 +82,7 @@ to use cyclical deps.
     isa_ok($a->B, 'Class::B');
 
     is($a->B, $b, '... our Bs match');
-    # NOTE:
-    # have to stringify this
-    # for the comparison only
-    # nothing else going on here
-    # - SL
-    is(($b->A . ""), "$a", '... our As match');
+    is($b->A, "$a", '... our As match');
 
 }
 
