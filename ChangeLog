@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.15
+0.15 Thurs. Sept. 30, 2010
     * Bread::Board::Service
       - removed the MooseX::Param dependency
         and implemented it internally so that
