@@ -3,7 +3,7 @@ use Moose;
 
 use Bread::Board::Container;
 
-our $VERSION   = '0.15';
+our $VERSION   = '0.16';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Traversable';

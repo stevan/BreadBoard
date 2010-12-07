@@ -5,7 +5,7 @@ use Try::Tiny;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.15';
+our $VERSION   = '0.16';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service::WithClass',
