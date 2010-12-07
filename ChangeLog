@@ -1,5 +1,25 @@
 Revision history for Perl extension Bread::Board
 
+0.16
+    * Bread::Board::service
+      - adding the 'service_class' param for the
+        service sugar function which allows you
+        to pass in a custom service subclass
+        - added tests for this (062_service_class_w_sugar.t)
+
+    * Bread::Board::Dependency
+      - added the service_params attribute here
+        so that it is possible to pass in parameters
+        when you depend on a service which requires them
+        - added tests for this (045_parameters_in_dependency.t)
+
+    * Bread::Board::Service::Inferred
+      - when a typemapped service is created it is now
+        named with the special 'type:' prefix. This allows
+        you to depend on a typemapped service in a
+        non-typemapped service
+        - added tests for this (079_depending_on_type.t)
+
 0.15 Thurs. Sept. 30, 2010
     * Bread::Board::Service
       - removed the MooseX::Param dependency

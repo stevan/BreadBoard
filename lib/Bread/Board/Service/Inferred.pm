@@ -148,7 +148,7 @@ sub infer_service {
     # injection makes sense here.
     # - SL
     my $service = Bread::Board::ConstructorInjection->new(
-        name => ($type . '::__AUTO__'),
+        name => ('type:' . $type),
         %params
     );
 

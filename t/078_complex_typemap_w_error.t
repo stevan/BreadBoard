@@ -60,7 +60,7 @@ BEGIN {
 
 throws_ok {
     container 'Initech' => as {
-        typemap 'Employee'    => infer;
+        typemap 'Employee' => infer;
     };
 } qr/Only class types\, role types\, or subtypes of Object can be inferred\. I don\'t know what to do with type \(Any\)/,
 '... cannot infer a non typemapped item below the first level';

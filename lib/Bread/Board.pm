@@ -95,8 +95,15 @@ sub service ($@) {
     }
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
-        my $type   = $params{service_type} || (exists $params{block} ? 'Block' : 'Constructor');
-        $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
+        if ($params{service_class}) {
+            ($params{service_class}->does('Bread::Board::Service'))
+                || confess "The service class must do the Bread::Board::Service role";
+            $s = $params{service_class}->new(name => $name, %params);
+        }
+        else {
+            my $type   = $params{service_type} || (exists $params{block} ? 'Block' : 'Constructor');
+            $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
+        }
     }
     else {
         confess "I don't understand @_";

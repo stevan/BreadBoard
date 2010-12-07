@@ -26,6 +26,12 @@ has 'service_name' => (
     }
 );
 
+has 'service_params' => (
+    is        => 'ro',
+    isa       => 'HashRef',
+    predicate => 'has_service_params'
+);
+
 has 'service' => (
     is       => 'ro',
     does     => 'Bread::Board::Service | Bread::Board::Dependency',
