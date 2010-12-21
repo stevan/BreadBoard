@@ -72,7 +72,7 @@ sub _get_container_or_service {
         return $c->get_service($name)       if $c->has_service($name);
     }
 
-    confess "Could not find container or service for $name";
+    confess "Could not find container or service for $name in " . $c->name;
 }
 
 no Moose::Role; 1;
