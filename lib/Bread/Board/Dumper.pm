@@ -8,24 +8,24 @@ sub dump {
     my ($self, $thing, $indent) = @_;
 
     $indent = defined $indent ? $indent . '  ' : '';
-    
+
     my $output = '';
-    
+
     if ($thing->isa('Bread::Board::Dependency')) {
         $output .= join('', $indent, "depends_on: ", $thing->service_path || $thing->service->name, "\n");
-    } 
+    }
     elsif ($thing->does('Bread::Board::Service')) {
         $output .= join('', $indent, "service: ", $thing->name, "\n" );
-        
+
         if ($thing->does('Bread::Board::Service::WithDependencies')) {
             while (my($key, $value) = each %{ $thing->dependencies }) {
                 $output .= $self->dump($value, $indent);
             }
         }
-    } 
+    }
     elsif ($thing->isa('Bread::Board::Container')) {
         $output = join('', $indent, "container: ", $thing->name, "\n" );
-        
+
         my ($key, $value);
 
         while (($key, $value) = each %{ $thing->sub_containers }) {
@@ -36,7 +36,7 @@ sub dump {
             $output .= $self->dump($value, $indent);
         }
     }
-    
+
     return $output;
 }
 
@@ -55,9 +55,9 @@ Bread::Board::Dumper
 =head1 SYNOPSIS
 
   use Bread::Board::Dumper;
-  
+
   print Bread::Board::Dumper->new->dump($container);
-  
+
   # container: Application
   #   container: Controller
   #   container: View
@@ -72,12 +72,12 @@ Bread::Board::Dumper
 
 =head1 DESCRIPTION
 
-This is a useful utility for dumping a clean view of a Bread::Board 
+This is a useful utility for dumping a clean view of a Bread::Board
 container.
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 
@@ -87,7 +87,7 @@ Daisuke Maki
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008 Infinity Interactive, Inc.
+Copyright 2008-2011 Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 
