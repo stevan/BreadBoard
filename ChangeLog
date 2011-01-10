@@ -1,7 +1,7 @@
 Revision history for Perl extension Bread::Board
 
-0.16
-    * Bread::Board::service
+0.16 Mon. Jan. 10, 2011
+    * Bread::Board::service sugar
       - adding the 'service_class' param for the
         service sugar function which allows you
         to pass in a custom service subclass
@@ -19,6 +19,10 @@ Revision history for Perl extension Bread::Board
         you to depend on a typemapped service in a
         non-typemapped service
         - added tests for this (079_depending_on_type.t)
+
+    * Bread::Board::Traversable
+      - improving the error messages when a container/service
+        is not found
 
 0.15 Thurs. Sept. 30, 2010
     * Bread::Board::Service
