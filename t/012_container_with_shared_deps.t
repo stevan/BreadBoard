@@ -43,9 +43,9 @@ my $c = Bread::Board::Container->new(
                 )
             },
             dependencies => {
-                dsn  => Bread::Board::Dependency->new(service_path => '../../schema/dsn'),
-                user => Bread::Board::Dependency->new(service_path => '../../schema/user'),
-                pass => Bread::Board::Dependency->new(service_path => '../../schema/pass'),
+                dsn  => Bread::Board::Dependency->new(service_path => 'schema/dsn'),
+                user => Bread::Board::Dependency->new(service_path => 'schema/user'),
+                pass => Bread::Board::Dependency->new(service_path => 'schema/pass'),
             },
         )
     ]

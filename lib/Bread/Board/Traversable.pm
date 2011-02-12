@@ -25,7 +25,17 @@ sub get_root_container {
 sub fetch {
     my ($self, $path) = @_;
 
-    my $root = $path =~ /^\// ? $self->get_root_container : $self;
+    my $root;
+    if ($path =~ /^\//) {
+        $root = $self->get_root_container;
+    }
+    else {
+        $root = $self;
+        while (!$root->isa('Bread::Board::Container')) {
+            $root = $root->parent;
+        }
+    }
+
     my @path = grep { $_ } split /\// => $path;
 
     if ($path[0] eq '..') {

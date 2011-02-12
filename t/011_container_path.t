@@ -24,7 +24,7 @@ my $c = Bread::Board::Container->new(
                     name  => 'schema',
                     class => 'My::App::Schema',
                     dependencies => {
-                        dsn  => Bread::Board::Dependency->new(service_path => '../dsn'),
+                        dsn  => Bread::Board::Dependency->new(service_path => 'dsn'),
                         user => Bread::Board::Literal->new(name => 'user', value => ''),
                         pass => Bread::Board::Literal->new(name => 'pass', value => ''),
                     },
@@ -65,7 +65,7 @@ is($model->name, 'Model', '... got the right model');
 my $dsn = $model->fetch('schema/dsn');
 isa_ok($dsn, 'Bread::Board::Dependency');
 
-is($dsn->service_path, '../dsn', '... got the right name');
+is($dsn->service_path, 'dsn', '... got the right name');
 
 {
     my $dsn2 = $c->fetch('/Application/Model/schema/dsn');
@@ -82,7 +82,7 @@ is($root, $c, '... got the same container');
 is($model, $model->fetch('../Application/Model'), '... navigated back to myself');
 is($dsn, $model->fetch('../Model/schema/dsn'), '... navigated to dsn');
 
-is($model, $dsn->fetch('../../'), '... got the model from the dsn');
+is($model, $dsn->fetch('../Model'), '... got the model from the dsn');
 
 
 
