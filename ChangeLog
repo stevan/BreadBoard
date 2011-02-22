@@ -1,5 +1,23 @@
 Revision history for Perl extension Bread::Board
 
+0.17 Tues. Feb. 22, 2011
+    * Bread::Board::Service::Inferred
+      - make recrusive inferrence work
+        - add tests for this
+
+    * Bread::Board::Manual::Concepts::Advanced
+      - small doc update about subclassing and
+        the name parameter, resolving RT#63124
+        (thanks to Evan Haas)
+
+    !! POSSIBLE BACK COMPAT BREAKAGE !!
+    * Bread::Board::Traversal
+      - make relative parent path traversal more sane, there
+        should be no more need for excessive ../../ stuff in
+        dependency service paths (thanks doy)
+        - adjust tests accordingly
+        - this should fix RT#64478 as well
+
 0.16 Mon. Jan. 10, 2011
     * Bread::Board::service sugar
       - adding the 'service_class' param for the
