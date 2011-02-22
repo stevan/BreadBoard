@@ -31,6 +31,7 @@ has 'infer_params' => (
 sub infer_service {
     my $self              = shift;
     my $type              = shift;
+    my $seen              = shift || {};
     my $type_constraint   = find_type_constraint( $type );
     my $current_container = $self->current_container;
 
@@ -86,6 +87,9 @@ sub infer_service {
     $params{'dependencies'} ||= {};
     $params{'parameters'}   ||= {};
 
+    # defer this for now ...
+    $seen->{ $type } = undef;
+
     foreach my $attribute (@required_attributes) {
         my $name = $attribute->name;
 
@@ -100,8 +104,20 @@ sub infer_service {
         if ($current_container->has_type_mapping_for( $type_name )) {
             $service = $current_container->get_type_mapping_for( $type_name )
         }
+        elsif ( exists $seen->{ $type_name } ) {
+            if ( defined $seen->{ $type_name } ) {
+                # if the type has already been
+                # inferred, then we use it
+                $service = $seen->{ $type_name };
+            }
+            else {
+                # if not, then we have to use
+                # the built in laziness and
+                # make it a dependency
+                $service = Bread::Board::Dependency->new( service_path => ('type:' . $type_name) );
+            }
+        }
         else {
-
             if (
                 $type_constraint->isa('Moose::Meta::TypeConstraint::Class')
                     ||
@@ -110,7 +126,8 @@ sub infer_service {
                 $service = Bread::Board::Service::Inferred->new(
                     current_container => $self->current_container
                 )->infer_service(
-                    $type_name
+                    $type_name,
+                    $seen
                 );
             } else {
                 if ($self->infer_params) {
