@@ -73,10 +73,21 @@ Then you can simply create an instance of the container
 and instantiate an instance of the application.
 
   my $c = My::Application::Container->new(
+      name          => 'MyLoggingContainer',
       log_file_name => 'other_logfile.log'
   );
 
   my $app = $c->resolve( service => 'application');
+
+It should be noted that when calling the constructor of a
+subclass of Bread::Board::Container, you must pass the "name"
+attribute as a parameter. Additionally you could use the
+C<+name> syntax in the subclass itself like so:
+
+  has '+name' => ( default => 'MyLoggingContainer' );
+
+which will remove the requirement in the constructor unless
+you choose to override it.
 
 It is also possible to extend/specialize a
 L<Bread::Board::Service> type to customize it for your
