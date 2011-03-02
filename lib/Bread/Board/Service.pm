@@ -1,7 +1,7 @@
 package Bread::Board::Service;
 use Moose::Role;
 
-our $VERSION   = '0.16';
+our $VERSION   = '0.17';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Traversable';

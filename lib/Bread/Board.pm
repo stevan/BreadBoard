@@ -27,7 +27,7 @@ Moose::Exporter->setup_import_methods(
 );
 
 our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.16';
+our $VERSION   = '0.17';
 
 sub as (&) { $_[0] }
 
