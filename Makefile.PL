@@ -5,6 +5,7 @@ use Module::Install::AuthorTests;
 
 name 'Bread-Board';
 all_from 'lib/Bread/Board.pm';
+auto_set_repository;
 license 'perl';
 
 # prereqs
