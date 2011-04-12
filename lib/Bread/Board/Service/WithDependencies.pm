@@ -69,7 +69,9 @@ sub resolve_dependencies {
                     &&
                     $service->has_required_parameters
                     &&
-                    !$dependency->has_service_params
+                    (not $service->has_parameter_defaults)
+                    &&
+                    (not $dependency->has_service_params)
                    ) {
                     $deps{$key} = Bread::Board::Service::Deferred::Thunk->new(
                         thunk => sub {

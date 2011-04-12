@@ -1,9 +1,14 @@
+#!/usr/bin/perl
+
 use strict;
 use warnings;
+
 use Test::More;
 use Test::Fatal;
 
-use Bread::Board;
+BEGIN {
+    use_ok('Bread::Board');
+}
 
 {
     package Model;
@@ -55,9 +60,12 @@ my $c = container 'MyApp' => as {
     );
 };
 
-is exception {
-    my $store = $c->fetch('/user_store')->get;
-    is $store->model->dsn, 'foo:bar';
-}, undef;
+my $store;
+
+is(exception {
+    $store = $c->fetch('/user_store')->get;
+}, undef, '... deferred parameters that have defaults should pass through too');
+
+is($store->model->dsn, 'foo:bar', '... got the right default values');
 
 done_testing;

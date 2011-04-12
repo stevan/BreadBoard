@@ -64,6 +64,11 @@ sub has_required_parameters {
     scalar grep { ! $_->{optional} } values %{ $self->parameters };
 }
 
+sub has_parameter_defaults {
+    my $self = shift;
+    scalar grep { $_->{default} } values %{ $self->parameters };
+}
+
 no Moose::Role; 1;
 
 __END__
