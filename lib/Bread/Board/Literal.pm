@@ -1,7 +1,7 @@
 package Bread::Board::Literal;
 use Moose;
 
-our $VERSION   = '0.17';
+our $VERSION   = '0.18';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service';

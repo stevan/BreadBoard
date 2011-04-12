@@ -6,7 +6,7 @@ use Scalar::Util qw(blessed);
 use Bread::Board::Service;
 use Bread::Board::Dependency;
 
-our $VERSION   = '0.17';
+our $VERSION   = '0.18';
 our $AUTHORITY = 'cpan:STEVAN';
 
 enum 'Bread::Board::Service::LifeCycles' => qw[

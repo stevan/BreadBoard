@@ -1,5 +1,14 @@
 Revision history for Perl extension Bread::Board
 
+0.18
+    * Bread::Board::Service::WithParameters
+        - added has_parameter_defaults method to check
+          if a parameter has default values
+    * Bread::Board::Service::WithDependencies
+        - added a check for has_parameter_defaults before
+          we make a Thunk
+          - added test for this (thanks to rafl)
+
 0.17 Tues. Feb. 22, 2011
     * Bread::Board::Service::Inferred
       - make recrusive inferrence work
