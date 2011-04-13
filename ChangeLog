@@ -1,6 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.18
+0.18 Wed. Apr. 13, 2011
     * Bread::Board::Service::WithParameters
         - added has_parameter_defaults method to check
           if a parameter has default values
