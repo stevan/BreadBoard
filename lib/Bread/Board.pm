@@ -11,6 +11,7 @@ use Bread::Board::Container::Parameterized;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
 use Bread::Board::Service::Inferred;
+use Bread::Board::Service::Alias;
 
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
@@ -19,6 +20,7 @@ Moose::Exporter->setup_import_methods(
         container
         depends_on
         service
+        alias
         wire_names
         include
         typemap
@@ -108,6 +110,20 @@ sub service ($@) {
     else {
         confess "I don't understand @_";
     }
+    $CC->add_service($s);
+}
+
+sub alias ($$@) {
+    my $name = shift;
+    my $path = shift;
+    my %params = @_;
+
+    my $s = Bread::Board::Service::Alias->new(
+        name              => $name,
+        aliased_from_path => $path,
+        %params,
+    );
+
     $CC->add_service($s);
 }
 
