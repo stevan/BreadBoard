@@ -22,7 +22,7 @@ has 'constructor_name' => (
 sub _build_constructor_name {
     my $self = shift;
 
-    try { $self->class->meta->constructor_name } || 'new';
+    try { Class::MOP::class_of($self->class)->constructor_name } || 'new';
 }
 
 sub get {

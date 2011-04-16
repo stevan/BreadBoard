@@ -68,11 +68,8 @@ sub infer_service {
         }
     }
 
-    my $meta = try {
-        $params{'class'}->meta
-    } catch {
-        confess "Could not get the meta object for class(" . $params{'class'} . ")";
-    };
+    my $meta = Class::MOP::class_of($params{'class'})
+        || confess "Could not get the meta object for class(" . $params{'class'} . ")";
 
     ($meta->isa('Moose::Meta::Class'))
         || confess "We can only infer Moose classes"

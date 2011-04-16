@@ -39,10 +39,10 @@ has 'lifecycle' => (
     trigger => sub {
         my ($self, $lifecycle) = @_;
         if ($self->does('Bread::Board::LifeCycle')) {
-            bless $self => ($self->meta->superclasses)[0];
+            bless $self => (Class::MOP::class_of($self)->superclasses)[0];
             return if $lifecycle eq 'Null';
         }
-        ("Bread::Board::LifeCycle::${lifecycle}")->meta->apply($self);
+        Class::MOP::class_of("Bread::Board::LifeCycle::${lifecycle}")->apply($self);
     }
 );
 
