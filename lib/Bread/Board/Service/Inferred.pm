@@ -15,6 +15,12 @@ has 'current_container' => (
     required => 1,
 );
 
+has 'service' => (
+    is        => 'ro',
+    isa       => 'Bread::Board::ConstructorInjection',
+    predicate => 'has_service',
+);
+
 has 'service_args' => (
     is      => 'ro',
     isa     => 'HashRef',
@@ -48,7 +54,18 @@ sub infer_service {
         || confess 'Only class types, role types, or subtypes of Object can be inferred. '
                  . 'I don\'t know what to do with type (' . $type_constraint->name . ')';
 
-    my %params = %{ $self->service_args };
+    my %params;
+    if ($self->has_service) {
+        my $service = $self->service;
+        %params = (
+            class        => $service->class,
+            dependencies => $service->dependencies,
+            parameters   => $service->parameters,
+        );
+    }
+    else {
+        %params = %{ $self->service_args };
+    }
 
     # if the class is specified, then
     # we can use that reliably, otherwise
@@ -161,10 +178,19 @@ sub infer_service {
     # infer. No other type of
     # injection makes sense here.
     # - SL
-    my $service = Bread::Board::ConstructorInjection->new(
-        name => ('type:' . $type),
-        %params
-    );
+    my $service;
+    if ($self->has_service) {
+        $service = $self->service->clone(
+            name => ('type:' . $type),
+            %params
+        );
+    }
+    else {
+        $service = Bread::Board::ConstructorInjection->new(
+            name => ('type:' . $type),
+            %params
+        );
+    }
 
     # NOTE:
     # We need to do this so that

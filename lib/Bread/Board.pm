@@ -153,12 +153,21 @@ sub typemap ($@) {
 }
 
 sub infer {
-    my %params = @_;
-    Bread::Board::Service::Inferred->new(
-        current_container => $CC,
-        service_args      => \%params,
-        infer_params      => 1,
-    );
+    if (@_ == 1) {
+        return Bread::Board::Service::Inferred->new(
+            current_container => $CC,
+            service           => $_[0],
+            infer_params      => 1,
+        );
+    }
+    else {
+        my %params = @_;
+        return Bread::Board::Service::Inferred->new(
+            current_container => $CC,
+            service_args      => \%params,
+            infer_params      => 1,
+        );
+    }
 }
 
 sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }

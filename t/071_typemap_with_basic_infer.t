@@ -57,5 +57,50 @@ BEGIN {
     }
 }
 
+{
+    my $c = container 'MyTestContainer' => as {
+        typemap 'My::Foo' => infer(
+            dependencies => { thing => service('thing' => 'THING') }
+        );
+    };
+
+    ok($c->has_type_mapping_for('My::Foo'), '... have a type mapping for My::Foo');
+    my $s = $c->get_type_mapping_for('My::Foo');
+    does_ok($s, 'Bread::Board::Service');
+    ok($s->has_dependency('thing'), "service_args were passed along");
+
+    {
+        my $foo = $c->resolve( type => 'My::Foo' );
+        isa_ok($foo, 'My::Foo');
+    }
+}
+
+{
+    package My::ConstructorInjection;
+    use Moose;
+    extends 'Bread::Board::ConstructorInjection';
+}
+
+{
+    my $c = container 'MyTestContainer' => as {
+        typemap 'My::Foo' => infer(
+            My::ConstructorInjection->new(
+                name  => 'foo',
+                class => 'My::Foo',
+            )
+        );
+    };
+
+    ok($c->has_type_mapping_for('My::Foo'), '... have a type mapping for My::Foo');
+    my $s = $c->get_type_mapping_for('My::Foo');
+    does_ok($s, 'Bread::Board::Service');
+    isa_ok($s, 'My::ConstructorInjection');
+
+    {
+        my $foo = $c->resolve( type => 'My::Foo' );
+        isa_ok($foo, 'My::Foo');
+    }
+}
+
 done_testing;
 
