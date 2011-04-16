@@ -54,17 +54,25 @@ sub infer_service {
         || confess 'Only class types, role types, or subtypes of Object can be inferred. '
                  . 'I don\'t know what to do with type (' . $type_constraint->name . ')';
 
-    my %params;
+    my %params = (
+        name => 'type:' . $type,
+    );
+
     if ($self->has_service) {
         my $service = $self->service;
         %params = (
+            %params,
+            name         => $service->name,
             class        => $service->class,
             dependencies => $service->dependencies,
             parameters   => $service->parameters,
         );
     }
     else {
-        %params = %{ $self->service_args };
+        %params = (
+            %params,
+            %{ $self->service_args }
+        );
     }
 
     # if the class is specified, then
@@ -102,7 +110,7 @@ sub infer_service {
     $params{'parameters'}   ||= {};
 
     # defer this for now ...
-    $seen->{ $type } = undef;
+    $seen->{ $type } = $params{'name'};
 
     foreach my $attribute (@required_attributes) {
         my $name = $attribute->name;
@@ -119,7 +127,7 @@ sub infer_service {
             $service = $current_container->get_type_mapping_for( $type_name )
         }
         elsif ( exists $seen->{ $type_name } ) {
-            if ( defined $seen->{ $type_name } ) {
+            if ( blessed($seen->{ $type_name }) ) {
                 # if the type has already been
                 # inferred, then we use it
                 $service = $seen->{ $type_name };
@@ -128,7 +136,9 @@ sub infer_service {
                 # if not, then we have to use
                 # the built in laziness and
                 # make it a dependency
-                $service = Bread::Board::Dependency->new( service_path => ('type:' . $type_name) );
+                $service = Bread::Board::Dependency->new(
+                    service_path => $seen->{ $type_name }
+                );
             }
         }
         else {
@@ -183,10 +193,7 @@ sub infer_service {
         $service = $self->service->clone(%params);
     }
     else {
-        $service = Bread::Board::ConstructorInjection->new(
-            name => ('type:' . $type),
-            %params
-        );
+        $service = Bread::Board::ConstructorInjection->new(%params);
     }
 
     # NOTE:
