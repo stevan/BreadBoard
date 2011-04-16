@@ -19,11 +19,6 @@ has aliased_from => (
     handles => ['get'], # is this sufficient?
 );
 
-has _seen => (
-    is  => 'rw',
-    isa => 'Bool',
-);
-
 with 'Bread::Board::Service';
 
 sub _build_aliased_from {
@@ -40,25 +35,6 @@ sub _build_aliased_from {
         die "While resolving alias " . $self->name . ": $_";
     };
 }
-
-around get => sub {
-    my $orig = shift;
-    my $self = shift;
-
-    confess "Cycle detected in aliases"
-        if $self->_seen;
-
-    $self->_seen(1);
-    try {
-        $self->$orig(@_);
-    }
-    catch {
-        die $_;
-    }
-    finally {
-        $self->_seen(0);
-    };
-};
 
 __PACKAGE__->meta->make_immutable;
 
