@@ -39,7 +39,8 @@ has 'lifecycle' => (
     trigger => sub {
         my ($self, $lifecycle) = @_;
         if ($self->does('Bread::Board::LifeCycle')) {
-            bless $self => (Class::MOP::class_of($self)->superclasses)[0];
+            my $base = (Class::MOP::class_of($self)->superclasses)[0];
+            Class::MOP::class_of($base)->rebless_instance_back($self);
             return if $lifecycle eq 'Null';
         }
         Class::MOP::class_of("Bread::Board::LifeCycle::${lifecycle}")->apply($self);
