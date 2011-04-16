@@ -34,6 +34,9 @@ use Bread::Board;
     is($c->resolve(service => 'foo_alias'), 'FOO', "literal aliases work");
     is($c->resolve(service => 'bar_alias'), 'BAR', "block aliases work");
     isa_ok($c->resolve(service => 'baz_alias'), 'Some::Class');
+
+    is($c->fetch('foo_alias')->name, 'foo',
+       "fetch on aliases returns the underlying service");
 }
 
 {
@@ -168,6 +171,7 @@ use Bread::Board;
     };
 
     is($c->resolve(service => 'foo2'), 'FOO', "multi-level aliases work");
+    is($c->fetch('foo2')->name, 'foo', "multi-level fetching works");
 }
 
 {
@@ -201,6 +205,19 @@ use Bread::Board;
       "error with circular aliases";
     throws_ok {
         $c->resolve(service => 'd');
+    } qr/^Cycle detected in aliases/,
+      "error with circular aliases with larger cycles";
+
+    throws_ok {
+        $c->fetch('a');
+    } qr/^Cycle detected in aliases/,
+      "error with self-referencing aliases";
+    throws_ok {
+        $c->fetch('b');
+    } qr/^Cycle detected in aliases/,
+      "error with circular aliases";
+    throws_ok {
+        $c->fetch('d');
     } qr/^Cycle detected in aliases/,
       "error with circular aliases with larger cycles";
 }
