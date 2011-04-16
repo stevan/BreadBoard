@@ -180,10 +180,7 @@ sub infer_service {
     # - SL
     my $service;
     if ($self->has_service) {
-        $service = $self->service->clone(
-            name => ('type:' . $type),
-            %params
-        );
+        $service = $self->service->clone(%params);
     }
     else {
         $service = Bread::Board::ConstructorInjection->new(
