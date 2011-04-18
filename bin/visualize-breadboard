@@ -1,0 +1,32 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use FindBin qw($Bin);
+use lib "$Bin/../lib";
+
+# these make the app much easier to use
+use lib ".";
+use lib "lib";
+
+use MooseX::Runnable::Run 'Bread::Board::GraphViz::App';
+
+__END__
+
+=head1 NAME
+
+visualize-breadboard - script to invoke L<Bread::Board::GraphViz::App>
+
+=head1 SYNOPSIS
+
+    $ visualize-breadboard 'use MyApp; MyApp->get_breadboard'
+
+Given a piece of Perl code to evaluate, this application prints the
+dot markup representing the dependency graph of the
+L<Bread::Board::Container> that the code returned.
+
+=head1 SEE ALSO
+
+L<Bread::Board::GraphViz::App>
+
+L<Bread::Board>
