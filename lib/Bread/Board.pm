@@ -11,6 +11,7 @@ use Bread::Board::Container::Parameterized;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
 use Bread::Board::Service::Inferred;
+use Bread::Board::Service::Alias;
 
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
@@ -19,6 +20,7 @@ Moose::Exporter->setup_import_methods(
         container
         depends_on
         service
+        alias
         wire_names
         include
         typemap
@@ -111,6 +113,20 @@ sub service ($@) {
     $CC->add_service($s);
 }
 
+sub alias ($$@) {
+    my $name = shift;
+    my $path = shift;
+    my %params = @_;
+
+    my $s = Bread::Board::Service::Alias->new(
+        name              => $name,
+        aliased_from_path => $path,
+        %params,
+    );
+
+    $CC->add_service($s);
+}
+
 sub typemap ($@) {
     my $type = shift;
 
@@ -137,12 +153,21 @@ sub typemap ($@) {
 }
 
 sub infer {
-    my %params = @_;
-    Bread::Board::Service::Inferred->new(
-        current_container => $CC,
-        service_args      => \%params,
-        infer_params      => 1,
-    );
+    if (@_ == 1) {
+        return Bread::Board::Service::Inferred->new(
+            current_container => $CC,
+            service           => $_[0],
+            infer_params      => 1,
+        );
+    }
+    else {
+        my %params = @_;
+        return Bread::Board::Service::Inferred->new(
+            current_container => $CC,
+            service_args      => \%params,
+            infer_params      => 1,
+        );
+    }
 }
 
 sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
