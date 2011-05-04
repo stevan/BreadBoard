@@ -18,8 +18,17 @@ requires 'MooseX::Params::Validate' => '0.14';
 build_requires 'Test::More'      => '0.62';
 build_requires 'Test::Exception' => '0.21';
 
+# if you want graphviz graphs, you'll need
+# requires 'Data::Visitor::Callback';
+# requires 'GraphViz';
+# requires 'MooseX::Runnable';
+# requires 'MooseX::Types::Set::Object';
+# requires 'Set::Object';
+
 tests('t/*.t');
 author_tests('t/author/*.t');
+
+install_script 'bin/visualize-breadboard';
 
 WriteAll();
 
