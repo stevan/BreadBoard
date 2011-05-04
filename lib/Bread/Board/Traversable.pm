@@ -53,6 +53,14 @@ sub fetch {
     while (my $h = shift @path) {
         $c = _get_container_or_service($c, $h);
     }
+    if (!$self->isa('Bread::Board::Service::Alias')) {
+        my %seen;
+        while ($c->isa('Bread::Board::Service::Alias')) {
+            $c = $c->aliased_from;
+            confess "Cycle detected in aliases" if exists $seen{$c};
+            $seen{$c}++;
+        }
+    }
     return $c;
 }
 
