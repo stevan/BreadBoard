@@ -43,7 +43,12 @@ has 'lifecycle' => (
             Class::MOP::class_of($base)->rebless_instance_back($self);
             return if $lifecycle eq 'Null';
         }
-        Class::MOP::class_of("Bread::Board::LifeCycle::${lifecycle}")->apply($self);
+
+        my $lifecycle_role = $lifecycle =~ /^\+/
+                 ? substr($lifecycle, 1)
+                 : "Bread::Board::LifeCycle::${lifecycle}";
+        Class::MOP::load_class($lifecycle_role);
+        Class::MOP::class_of($lifecycle_role)->apply($self);
     }
 );
 
