@@ -1,12 +1,14 @@
 package Bread::Board::GraphViz;
 use Moose;
-use namespace::autoclean -also => [qw/service_name/];
 
 use Data::Visitor::Callback;
 use GraphViz;
 use List::Util qw(reduce);
 use MooseX::Types::Set::Object;
 use Set::Object qw(set);
+
+our $AUTHORITY = 'cpan:STEVAN';
+our $VERSION   = '0.19';
 
 # edges is built incrementally, as a user may provide many "root" containers
 has 'edges' => (
@@ -114,9 +116,13 @@ sub graph {
     return $viz;
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+
+no Moose; 1;
 
 __END__
+
+=pod
 
 =head1 NAME
 
@@ -139,3 +145,24 @@ L<GraphViz::HasA>
 =head1 AUTHOR
 
 Jonathan Rockway - C<< <jrockway@cpan.org> >>
+
+=head1 BUGS
+
+All complex software has bugs lurking in it, and this module is no
+exception. If you find a bug please either email me, or add the bug
+to cpan-RT.
+
+=head1 AUTHOR
+
+Jonathan Rockway - C<< <jrockway@cpan.org> >>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2007-2011 by Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
