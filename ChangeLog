@@ -1,5 +1,28 @@
 Revision history for Perl extension Bread::Board
 
+0.19 Wed. June 1, 2011
+    * Bread::Board::GraphViz
+        - added by jrockway, this allows you to visualise
+          a Bread::Board system using GraphViz
+            - note that this is optional and requires you
+              to install optional dependencies
+
+    * Bread::Board::Service::Alias
+        - add the ability to alias services under
+          another name (thanks to doy)
+            - added tests for this
+
+    * Bread::Board::Service::Inferred
+        - improving edge cases (thanks to doy)
+
+    * Bread::Board::Service::*
+        - several code improvements (thanks to doy)
+
+    * Bread::Board::Service
+        - allow for custom Lifecycles by using the "+"
+          prefix (thanks to jasonmay)
+            - added tests for this
+
 0.18 Wed. Apr. 13, 2011
     * Bread::Board::Service::WithParameters
         - added has_parameter_defaults method to check
