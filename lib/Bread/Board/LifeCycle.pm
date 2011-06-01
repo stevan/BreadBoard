@@ -1,7 +1,7 @@
 package Bread::Board::LifeCycle;
 use Moose::Role;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.19';
 our $AUTHORITY = 'cpan:STEVAN';
 
 no Moose::Role; 1;

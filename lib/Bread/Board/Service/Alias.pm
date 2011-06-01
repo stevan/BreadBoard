@@ -3,7 +3,7 @@ use Moose;
 
 use Try::Tiny;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.19';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has aliased_from_path => (
