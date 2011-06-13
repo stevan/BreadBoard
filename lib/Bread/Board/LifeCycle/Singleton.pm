@@ -1,6 +1,8 @@
 package Bread::Board::LifeCycle::Singleton;
 use Moose::Role;
 
+use Try::Tiny;
+
 with 'Bread::Board::LifeCycle';
 
 our $VERSION   = '0.19';
@@ -14,6 +16,13 @@ has 'instance' => (
     clearer   => 'flush_instance'
 );
 
+has 'resolving_singleton' => (
+    traits  => [ 'NoClone' ],
+    is      => 'rw',
+    isa     => 'Bool',
+    default => 0,
+);
+
 around 'get' => sub {
     my $next = shift;
     my $self = shift;
@@ -21,12 +30,28 @@ around 'get' => sub {
     # return it if we got it ...
     return $self->instance if $self->has_instance;
 
-    # otherwise fetch it ...
-    my $instance = $self->$next(@_);
+    my $instance;
+    if ($self->resolving_singleton) {
+        $instance = Bread::Board::Service::Deferred->new(service => $self);
+    }
+    else {
+        $self->resolving_singleton(1);
+        my @args = @_;
+        try {
+            # otherwise fetch it ...
+            $instance = $self->$next(@args);
+        }
+        catch {
+            die $_;
+        }
+        finally {
+            $self->resolving_singleton(0);
+        };
+    }
 
     # if we get a copy, and our copy
     # has not already been set ...
-    $self->instance($instance) unless $self->has_instance;
+    $self->instance($instance);
 
     # return whatever we have ...
     return $self->instance;
