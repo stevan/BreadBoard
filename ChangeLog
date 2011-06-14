@@ -1,5 +1,11 @@
 Revision history for Perl extension Bread::Board
 
+0.20 Wed. June 13, 2011
+    * Bread::Board::Lifecycle::Singleton
+        - fix bug in singletons with circular
+          refs (thanks to doy)
+            - added tests for this (thanks to perigrin)
+
 0.19 Wed. June 1, 2011
     * Bread::Board::GraphViz
         - added by jrockway, this allows you to visualise

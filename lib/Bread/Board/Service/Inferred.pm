@@ -2,7 +2,7 @@ package Bread::Board::Service::Inferred;
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
-our $VERSION   = '0.19';
+our $VERSION   = '0.20';
 our $AUTHORITY = 'cpan:STEVAN';
 
 use Try::Tiny;

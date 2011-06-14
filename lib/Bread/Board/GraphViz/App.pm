@@ -4,7 +4,7 @@ use Moose;
 use Bread::Board::GraphViz;
 
 our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.19';
+our $VERSION   = '0.20';
 
 with 'MooseX::Runnable';
 
