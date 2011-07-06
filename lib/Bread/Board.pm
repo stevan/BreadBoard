@@ -110,6 +110,7 @@ sub service ($@) {
     else {
         confess "I don't understand @_";
     }
+    return $s unless defined $CC;
     $CC->add_service($s);
 }
 
@@ -123,7 +124,7 @@ sub alias ($$@) {
         aliased_from_path => $path,
         %params,
     );
-
+    return $s unless defined $CC;
     $CC->add_service($s);
 }
 
