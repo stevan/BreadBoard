@@ -15,7 +15,7 @@ has 'parameters' => (
     isa       => 'Bread::Board::Service::Parameters',
     lazy      => 1,
     coerce    => 1,
-    default   => sub { +{} },
+    builder   => '_build_parameters',
     handles   => {
         'has_parameters' => 'count'
     }
@@ -41,6 +41,8 @@ after 'get' => sub {
     map { $self->_clear_param( $_ ) } @{ $self->_parameter_keys_to_remove };
     $self->_clear_parameter_keys_to_remove;
 };
+
+sub _build_parameters { +{} }
 
 sub check_parameters {
     my $self = shift;
