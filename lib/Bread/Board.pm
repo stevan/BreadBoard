@@ -1,5 +1,8 @@
 package Bread::Board;
-use Moose;
+use strict;
+use warnings;
+use Carp qw(confess);
+use Scalar::Util qw(blessed);
 
 use Bread::Board::Types;
 use Bread::Board::ConstructorInjection;
@@ -178,9 +181,7 @@ sub depends_on ($) {
     Bread::Board::Dependency->new(service_path => $path);
 }
 
-__PACKAGE__->meta->make_immutable;
-
-no Moose; 1;
+1;
 
 __END__
 
