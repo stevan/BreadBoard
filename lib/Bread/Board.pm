@@ -207,13 +207,14 @@ Bread::Board - A solderless way to wire up your application components
       );
 
       container 'Database' => as {
-          service 'dsn'      => "dbi:sqlite:dbname=my-app.db";
+          service 'dsn'      => "dbi:SQLite:dbname=my-app.db";
           service 'username' => "user234";
           service 'password' => "****";
 
           service 'dbh' => (
               block => sub {
                   my $s = shift;
+                  require DBI;
                   DBI->connect(
                       $s->param('dsn'),
                       $s->param('username'),
