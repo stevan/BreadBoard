@@ -1,4 +1,3 @@
-
 =pod
 
 =head1 NAME
@@ -50,7 +49,7 @@ event handlers.
 Howard Lewis Ship, the creator of the HiveMind IoC Framework, once
 referred to dependency injection as being the inverse of garbage
 collection. With garbage collection you hand over the details of
-the destruction of you objects to the garbage collector. With
+the destruction of your objects to the garbage collector. With
 dependency injection you are handing over control of object
 creation, which also includes the satisfaction of your dependency
 relationships.
