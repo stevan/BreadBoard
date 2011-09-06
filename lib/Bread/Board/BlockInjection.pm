@@ -1,7 +1,7 @@
 package Bread::Board::BlockInjection;
 use Moose;
 
-our $VERSION   = '0.20';
+our $VERSION   = '0.21';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Service::WithParameters',

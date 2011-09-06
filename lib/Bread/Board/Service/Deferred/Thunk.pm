@@ -1,7 +1,7 @@
 package Bread::Board::Service::Deferred::Thunk;
 use Moose;
 
-our $VERSION   = '0.20';
+our $VERSION   = '0.21';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'thunk' => (

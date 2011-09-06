@@ -8,7 +8,7 @@ use MooseX::Types::Set::Object;
 use Set::Object qw(set);
 
 our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.20';
+our $VERSION   = '0.21';
 
 # edges is built incrementally, as a user may provide many "root" containers
 has 'edges' => (

@@ -1,5 +1,24 @@
 Revision history for Perl extension Bread::Board
 
+0.21
+
+    * Bread::Board
+        - Allow service() and alias() sugar functions to
+          return the newly-created objects if the context
+          container is not defined. (thanks to kip hampton)
+            - added tests for this
+        - this module is just an exporter, so it does not
+          need to 'use Moose' (thanks to Tomas Doran)
+
+    - fixed some spelling and grammar errors
+      (thanks to ben hengst and Brad Bowman)
+
+    * Bread::Board::Service::WithParameters
+        - parameters attribute now has a builder instead
+          of a default, so as to allow better tweaking
+          in subclasses (thanks to Andre Walker)
+            - added tests for this
+
 0.20 Wed. June 13, 2011
     * Bread::Board::Lifecycle::Singleton
         - fix bug in singletons with circular
