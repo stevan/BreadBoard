@@ -1,7 +1,6 @@
 Revision history for Perl extension Bread::Board
 
-0.21
-
+0.21 Tues. Sept. 6th, 2011
     * Bread::Board
         - Allow service() and alias() sugar functions to
           return the newly-created objects if the context
