@@ -61,10 +61,41 @@ has 'type_mappings' => (
     lazy    => 1,
     default => sub{ +{} },
     handles => {
-        'get_type_mapping_for' => 'get',
-        'has_type_mapping_for' => 'exists',
+        '_get_type_mapping_for' => 'get',
+        '_has_type_mapping_for' => 'exists',
+        '_mapped_types'         => 'keys',
     }
 );
+
+sub get_type_mapping_for {
+    my $self = shift;
+    my ($type) = @_;
+
+    return $self->_get_type_mapping_for($type)
+        if $self->_has_type_mapping_for($type);
+
+    for my $possible ($self->_mapped_types) {
+        return $self->_get_type_mapping_for($possible)
+            if $possible->isa($type);
+    }
+
+    return;
+}
+
+sub has_type_mapping_for {
+    my $self = shift;
+    my ($type) = @_;
+
+    return 1
+        if $self->_has_type_mapping_for($type);
+
+    for my $possible ($self->_mapped_types) {
+        return 1
+            if $possible->isa($type);
+    }
+
+    return;
+}
 
 sub add_service {
     my ($self, $service) = @_;
