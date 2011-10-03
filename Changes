@@ -1,6 +1,9 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+    - When inferring a service for a type, allow subclasses to fulfill
+      discovered types.
+    - Converted to Dist::Zilla
 
 0.21 Tues. Sept. 6th, 2011
     * Bread::Board
