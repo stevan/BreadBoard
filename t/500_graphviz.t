@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     eval 'use Bread::Board::GraphViz; 1' or
@@ -11,9 +11,9 @@ BEGIN {
 my $example_board = do('t/lib/graphable.bb');
 
 my $g = Bread::Board::GraphViz->new;
-lives_ok {
+is(exception {
     $g->add_container($example_board);
-} 'adding works';
+}, undef, 'adding works');
 
 is_deeply [ sort map { $_->name } $g->services ], [
     sort qw/config_file dsn logger database login login template_dir name/,

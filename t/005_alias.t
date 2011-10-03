@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 
 use Bread::Board;
 
@@ -176,7 +176,7 @@ use Bread::Board;
 
 {
     my $c;
-    lives_ok {
+    is(exception {
         $c = container 'MyApp' => as {
             alias 'foo' => 'doesnt_exist';
 
@@ -189,37 +189,37 @@ use Bread::Board;
             alias 'e' => 'f';
             alias 'f' => 'd';
         };
-    } "bad aliases don't die on creation";
+    }, undef, "bad aliases don't die on creation");
 
-    throws_ok {
+    like(exception {
         $c->resolve(service => 'foo');
-    } qr/^While resolving alias foo: Could not find container or service for doesnt_exist in MyApp/,
-      "error when aliasing to something that doesn't exist";
-    throws_ok {
+    }, qr/^While resolving alias foo: Could not find container or service for doesnt_exist in MyApp/,
+      "error when aliasing to something that doesn't exist");
+    like(exception {
         $c->resolve(service => 'a');
-    } qr/^Cycle detected in aliases/,
-      "error with self-referencing aliases";
-    throws_ok {
+    }, qr/^Cycle detected in aliases/,
+      "error with self-referencing aliases");
+    like(exception {
         $c->resolve(service => 'b');
-    } qr/^Cycle detected in aliases/,
-      "error with circular aliases";
-    throws_ok {
+    }, qr/^Cycle detected in aliases/,
+      "error with circular aliases");
+    like(exception {
         $c->resolve(service => 'd');
-    } qr/^Cycle detected in aliases/,
-      "error with circular aliases with larger cycles";
+    }, qr/^Cycle detected in aliases/,
+      "error with circular aliases with larger cycles");
 
-    throws_ok {
+    like(exception {
         $c->fetch('a');
-    } qr/^Cycle detected in aliases/,
-      "error with self-referencing aliases";
-    throws_ok {
+    }, qr/^Cycle detected in aliases/,
+      "error with self-referencing aliases");
+    like(exception {
         $c->fetch('b');
-    } qr/^Cycle detected in aliases/,
-      "error with circular aliases";
-    throws_ok {
+    }, qr/^Cycle detected in aliases/,
+      "error with circular aliases");
+    like(exception {
         $c->fetch('d');
-    } qr/^Cycle detected in aliases/,
-      "error with circular aliases with larger cycles";
+    }, qr/^Cycle detected in aliases/,
+      "error with circular aliases with larger cycles");
 }
 
 {

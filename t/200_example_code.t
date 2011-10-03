@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('Bread::Board');
@@ -55,7 +55,7 @@ BEGIN {
 }
 
 my $c;
-lives_ok {
+is(exception {
     $c = Bread::Board::Container->new( name => 'Application' );
 
     $c->add_service(
@@ -89,12 +89,12 @@ lives_ok {
         )
     );
 
-} '... container compiled successfully';
+}, undef, '... container compiled successfully');
 
 my $authenticator;
-lives_ok {
+is(exception {
     $authenticator = $c->resolve( service => 'authenticator' )
-} '... and the container compiled correctly';
+}, undef, '... and the container compiled correctly');
 
 
 isa_ok($authenticator, 'MyAuthenticator');

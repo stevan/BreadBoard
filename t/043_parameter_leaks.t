@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 6;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('Bread::Board');
@@ -40,9 +40,9 @@ my $c = container 'MyApp' => as {
 
     {
         my $foo;
-        lives_ok {
+        is(exception {
             $foo = $c->resolve( service => 'foo', parameters => { bar => $bar } );
-        } '... got the service correctly';
+        }, undef, '... got the service correctly');
         isa_ok($foo, 'Foo');
         is($foo->bar, $bar, '... got the right parameter value');
     }

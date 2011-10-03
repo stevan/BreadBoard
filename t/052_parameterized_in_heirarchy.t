@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('Bread::Board');
@@ -41,13 +41,13 @@ isa_ok($db_conn_info, 'Bread::Board::Container');
 my $db = $utils->fetch('Utils/Database');
 isa_ok($db, 'Bread::Board::Container::Parameterized');
 
-dies_ok {
+isnt(exception {
     $utils->fetch('Utils/Database')->fetch('handle');
-} '... cannot fetch on a parameterized container';
+}, undef, '... cannot fetch on a parameterized container');
 
-dies_ok {
+isnt(exception {
     $utils->fetch('Utils/Database/handle');
-} '... cannot fetch within a parameterized container';
+}, undef, '... cannot fetch within a parameterized container');
 
 my $dbh = $db->create( DBConnInfo => $db_conn_info )->resolve( service => 'handle' );
 isa_ok($dbh, 'My::Database::Handle');

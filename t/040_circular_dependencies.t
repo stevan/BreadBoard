@@ -5,7 +5,6 @@ use warnings;
 
 use Test::More tests => 25;
 use Test::Moose;
-use Test::Exception;
 
 BEGIN {
     use_ok('Bread::Board');

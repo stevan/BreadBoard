@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More tests => 28;
 use Test::Moose;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('Bread::Board::SetterInjection');
@@ -85,17 +85,14 @@ is_deeply($params->{stash}, { isa => 'Mexican::Black::Tar' }, '... got the right
 
 ## some errors
 
-dies_ok {
-    $s->get;
-} '... you must supply the required parameters';
+isnt(exception { $s->get }, undef,
+     '... you must supply the required parameters');
 
-dies_ok {
-    $s->get(stash => []);
-} '... you must supply the required parameters as correct types';
+isnt(exception { $s->get(stash => []) }, undef,
+     '... you must supply the required parameters as correct types');
 
-dies_ok {
-    $s->get(stash => Mexican::Black::Tar->new, foo => 10);
-} '... you must supply the required parameters (and no more)';
+isnt(exception { $s->get(stash => Mexican::Black::Tar->new, foo => 10) }, undef,
+     '... you must supply the required parameters (and no more)');
 
 
 

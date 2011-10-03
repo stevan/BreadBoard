@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('Bread::Board');
@@ -51,9 +51,9 @@ my $db_logger = container 'DatabaseLogger' => [ 'DBConnInfo' ] => as {
 };
 isa_ok($db_logger, 'Bread::Board::Container::Parameterized');
 
-dies_ok {
+isnt(exception {
     $db_logger->fetch('handle')
-} '... cannot call fetch on a parameterized container';
+}, undef, '... cannot call fetch on a parameterized container');
 
 my $app = container 'Application' => [ 'Logger' ] => as {
     service 'app' => (
@@ -65,13 +65,13 @@ my $app = container 'Application' => [ 'Logger' ] => as {
 };
 isa_ok($app, 'Bread::Board::Container::Parameterized');
 
-dies_ok {
+isnt(exception {
     $app->fetch('handle')
-} '... cannot call fetch on a parameterized container';
+}, undef, '... cannot call fetch on a parameterized container');
 
-dies_ok {
+isnt(exception {
     $app->resolve( service => 'handle')
-} '... cannot call resolve on a parameterized container';
+}, undef, '... cannot call resolve on a parameterized container');
 
 my $simple_app = $app->create( Logger => $simple_logger );
 isa_ok($simple_app, 'Bread::Board::Container');

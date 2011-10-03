@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::Exception;
 use Test::Moose;
 use Scalar::Util 'blessed';
 
