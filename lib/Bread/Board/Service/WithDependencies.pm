@@ -7,9 +7,6 @@ use Bread::Board::Types;
 use Bread::Board::Service::Deferred;
 use Bread::Board::Service::Deferred::Thunk;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Service';
 
 has 'dependencies' => (
@@ -106,10 +103,6 @@ no Moose::Role; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Service::WithDependencies
 
 =head1 DESCRIPTION
 

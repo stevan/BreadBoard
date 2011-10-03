@@ -5,9 +5,6 @@ use Try::Tiny;
 
 with 'Bread::Board::LifeCycle';
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 has 'instance' => (
     traits    => [ 'NoClone' ],
     is        => 'rw',
@@ -62,10 +59,6 @@ no Moose::Role; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::LifeCycle::Singleton
 
 =head1 DESCRIPTION
 

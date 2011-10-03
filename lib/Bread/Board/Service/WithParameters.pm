@@ -4,9 +4,6 @@ use MooseX::Params::Validate qw(validated_hash);
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Service';
 
 has 'parameters' => (
@@ -77,10 +74,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board::Service::WithParameters
-
 =head1 DESCRIPTION
 
 =head1 METHODS
@@ -92,6 +85,8 @@ Bread::Board::Service::WithParameters
 =item B<parameters>
 
 =item B<has_parameters>
+
+=item B<has_parameter_defaults>
 
 =item B<has_required_parameters>
 

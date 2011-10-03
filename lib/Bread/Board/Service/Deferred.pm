@@ -1,9 +1,6 @@
 package Bread::Board::Service::Deferred;
 use Moose ();
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 use overload
     # cover your basic operatins ...
     'bool' => sub { 1 },
@@ -87,10 +84,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board::Service::Deferred
-
 =head1 DESCRIPTION
 
 No user servicable parts. Read the source if you are interested.
@@ -113,5 +106,14 @@ L<http://www.iinteractive.com>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+=begin Pod::Coverage
+
+can
+isa
+meta
+new
+
+=end Pod::Coverage
 
 =cut

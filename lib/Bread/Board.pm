@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Scalar::Util qw(blessed);
+# ABSTRACT: A solderless way to wire up your application components
 
 use Bread::Board::Types;
 use Bread::Board::ConstructorInjection;
@@ -30,9 +31,6 @@ Moose::Exporter->setup_import_methods(
         infer
     ]],
 );
-
-our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.21';
 
 sub as (&) { $_[0] }
 
@@ -187,10 +185,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board - A solderless way to wire up your application components
-
 =head1 SYNOPSIS
 
   use Bread::Board;
@@ -312,6 +306,10 @@ Want to know more? See the L<Bread::Board::Manual>.
 =item I<infer (?%hints)>
 
 =item I<include ($file)>
+
+=item I<alias ($service_name, $service_path, %service_description)>
+
+=item I<set_root_container ($container)>
 
 =back
 

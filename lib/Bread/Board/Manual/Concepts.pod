@@ -1,8 +1,7 @@
+# PODNAME: Bread::Board::Manual::Concepts
+# ABSTRACT: An overview of the concepts in Bread::Board
+
 =pod
-
-=head1 NAME
-
-Bread::Board::Manual::Concepts - An overview of the concepts in Bread::Board
 
 =head1 INTRODUCTION
 

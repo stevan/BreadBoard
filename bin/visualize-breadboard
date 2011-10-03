@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
+# PODNAME: visualize-breadboard
+# ABSTRACT: script to invoke L<Bread::Board::GraphViz::App>
 
 use FindBin qw($Bin);
 use lib "$Bin/../lib";
@@ -14,10 +16,6 @@ use MooseX::Runnable::Run 'Bread::Board::GraphViz::App';
 __END__
 
 =pod
-
-=head1 NAME
-
-visualize-breadboard - script to invoke L<Bread::Board::GraphViz::App>
 
 =head1 SYNOPSIS
 

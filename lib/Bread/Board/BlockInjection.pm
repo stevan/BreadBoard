@@ -1,9 +1,6 @@
 package Bread::Board::BlockInjection;
 use Moose;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Service::WithParameters',
      'Bread::Board::Service::WithDependencies';
 
@@ -33,10 +30,6 @@ no Moose; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::BlockInjection
 
 =head1 DESCRIPTION
 

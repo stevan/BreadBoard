@@ -1,9 +1,7 @@
+# PODNAME: Bread::Board::Manual::Concepts::Advanced
+# ABSTRACT: An overview of some of the more advanced Bread::Board concepts
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Manual::Concepts::Advanced - An overview of some of the more advanced Bread::Board concepts
 
 =head1 INTRODUCTION
 

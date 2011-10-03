@@ -1,9 +1,6 @@
 package Bread::Board::Service::Deferred::Thunk;
 use Moose;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 has 'thunk' => (
     traits   => [ 'Code' ],
     is       => 'bare',
@@ -19,10 +16,6 @@ has 'thunk' => (
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Service::Deferred::Thunk
 
 =head1 DESCRIPTION
 

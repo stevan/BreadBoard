@@ -1,9 +1,6 @@
 package Bread::Board::Traversable;
 use Moose::Role;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'MooseX::Clone';
 
 has 'parent' => (
@@ -98,10 +95,6 @@ no Moose::Role; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Traversable
 
 =head1 SYNOPSIS
 

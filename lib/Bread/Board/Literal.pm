@@ -1,9 +1,6 @@
 package Bread::Board::Literal;
 use Moose;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Service';
 
 has 'value' => (
@@ -21,10 +18,6 @@ no Moose; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Literal
 
 =head1 DESCRIPTION
 

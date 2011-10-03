@@ -1,9 +1,6 @@
 package Bread::Board::Dumper;
 use Moose;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 sub dump {
     my ($self, $thing, $indent) = @_;
 
@@ -47,10 +44,6 @@ no Moose; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Dumper
 
 =head1 SYNOPSIS
 

@@ -1,10 +1,8 @@
 package Bread::Board::Container::Parameterized;
 use Moose;
+# ABSTRACT: A parameterized container
 
 use Bread::Board::Container;
-
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
 
 with 'Bread::Board::Traversable';
 
@@ -81,10 +79,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board::Container::Parameterized - A parameterized container
-
 =head1 DESCRIPTION
 
 =head1 ATTRIBUTES
@@ -125,5 +119,12 @@ L<http://www.iinteractive.com>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+=begin Pod::Coverage
+
+fetch
+resolve
+
+=end Pod::Coverage
 
 =cut

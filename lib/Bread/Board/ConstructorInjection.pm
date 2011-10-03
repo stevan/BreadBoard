@@ -5,9 +5,6 @@ use Try::Tiny;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Service::WithClass',
      'Bread::Board::Service::WithParameters',
      'Bread::Board::Service::WithDependencies';
@@ -39,10 +36,6 @@ no Moose; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::ConstructorInjection
 
 =head1 DESCRIPTION
 

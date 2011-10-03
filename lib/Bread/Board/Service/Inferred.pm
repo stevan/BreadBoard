@@ -2,9 +2,6 @@ package Bread::Board::Service::Inferred;
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 use Try::Tiny;
 use Bread::Board::Types;
 use Bread::Board::ConstructorInjection;
@@ -216,15 +213,19 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board::Service::Inferred
-
 =head1 DESCRIPTION
 
 CAUTION, EXPERIMENTAL FEATURE.
 
 Docs to come, as well as refactoring.
+
+=head1 METHODS
+
+=over 4
+
+=item B<infer_service>
+
+=back
 
 =head1 BUGS
 

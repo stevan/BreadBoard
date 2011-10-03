@@ -3,9 +3,6 @@ use Moose::Role;
 
 with 'Bread::Board::LifeCycle';
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 has 'instances' => (
     traits    => [ 'Hash', 'NoClone' ],
     is        => 'rw',
@@ -53,10 +50,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board::LifeCycle::Singleton::WithParameters
-
 =head1 DESCRIPTION
 
 =head1 METHODS
@@ -91,5 +84,11 @@ L<http://www.iinteractive.com>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+=begin Pod::Coverage
+
+generate_instance_key
+
+=end Pod::Coverage
 
 =cut

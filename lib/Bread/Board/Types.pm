@@ -6,9 +6,6 @@ use Scalar::Util qw(blessed);
 use Bread::Board::Service;
 use Bread::Board::Dependency;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 enum 'Bread::Board::Service::LifeCycles' => qw[
     Null
     Singleton
@@ -102,10 +99,6 @@ no Moose::Util::TypeConstraints; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Types
 
 =head1 DESCRIPTION
 

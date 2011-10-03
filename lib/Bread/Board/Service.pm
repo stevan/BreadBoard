@@ -1,9 +1,6 @@
 package Bread::Board::Service;
 use Moose::Role;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Traversable';
 
 has 'name' => (
@@ -77,10 +74,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board::Service
-
 =head1 DESCRIPTION
 
 =head1 METHODS
@@ -98,6 +91,10 @@ Bread::Board::Service
 =item B<lifecycle>
 
 =item B<get>
+
+=item B<init_params>
+
+=item B<param>
 
 =back
 

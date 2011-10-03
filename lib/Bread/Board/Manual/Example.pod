@@ -1,8 +1,7 @@
+# PODNAME: Bread::Board::Manual::Example
+# ABSTRACT: A set of examples of Bread::Board usage
+
 =pod
-
-=head1 NAME
-
-Bread::Board::Manual::Example - A set of examples of Bread::Board usage
 
 =head1 DESCRIPTION
 

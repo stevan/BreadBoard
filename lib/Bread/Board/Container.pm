@@ -5,9 +5,6 @@ use MooseX::Params::Validate;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Traversable';
 
 has 'name' => (
@@ -185,10 +182,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Bread::Board::Container
-
 =head1 DESCRIPTION
 
 =head1 METHODS
@@ -224,6 +217,12 @@ Bread::Board::Container
 =item B<fetch ( $service_name )>
 
 =item B<resolve ( ?service => $service_name, ?type => $type, ?parameters => { ... } )>
+
+=item B<add_type_mapping_for ( $type_name, $service )>
+
+=item B<get_type_mapping_for ( $type_name )>
+
+=item B<has_type_mapping_for ( $type_name )>
 
 =back
 

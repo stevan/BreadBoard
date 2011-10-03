@@ -3,9 +3,6 @@ use Moose::Role;
 
 use Bread::Board::Types;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Service';
 
 has 'class' => (
@@ -23,10 +20,6 @@ no Moose::Role; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Service::WithClass
 
 =head1 DESCRIPTION
 

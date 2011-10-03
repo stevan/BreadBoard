@@ -1,10 +1,8 @@
 package Bread::Board::GraphViz::App;
 use Moose;
+# ABSTRACT: display a L<Bread::Board>'s dependency graph
 
 use Bread::Board::GraphViz;
-
-our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.21';
 
 with 'MooseX::Runnable';
 
@@ -32,10 +30,6 @@ no Moose; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::GraphViz::App - display a L<Bread::Board>'s dependency graph
 
 =head1 SYNOPSIS
 

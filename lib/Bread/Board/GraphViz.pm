@@ -1,14 +1,12 @@
 package Bread::Board::GraphViz;
 use Moose;
+# ABSTRACT: visualize L<Bread::Board> dependency graphs
 
 use Data::Visitor::Callback;
 use GraphViz;
 use List::Util qw(reduce);
 use MooseX::Types::Set::Object;
 use Set::Object qw(set);
-
-our $AUTHORITY = 'cpan:STEVAN';
-our $VERSION   = '0.21';
 
 # edges is built incrementally, as a user may provide many "root" containers
 has 'edges' => (
@@ -123,10 +121,6 @@ no Moose; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::GraphViz - visualize L<Bread::Board> dependency graphs
 
 =head1 SYNOPSIS
 

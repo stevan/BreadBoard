@@ -8,23 +8,23 @@ use Test::Moose;
 use Test::Exception;
 
 BEGIN {
-    use_ok('Bread::Board::SetterInjection');    
-    use_ok('Bread::Board::Literal');        
+    use_ok('Bread::Board::SetterInjection');
+    use_ok('Bread::Board::Literal');
 }
 
 {
     package Needle;
     use Moose;
-    
+
     package Mexican::Black::Tar;
     use Moose;
-    
+
     package Addict;
     use Moose;
-    
+
     has 'needle' => (is => 'rw');
     has 'spoon'  => (is => 'rw');
-    has 'stash'  => (is => 'rw');        
+    has 'stash'  => (is => 'rw');
 }
 
 my $s = Bread::Board::SetterInjection->new(
@@ -32,7 +32,7 @@ my $s = Bread::Board::SetterInjection->new(
     class => 'Addict',
     dependencies => {
         needle => Bread::Board::SetterInjection->new(name => 'spike', class => 'Needle'),
-        spoon  => Bread::Board::Literal->new(name => 'works', value => 'Spoon!'),        
+        spoon  => Bread::Board::Literal->new(name => 'works', value => 'Spoon!'),
     },
     parameters => {
         stash => { isa => 'Mexican::Black::Tar' }
@@ -54,7 +54,7 @@ does_ok($s, 'Bread::Board::Service');
 
 
     {
-        my $i2 = $s->get(stash => Mexican::Black::Tar->new);    
+        my $i2 = $s->get(stash => Mexican::Black::Tar->new);
         isnt($i, $i2, '... calling it again returns an new object');
     }
 }

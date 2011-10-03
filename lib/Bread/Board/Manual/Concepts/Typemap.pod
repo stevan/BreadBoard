@@ -1,9 +1,7 @@
+# PODNAME: Bread::Board::Manual::Concepts::Typemap
+# ABSTRACT: An overview of the typemapping feature
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Manual::Concepts::Typemap - An overview of the typemapping feature
 
 =head1 INTRODUCTION
 

@@ -3,9 +3,6 @@ use Moose;
 
 use Bread::Board::Service;
 
-our $VERSION   = '0.21';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'Bread::Board::Traversable';
 
 has 'service_path' => (
@@ -52,10 +49,6 @@ no Moose; 1;
 __END__
 
 =pod
-
-=head1 NAME
-
-Bread::Board::Dependency
 
 =head1 DESCRIPTION
 
