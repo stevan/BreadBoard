@@ -7,6 +7,8 @@ with 'Bread::Board::Service::WithClass',
      'Bread::Board::Service::WithParameters',
      'Bread::Board::Service::WithDependencies';
 
+has '+class' => (required => 1);
+
 sub get {
     my $self = shift;
     my $o = $self->class->new;

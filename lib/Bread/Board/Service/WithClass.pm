@@ -6,13 +6,15 @@ use Bread::Board::Types;
 with 'Bread::Board::Service';
 
 has 'class' => (
-    is       => 'rw',
-    isa      => 'Str',
-    required => 1,
+    is        => 'rw',
+    isa       => 'Str',
+    predicate => 'has_class',
 );
 
 before 'get' => sub {
-    Class::MOP::load_class((shift)->class)
+    my $self = shift;
+    Class::MOP::load_class($self->class)
+        if $self->has_class;
 };
 
 no Moose::Role; 1;

@@ -2,7 +2,8 @@ package Bread::Board::BlockInjection;
 use Moose;
 
 with 'Bread::Board::Service::WithParameters',
-     'Bread::Board::Service::WithDependencies';
+     'Bread::Board::Service::WithDependencies',
+     'Bread::Board::Service::WithClass';
 
 has 'block' => (
     is       => 'rw',
@@ -10,16 +11,9 @@ has 'block' => (
     required => 1,
 );
 
-has 'class' => (
-    is        => 'rw',
-    isa       => 'Str',
-    predicate => 'has_class'
-);
-
 
 sub get {
     my $self = shift;
-    Class::MOP::load_class($self->class) if $self->has_class;
     $self->block->($self)
 }
 

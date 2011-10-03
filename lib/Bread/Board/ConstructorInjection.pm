@@ -16,6 +16,8 @@ has 'constructor_name' => (
     builder  => '_build_constructor_name',
 );
 
+has '+class' => (required => 1);
+
 sub _build_constructor_name {
     my $self = shift;
 
