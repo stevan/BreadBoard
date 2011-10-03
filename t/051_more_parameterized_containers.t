@@ -5,9 +5,7 @@ use warnings;
 
 use Test::More;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package My::Form;
@@ -161,8 +159,3 @@ is_deeply(
 );
 
 done_testing;
-
-
-
-
-

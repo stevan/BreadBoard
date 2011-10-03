@@ -7,9 +7,7 @@ use Test::More;
 use Test::Fatal;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package Desk;

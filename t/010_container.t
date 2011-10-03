@@ -3,14 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 22;
+use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board::Container');
-    use_ok('Bread::Board::ConstructorInjection');
-    use_ok('Bread::Board::Literal');
-}
+use Bread::Board::Container;
+use Bread::Board::ConstructorInjection;
+use Bread::Board::Literal;
 
 my $c = Bread::Board::Container->new(name => '/');
 isa_ok($c, 'Bread::Board::Container');
@@ -94,6 +92,4 @@ is($app->name, 'Application', '... got the right container');
     is($service->parent, $model, '... the parent of the service is the model');
 }
 
-
-
-
+done_testing;

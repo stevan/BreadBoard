@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 10;
+use Test::More;
 use Test::Fatal;
 
 use Bread::Board;
@@ -46,3 +46,5 @@ like(exception { depends_on() },
      qr/^Undefined subroutine &main::depends_on called/);
 like(exception { wire_names() },
      qr/^Undefined subroutine &main::wire_names called/);
+
+done_testing;

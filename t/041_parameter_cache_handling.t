@@ -3,12 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More tests => 7;
+use Test::More;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package Foo;
@@ -52,10 +50,4 @@ is(exception {
 isa_ok($bar, 'Bar');
 is($bar->foo, 20, '... got the right parameter value');
 
-
-
-
-
-
-
-
+done_testing;

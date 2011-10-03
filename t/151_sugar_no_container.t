@@ -6,9 +6,7 @@ use warnings;
 use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package FileLogger;
@@ -75,4 +73,4 @@ my $bunyan = $c->resolve( service => 'paul_bunyan' );
 isa_ok($bunyan, 'FileLogger');
 is($bunyan, $logger, 'standalone alias works.');
 
-done_testing();
+done_testing;

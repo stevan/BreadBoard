@@ -4,12 +4,10 @@ use strict;
 use warnings;
 use FindBin;
 
-use Test::More tests => 10;
+use Test::More;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 
 like(exception { local $SIG{__WARN__} = sub { }; include "$FindBin::Bin/lib/bad.bb" },
@@ -58,9 +56,4 @@ isa_ok($app, 'MyApplication');
 isa_ok($app->logger, 'FileLogger');
 is($app->logger, $logger, '... got the right logger (singleton)');
 
-
-
-
-
-
-
+done_testing;

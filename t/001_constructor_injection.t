@@ -3,14 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 31;
+use Test::More;
 use Test::Moose;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board::ConstructorInjection');
-    use_ok('Bread::Board::Literal');
-}
+use Bread::Board::ConstructorInjection;
+use Bread::Board::Literal;
 
 {
     package Needle;
@@ -109,5 +107,4 @@ isnt(exception {
     $s->get(stash => Mexican::Black::Tar->new, foo => 10);
 }, undef, '... you must supply the required parameters (and no more)');
 
-
-
+done_testing;

@@ -6,9 +6,7 @@ use warnings;
 use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package Bar::Role;
@@ -70,4 +68,3 @@ BEGIN {
 }
 
 done_testing;
-

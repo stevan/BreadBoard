@@ -6,9 +6,7 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package My::Simple::Logger;
@@ -84,5 +82,3 @@ isa_ok($db_app, 'Bread::Board::Container');
 isa_ok($db_app->resolve( service => 'app' )->log_handle, 'My::Database::Logger');
 
 done_testing;
-
-

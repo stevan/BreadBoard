@@ -3,15 +3,13 @@
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board::Container');
-    use_ok('Bread::Board::ConstructorInjection');
-    use_ok('Bread::Board::BlockInjection');
-    use_ok('Bread::Board::Literal');
-}
+use Bread::Board::Container;
+use Bread::Board::ConstructorInjection;
+use Bread::Board::BlockInjection;
+use Bread::Board::Literal;
 
 {
     package DBH;
@@ -56,9 +54,4 @@ does_ok($s, 'Bread::Board::Service');
 my $dbh = $s->get;
 isa_ok($dbh, 'DBH');
 
-
-
-
-
-
-
+done_testing;

@@ -6,9 +6,7 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package My::Database::Handle;
@@ -53,5 +51,3 @@ my $dbh = $db->create( DBConnInfo => $db_conn_info )->resolve( service => 'handl
 isa_ok($dbh, 'My::Database::Handle');
 
 done_testing;
-
-

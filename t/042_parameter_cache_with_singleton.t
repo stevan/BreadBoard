@@ -3,13 +3,11 @@
 use strict;
 use warnings;
 
-use Test::More tests => 27;
+use Test::More;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board');
-    use_ok('Bread::Board::LifeCycle::Singleton::WithParameters');
-}
+use Bread::Board;
+use Bread::Board::LifeCycle::Singleton::WithParameters;
 
 {
     package Foo;
@@ -83,11 +81,4 @@ is($foo, $foo4, '... they are the same instances (same params)');
 isnt($foo, $foo5, '... they are the same instances (same params)');
 isnt($foo3, $foo5, '... they are the same instances (same params)');
 
-
-
-
-
-
-
-
-
+done_testing;

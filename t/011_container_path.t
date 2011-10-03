@@ -3,14 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 16;
+use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board::Container');
-    use_ok('Bread::Board::ConstructorInjection');
-    use_ok('Bread::Board::Literal');
-}
+use Bread::Board::Container;
+use Bread::Board::ConstructorInjection;
+use Bread::Board::Literal;
 
 my $c = Bread::Board::Container->new(
     name           => 'Application',
@@ -83,10 +81,4 @@ is($dsn, $model->fetch('../Model/schema/dsn'), '... navigated to dsn');
 
 is($model, $dsn->fetch('../Model'), '... got the model from the dsn');
 
-
-
-
-
-
-
-
+done_testing;

@@ -3,11 +3,9 @@
 use strict;
 use warnings;
 
-use Test::More tests => 14;
+use Test::More;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package FileLogger;
@@ -96,4 +94,4 @@ is($app->logger, $logger, '... got the right logger (singleton)');
 isa_ok($app->dbh, 'DBI');
 isnt($app->dbh, $dbh, '... got a different dbh');
 
-
+done_testing;

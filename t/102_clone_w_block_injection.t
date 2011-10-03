@@ -3,12 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More tests => 21;
+use Test::More;
 use Scalar::Util qw(refaddr);
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package Test::Class;
@@ -74,4 +72,4 @@ is($board2->fetch('/app/dep')->get(), 2, '... got correct dep');
 is($board2->fetch('/app/test')->get()->dep, 2, '... test uses dep');
 is(refaddr $board2->fetch('/app/test')->parent, refaddr $board2, '... got the right board');
 
-
+done_testing;

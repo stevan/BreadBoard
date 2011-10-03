@@ -6,9 +6,7 @@ use warnings;
 use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package My::Foo;
@@ -52,4 +50,3 @@ BEGIN {
 }
 
 done_testing;
-

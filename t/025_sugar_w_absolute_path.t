@@ -3,12 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More tests => 14;
+use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 my $c = container 'Application' => as {
     container 'Model' => as {
@@ -67,3 +65,5 @@ is($model, $model->fetch('../Application/Model'), '... navigated back to myself'
 is($dsn, $model->fetch('../Model/schema/dsn'), '... navigated to dsn');
 
 is($model, $dsn->fetch('../Model'), '... got the model from the dsn');
+
+done_testing;

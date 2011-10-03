@@ -6,30 +6,28 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board');
+use Bread::Board;
 
-    use_ok('Bread::Board::Types');
+use Bread::Board::Types;
 
-    # roles
-    use_ok('Bread::Board::Service');
-    use_ok('Bread::Board::Service::WithClass');
-    use_ok('Bread::Board::Service::WithDependencies');
-    use_ok('Bread::Board::Service::WithParameters');
+# roles
+use Bread::Board::Service;
+use Bread::Board::Service::WithClass;
+use Bread::Board::Service::WithDependencies;
+use Bread::Board::Service::WithParameters;
 
-    # services
-    use_ok('Bread::Board::ConstructorInjection');
-    use_ok('Bread::Board::SetterInjection');
-    use_ok('Bread::Board::BlockInjection');
-    use_ok('Bread::Board::Literal');
+# services
+use Bread::Board::ConstructorInjection;
+use Bread::Board::SetterInjection;
+use Bread::Board::BlockInjection;
+use Bread::Board::Literal;
 
-    use_ok('Bread::Board::Container');
-    use_ok('Bread::Board::Dependency');
+use Bread::Board::Container;
+use Bread::Board::Dependency;
 
-    use_ok('Bread::Board::Traversable');
+use Bread::Board::Traversable;
 
-    use_ok('Bread::Board::LifeCycle::Singleton');
-}
+use Bread::Board::LifeCycle::Singleton;
 
 {
     package MyLogger;
@@ -103,6 +101,3 @@ isa_ok($authenticator->logger, 'MyLogger');
 
 
 done_testing;
-
-
-

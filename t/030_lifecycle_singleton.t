@@ -3,14 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 32;
+use Test::More;
 use Test::Moose;
 
-BEGIN {
-    use_ok('Bread::Board::ConstructorInjection');
-    use_ok('Bread::Board::LifeCycle::Singleton');
-    use_ok('Bread::Board::Literal');
-}
+use Bread::Board::ConstructorInjection;
+use Bread::Board::LifeCycle::Singleton;
+use Bread::Board::Literal;
 
 {
     package Needle;
@@ -110,3 +108,4 @@ is($s->lifecycle, 'Singleton', '... got the right lifecycle');
     }
 }
 
+done_testing;

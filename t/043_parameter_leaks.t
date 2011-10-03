@@ -3,12 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package Foo;
@@ -54,6 +52,4 @@ my $c = container 'MyApp' => as {
 
 is($Bar::BAR_DEMOLISH_COUNT, 1, '... it should be one');
 
-
-
-
+done_testing;

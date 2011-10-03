@@ -7,10 +7,8 @@ use Test::More;
 use Test::Moose;
 use Scalar::Util 'blessed';
 
-BEGIN {
-    use_ok('Bread::Board::BlockInjection');
-    use_ok('Bread::Board::Literal');
-}
+use Bread::Board::BlockInjection;
+use Bread::Board::Literal;
 
 my $s = Bread::Board::BlockInjection->new(
     name  => 'NoClass',

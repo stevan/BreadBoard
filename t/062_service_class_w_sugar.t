@@ -3,11 +3,9 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More;
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package My::LoggerService;
@@ -61,9 +59,4 @@ isa_ok($app, 'MyApplication');
 isa_ok($app->logger, 'FileLogger');
 is($app->logger, $logger, '... got the right logger (singleton)');
 
-
-
-
-
-
-
+done_testing;

@@ -3,12 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More tests => 17;
+use Test::More;
 use Scalar::Util qw(refaddr);
 
-BEGIN {
-    use_ok('Bread::Board');
-}
+use Bread::Board;
 
 {
     package Test::Class;
@@ -65,6 +63,4 @@ is($board2->fetch('/app/test')->get, $board2->fetch('/app/test')->get, '... got 
 
 isnt($board->fetch('/app/test')->get, $board2->fetch('/app/test')->get, '... singleton are not shared');
 
-
-
-
+done_testing;
