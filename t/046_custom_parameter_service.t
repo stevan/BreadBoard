@@ -25,7 +25,7 @@ our $params;
     package MyCustomWithParametersService;
     use Moose::Role;
     with 'Bread::Board::Service::WithParameters'
-        =>  { excludes => '_build_parameters' };
+        =>  { -excludes => '_build_parameters' };
 
     sub _build_parameters {
         {
