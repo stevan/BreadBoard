@@ -1,6 +1,14 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+    * Bread::Board::Container
+        - make sure to clone subcontainers
+
+    * Bread::Board::Traversable
+        - add some errors, be a little more
+          defensive
+
+0.23  2011-10-14
     * Bread::Board::Container::Parameterized
         - retain control of names of the generated
           containers, so if your the container being
