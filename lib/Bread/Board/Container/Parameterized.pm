@@ -62,7 +62,12 @@ sub create {
                  . (join "" => @allowed_names)
                  . ")";
 
-    my $clone = $self->container->clone( name => join "|" => $self->name, @given_names );
+
+    my $clone = $self->container->clone(
+        name => ($self->container->name eq $self->name
+                    ? join "|" => $self->name, @given_names
+                    : $self->container->name)
+    );
 
     foreach my $key ( @given_names ) {
         $clone->add_sub_container(
