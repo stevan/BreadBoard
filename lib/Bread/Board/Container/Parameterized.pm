@@ -22,10 +22,7 @@ has 'container' => (
     is      => 'ro',
     isa     => 'Bread::Board::Container',
     lazy    => 1,
-    default => sub {
-        my $self = shift;
-        Bread::Board::Container->new( name => $self->name )
-    },
+    builder => '_build_container',
     handles => [qw[
         add_service
         get_service
@@ -40,6 +37,11 @@ has 'container' => (
         has_sub_containers
     ]]
 );
+
+sub _build_container {
+    my $self = shift;
+    Bread::Board::Container->new( name => $self->name )
+}
 
 sub fetch   { die "Cannot fetch from a parameterized container";   }
 sub resolve { die "Cannot resolve from a parameterized container"; }
