@@ -488,17 +488,4 @@ This article is based on an article I wrote for The Perl Journal
 about my earlier L<IOC> module. That article can be found online
 at L<http://www.drdobbs.com/windows/184416179>.
 
-=head1 AUTHOR
-
-Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2010-2011 Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
 =cut

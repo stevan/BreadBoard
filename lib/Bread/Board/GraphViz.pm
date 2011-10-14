@@ -136,7 +136,7 @@ L<GraphViz>
 
 L<GraphViz::HasA>
 
-=head1 AUTHOR
+=head1 AUTHOR (actual)
 
 Jonathan Rockway - C<< <jrockway@cpan.org> >>
 
@@ -145,18 +145,5 @@ Jonathan Rockway - C<< <jrockway@cpan.org> >>
 All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
-
-=head1 AUTHOR
-
-Jonathan Rockway - C<< <jrockway@cpan.org> >>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2011 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

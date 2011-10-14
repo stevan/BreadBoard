@@ -1,8 +1,6 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
-
-0.23
     * Bread::Board::Container::Parameterized
         - retain control of names of the generated
           containers, so if your the container being
