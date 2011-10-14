@@ -33,7 +33,7 @@ has 'services' => (
 );
 
 has 'sub_containers' => (
-    traits    => [ 'Hash' ],
+    traits    => [ 'Hash', 'Clone' ],
     is        => 'rw',
     isa       => 'Bread::Board::Container::SubContainerList',
     coerce    => 1,
