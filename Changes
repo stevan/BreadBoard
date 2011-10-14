@@ -2,6 +2,24 @@ Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
 
+0.23
+    * Bread::Board::Container::Parameterized
+        - retain control of names of the generated
+          containers, so if your the container being
+          generated has a name, it keeps it.
+            - this makes these containers more
+              addressable when composed into
+              higher level containers
+            - this helps when subclassing
+              parameterized containers
+        - switch the generated containers to be
+          created with builder instead of default
+            - also helps when subclassing
+              parameterized containers as well
+
+    * t/046_custom_parameter_service.t
+        - fixing the error about Moose deprecations
+
 0.22  2011-10-03
     - When inferring a service for a type, allow subclasses to fulfill
       discovered types.
