@@ -2,7 +2,9 @@ Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
     * Bread::Board::Container
-        - make sure to clone subcontainers
+        - make sure to clone subcontainers,
+          this is necessary for parameterized
+          containers to retain their connections
 
     * Bread::Board::Traversable
         - add some errors, be a little more
