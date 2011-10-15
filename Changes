@@ -1,6 +1,8 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+
+0.24  2011-10-15
     * Bread::Board::Container
         - make sure to clone subcontainers,
           this is necessary for parameterized
