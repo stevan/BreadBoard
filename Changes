@@ -1,6 +1,8 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+
+0.25  2011-10-20
     * Bread::Board
         - the container sugar was misbehaving
           (since April 2010 apparently), so
