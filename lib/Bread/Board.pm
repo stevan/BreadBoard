@@ -47,16 +47,35 @@ sub container ($;$$) {
 
     my $c;
     if ( scalar @_ == 0 ) {
-        return $name if $name_is_obj;
-        return Bread::Board::Container->new(
-            name => $name
-        );
+        if ( $name_is_obj ) {
+            # this is basically:
+            # container( A::Bread::Boad::Container->new )
+            # which should work
+            $c = $name;
+        }
+        else {
+            # otherwise it is just
+            # someone using &container
+            # as a constructor
+            return Bread::Board::Container->new(
+                name => $name
+            );
+        }
     }
+    # if we have one more arg
+    # then we have block to
+    # follow us, that we want
+    # to use to create stuff
+    # with.
     elsif ( scalar @_ == 1 ) {
         $c = $name_is_obj
             ? $name
             : Bread::Board::Container->new( name => $name );
     }
+    # if we have even more
+    # then we are a parameterized
+    # container, so we need to
+    # act accordingly
     else {
         confess 'container($object, ...) is not supported for parameterized containers'
             if $name_is_obj;
@@ -66,15 +85,30 @@ sub container ($;$$) {
             allowed_parameter_names => $param_names,
         )
     }
-    my $body = shift;
+
+    # now, if we are here, then
+    # we obviously have something
+    # more to contribute to the
+    # container world ...
+
+    # if we already have a root
+    # container, then we are a
+    # subcontainer of it ...
     if (defined $CC) {
         $CC->add_sub_container($c);
     }
+
+
+    my $body = shift;
+    # if we have more arguments
+    # then they are likely a body
+    # and so we should execute it
     if (defined $body) {
         local $_  = $c;
         local $CC = $c;
         $body->($c);
     }
+
     return $c;
 }
 
