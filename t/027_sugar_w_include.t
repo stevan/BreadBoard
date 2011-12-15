@@ -19,7 +19,7 @@ like(exception { include "$FindBin::Bin/lib/doesnt_exist.bb" },
      "we get appropriate errors for files that don't exist");
 
 like(exception { include "$FindBin::Bin/lib/false.bb" },
-     qr/Unknown error when compiling .*/,
+     qr/compiles to false/,
      "we get appropriate errors for files that evaluate to false");
 
 {
