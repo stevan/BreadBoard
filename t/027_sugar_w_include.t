@@ -18,6 +18,10 @@ like(exception { include "$FindBin::Bin/lib/doesnt_exist.bb" },
      qr/Couldn't open.*doesnt_exist\.bb.*for reading/,
      "we get appropriate errors for files that don't exist");
 
+like(exception { include "$FindBin::Bin/lib/false.bb" },
+     qr/Unknown error when compiling .*/,
+     "we get appropriate errors for files that evaluate to false");
+
 {
     package FileLogger;
     use Moose;

@@ -49,7 +49,7 @@ sub container ($;$$) {
     if ( scalar @_ == 0 ) {
         if ( $name_is_obj ) {
             # this is basically:
-            # container( A::Bread::Boad::Container->new )
+            # container( A::Bread::Board::Container->new )
             # which should work
             $c = $name;
         }
@@ -138,7 +138,8 @@ sub service ($@) {
             $s = $params{service_class}->new(name => $name, %params);
         }
         else {
-            my $type   = $params{service_type} || (exists $params{block} ? 'Block' : 'Constructor');
+            my $type = $params{service_type};
+            $type = (exists $params{block} ? 'Block' : 'Constructor') unless $type;
             $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
         }
     }
