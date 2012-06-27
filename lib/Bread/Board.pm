@@ -363,6 +363,10 @@ for this module.
 
 =over 4
 
+=item L<Bread::Board::Declare>
+
+This provides more powerful syntax for writing Bread::Board container classes.
+
 =item L<IOC>
 
 Bread::Board is basically my re-write of IOC.
