@@ -35,8 +35,19 @@ my $c = container 'MyApp';
 
 Bread::Board::set_root_container($c);
 
-my $exception = exception{ Bread::Board::set_root_container($c) };
-like $exception, qr/^Cannot set the root container/, 'cannot set root container twice';
+is exception { Bread::Board::set_root_container($c) }, undef,
+   "setting the root container multiple times works";
+
+is exception { Bread::Board::set_root_container(undef) }, undef,
+   "setting the root container to undef works";
+
+container $c => as {
+    like exception { Bread::Board::set_root_container(undef) },
+         qr/Can't set the root container when we're already in a container/,
+         "can't set the root container from inside a container";
+};
+
+Bread::Board::set_root_container($c);
 
 loggers(); # reuse baby !!!
 

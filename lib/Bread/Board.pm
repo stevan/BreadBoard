@@ -35,9 +35,11 @@ Moose::Exporter->setup_import_methods(
 sub as (&) { $_[0] }
 
 our $CC;
+our $in_container;
 
 sub set_root_container {
-    (defined $CC && confess "Cannot set the root container, CC is already defined $CC");
+    confess "Can't set the root container when we're already in a container"
+        if $in_container;
     $CC = shift;
 }
 
@@ -112,6 +114,7 @@ sub container ($;$$) {
     if (defined $body) {
         local $_  = $c;
         local $CC = $c;
+        local $in_container = 1;
         $body->($c);
     }
 
