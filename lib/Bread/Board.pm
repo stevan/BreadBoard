@@ -445,13 +445,67 @@ The above is identical to:
 
 =item I<typemap ($type, $service | $service_path)>
 
+This feature is new (read: experimental).
+
+This creates a type mapping for the named type. Typically, it is paired with the C<infer> call like so:
+
+  typemap 'MyApp::Model::UserAccount' => infer;
+
+For more details on what type mapping is and how it works, see L<Bread::Board::Manual::Concepts::Typemap>.
+
 =item I<infer (?%hints)>
+
+This is used with C<typemap> to help create the typemap inference. It can be used with no arguments to do everything automatically. However, in some cases, you may want to pass a service instance as the argument or a hash of service arguments to change how the type map works. For example, if your type needs to be constructed using a setter injection, you can use an inference similar to this:
+
+  typemap 'MyApp::Model::UserPassword' => infer( service_class => 'Bread::Board::SetterInjection' );
+
+For more details on what type mapping is and how it works, see L<Bread::Board::Manual::Concepts::Typemap>.
 
 =item I<include ($file)>
 
+This is a shortcut for loading another Bread::Board configuration from another file. 
+
+  include "filename.pl";
+
+The above pretty much identical to running:
+
+  do "filename.pl";
+
+However, you might find it more readable to use C<include>.
+
 =item I<alias ($service_name, $service_path, %service_description)>
 
+This helper allows for the creation of service aliases, which allows you to define a service in one place and then res-use that service with a different name somewhere else. This is sort of like a symbolic link for services. Aliases will be resolved recursively, so an alias can alias an alias.
+
+For example,
+
+  service file_logger => (
+      class => 'MyApp::Logger::File',
+  );
+
+  alias my_logger => 'file_logger';
+
+=back
+
+=head1 OTHER FUNCTIONS
+
+These are not exported, but might be helpful to you.
+
+=over 4
+
 =item I<set_root_container ($container)>
+
+You may use this to set a top-level root container for all container definitions. 
+
+For example,
+
+  my $app = container MyApp => as { ... };
+
+  Bread::Board::set_root_container($app);
+
+  my $config = container Config => as { ... };
+
+Here the C<$config> container would be created as a sub-container of C<$app>.
 
 =back
 
