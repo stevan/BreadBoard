@@ -49,13 +49,14 @@ like( $exception, qr/^The service class must do the Bread::Board::Service role/,
 
 
 $exception = exception{ typemap ('Type') };
-like( $exception, qr/^typemap has one argu/, 'exception begins with: typemap has one argu' );
+like( $exception, qr/^typemap takes a single argument/,
+      "exception begins with: typemap takes a single argument" );
 
 
-$exception = exception{ 
+$exception = exception{
     typemap ('Type', MyNonService->new)
 };
-like( $exception, qr/doesn't do Bread::Board::Service/, 'exception contains: doesn\'t do Bread::Board::Service' );
+like( $exception, qr/isn't a service/, "exception contains: isn't a service" );
 
 
 done_testing;

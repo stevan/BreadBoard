@@ -126,7 +126,8 @@ sub include ($) {
     else {
         confess "Couldn't compile $file: $@" if $@;
         confess "Couldn't open $file for reading: $!" if $!;
-        confess "$file compiles to false.";
+        confess "Unknown error when compiling $file "
+              . "(or $file doesn't return a true value)";
     }
 }
 
@@ -145,12 +146,13 @@ sub service ($@) {
         }
         else {
             my $type = $params{service_type};
-            $type = (exists $params{block} ? 'Block' : 'Constructor') unless $type;
+            $type = exists $params{block} ? 'Block' : 'Constructor'
+                unless defined $type;
             $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
         }
     }
     else {
-        confess "A service is defined by a name and either a single value or hash of\nparameters, you have supplied neither with:\n\t@_";
+        confess "A service is defined by a name and either a single value or hash of parameters; you have supplied neither";
     }
     return $s unless defined $CC;
     $CC->add_service($s);
@@ -174,7 +176,7 @@ sub typemap ($@) {
     my $type = shift;
 
     (scalar @_ == 1)
-        || confess "typemap has one argument at a time";
+        || confess "typemap takes a single argument";
 
     my $service;
     if (blessed $_[0]) {
@@ -185,7 +187,7 @@ sub typemap ($@) {
             $service = $_[0]->infer_service( $type );
         }
         else {
-            confess $_[0] . " doesn't do Bread::Board::Service and isn't a Bread::Board::Service::Inferred. No idea what to do with it.";
+            confess $_[0] . " isn't a service";
         }
     }
     else {
