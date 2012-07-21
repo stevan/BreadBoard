@@ -43,13 +43,19 @@ sub set_root_container {
 
 sub container ($;$$) {
     my $name        = shift;
-    my $name_is_obj = blessed $name && $name->isa('Bread::Board::Container') ? 1 : 0;
+
+    my $name_is_obj = 0;
+    if (blessed $name){
+        confess 'an object used as a container must inherit from Bread::Board::Container'
+            unless $name->isa('Bread::Board::Container');
+        $name_is_obj = 1;
+    }
 
     my $c;
     if ( scalar @_ == 0 ) {
         if ( $name_is_obj ) {
             # this is basically:
-            # container( A::Bread::Boad::Container->new )
+            # container( A::Bread::Board::Container->new )
             # which should work
             $c = $name;
         }
@@ -120,7 +126,7 @@ sub include ($) {
     else {
         confess "Couldn't compile $file: $@" if $@;
         confess "Couldn't open $file for reading: $!" if $!;
-        confess "Unknown error when compiling $file";
+        confess "$file compiles to false.";
     }
 }
 
@@ -138,12 +144,13 @@ sub service ($@) {
             $s = $params{service_class}->new(name => $name, %params);
         }
         else {
-            my $type   = $params{service_type} || (exists $params{block} ? 'Block' : 'Constructor');
+            my $type = $params{service_type};
+            $type = (exists $params{block} ? 'Block' : 'Constructor') unless $type;
             $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
         }
     }
     else {
-        confess "I don't understand @_";
+        confess "A service is defined by a name and either a single value or hash of\nparameters, you have supplied neither with:\n\t@_";
     }
     return $s unless defined $CC;
     $CC->add_service($s);
@@ -167,7 +174,7 @@ sub typemap ($@) {
     my $type = shift;
 
     (scalar @_ == 1)
-        || confess "Too many (or too few) arguments to typemap";
+        || confess "typemap has one argument at a time";
 
     my $service;
     if (blessed $_[0]) {
@@ -178,7 +185,7 @@ sub typemap ($@) {
             $service = $_[0]->infer_service( $type );
         }
         else {
-            confess "No idea what to do with a " . $_[0];
+            confess $_[0] . " doesn't do Bread::Board::Service and isn't a Bread::Board::Service::Inferred. No idea what to do with it.";
         }
     }
     else {

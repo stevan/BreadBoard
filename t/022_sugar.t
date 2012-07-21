@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Fatal;
 
 use Bread::Board;
 
@@ -33,6 +34,9 @@ sub loggers {
 my $c = container 'MyApp';
 
 Bread::Board::set_root_container($c);
+
+my $exception = exception{ Bread::Board::set_root_container($c) };
+like $exception, qr/^Cannot set the root container/, 'cannot set root container twice';
 
 loggers(); # reuse baby !!!
 
