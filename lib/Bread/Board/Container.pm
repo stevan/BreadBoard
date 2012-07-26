@@ -1,5 +1,5 @@
 package Bread::Board::Container;
-# ABSTRACT: entity containing services and other containers
+# ABSTRACT: A container for services and other containers
 
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';

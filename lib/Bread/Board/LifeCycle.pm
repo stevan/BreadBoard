@@ -2,6 +2,7 @@ package Bread::Board::LifeCycle;
 # ABSTRACT: base lifecycle role 
 
 use Moose::Role;
+# ABSTRACT: Interface for service life cycle classes
 
 no Moose::Role; 1;
 

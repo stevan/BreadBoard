@@ -2,6 +2,7 @@ package Bread::Board::Literal;
 # ABSTRACT: service providing a literal value
 
 use Moose;
+# ABSTRACT: Non-lazy services returning a literal scalar or reference
 
 with 'Bread::Board::Service';
 

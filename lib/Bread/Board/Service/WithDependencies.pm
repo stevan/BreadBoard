@@ -2,6 +2,7 @@ package Bread::Board::Service::WithDependencies;
 # ABSTRACT: service role for recursively resolving dependencies
 
 use Moose::Role;
+# ABSTRACT: Services with dependencies
 
 use Try::Tiny;
 

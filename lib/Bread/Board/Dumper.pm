@@ -2,6 +2,7 @@ package Bread::Board::Dumper;
 # ABSTRACT: utility for dumping a Bread::Board object's information
 
 use Moose;
+# ABSTRACT: Pretty printer for seeing the layout of your Bread::Board
 
 sub dump {
     my ($self, $thing, $indent) = @_;
