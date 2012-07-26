@@ -1,5 +1,6 @@
 package Bread::Board::Literal;
 use Moose;
+# ABSTRACT: Non-lazy services returning a literal scalar or reference
 
 with 'Bread::Board::Service';
 

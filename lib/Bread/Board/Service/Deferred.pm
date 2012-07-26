@@ -1,5 +1,6 @@
 package Bread::Board::Service::Deferred;
 use Moose ();
+# ABSTRACT: Helper for holding a service that is not quite constructed yet
 
 use overload
     # cover your basic operatins ...

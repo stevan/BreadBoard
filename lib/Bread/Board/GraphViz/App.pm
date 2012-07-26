@@ -1,6 +1,6 @@
 package Bread::Board::GraphViz::App;
 use Moose;
-# ABSTRACT: display a L<Bread::Board>'s dependency graph
+# ABSTRACT: Display a L<Bread::Board>'s dependency graph
 
 use Bread::Board::GraphViz;
 

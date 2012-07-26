@@ -1,5 +1,6 @@
 package Bread::Board::Service::WithClass;
 use Moose::Role;
+# ABSTRACT: Services with class
 
 use Bread::Board::Types;
 

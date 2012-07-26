@@ -1,5 +1,6 @@
 package Bread::Board::LifeCycle::Singleton::WithParameters;
 use Moose::Role;
+# ABSTRACT: Define services that are constructed once with parameters and reused
 
 with 'Bread::Board::LifeCycle';
 

@@ -1,5 +1,6 @@
 package Bread::Board::Service::Deferred::Thunk;
 use Moose;
+# ABSTRACT: Helper for using services with incomplete parameters
 
 has 'thunk' => (
     traits   => [ 'Code' ],

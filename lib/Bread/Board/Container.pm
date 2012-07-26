@@ -2,6 +2,7 @@ package Bread::Board::Container;
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Params::Validate;
+# ABSTRACT: A container for services and other containers
 
 use Bread::Board::Types;
 

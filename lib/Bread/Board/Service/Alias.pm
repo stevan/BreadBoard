@@ -1,5 +1,6 @@
 package Bread::Board::Service::Alias;
 use Moose;
+# ABSTRACT: Symbolic links for services
 
 use Try::Tiny;
 

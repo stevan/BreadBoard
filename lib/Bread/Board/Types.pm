@@ -1,5 +1,6 @@
 package Bread::Board::Types;
 use Moose::Util::TypeConstraints;
+# ABSTRACT: Repository of Moose types used by Bread::Board
 
 use Scalar::Util qw(blessed);
 

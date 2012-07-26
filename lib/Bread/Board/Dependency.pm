@@ -1,5 +1,6 @@
 package Bread::Board::Dependency;
 use Moose;
+# ABSTRACT: Links one service to another lazily
 
 use Bread::Board::Service;
 

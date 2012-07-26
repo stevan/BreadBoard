@@ -1,6 +1,6 @@
 package Bread::Board::GraphViz;
 use Moose;
-# ABSTRACT: visualize L<Bread::Board> dependency graphs
+# ABSTRACT: Visualize L<Bread::Board> dependency graphs
 
 use Data::Visitor::Callback;
 use GraphViz;
