@@ -313,10 +313,10 @@ whose service is already resolved to that service.
 
 =head2 Hierarchal Containers
 
-Up until now, we have see basic containers which only have a single
-level of components. As you application grows larger it may become
+Up until now, we have seen basic containers which only have a single
+level of components. As your application grows larger it may become
 useful to have a more hierarchal approach to your containers.
-Bread::Board::Container supports this behavior through it's many
+Bread::Board::Container supports this behavior through its many
 subcontainer methods. Here is an example of how we might re-arrange
 the previous examples using subcontainers.
 
@@ -325,7 +325,7 @@ the previous examples using subcontainers.
   my $db_c = Bread::Board::Container->new( name => 'database' );
   $db_c->add_service(
       Bread::Board::BlockInjection->new(
-          name  => 'connection'
+          name  => 'db_conn'
           block => sub {
               my $s = shift;
               return DBI->connect(
@@ -410,9 +410,9 @@ the previous examples using subcontainers.
       )
   );
 
-So as can be seen above, hierarchal containers can be used as a
-form of namespacing to better organize your Bread::Board
-configuration. As is shown with the 'authenticator' service,
+So, as an example that can be seen above, hierarchal containers can be used as a
+form of namespacing to organize your Bread::Board
+configuration better. As it is shown with the 'authenticator' service,
 it is possible to address services outside of your container
 using path notation. In this case the 'authenticator' service
 makes the assumption that it's parent container has both a
@@ -432,7 +432,7 @@ Bread::Board configuration using the sugar layer.
   my $c = container 'app' => as {
 
       container 'database' => as {
-          service 'connection' => (
+          service 'db_conn' => (
               block => sub {
                   my $s = shift;
                   return DBI->connect(
