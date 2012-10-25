@@ -3,6 +3,9 @@ use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Params::Validate;
 
+use namespace::autoclean;
+use Class::Load 0.20 'load_class';
+
 use Bread::Board::Types;
 
 use namespace::autoclean;
@@ -174,6 +177,12 @@ sub resolve {
         confess "Cannot call resolve without telling it what to resolve.";
     }
 
+}
+
+sub dump {
+    my $self = shift;
+
+    load_class('Bread::Board::Dumper')->new->dump( $self );
 }
 
 __PACKAGE__->meta->make_immutable;
