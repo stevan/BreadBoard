@@ -52,6 +52,8 @@ $c->add_sub_container(
 my $app = $c->get_sub_container('Application');
 isa_ok($app, 'Bread::Board::Container');
 
+ok ! $app->can('find_type_constraint'), 'can not find_type_constraint';
+
 is($app->name, 'Application', '... got the right container');
 
 {
