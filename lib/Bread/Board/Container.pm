@@ -3,7 +3,12 @@ use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Params::Validate;
 
+use namespace::autoclean;
+use Class::Load 0.20 'load_class';
+
 use Bread::Board::Types;
+
+use namespace::autoclean;
 
 with 'Bread::Board::Traversable';
 
@@ -174,9 +179,15 @@ sub resolve {
 
 }
 
+sub dump {
+    my $self = shift;
+
+    load_class('Bread::Board::Dumper')->new->dump( $self );
+}
+
 __PACKAGE__->meta->make_immutable;
 
-no Moose; 1;
+1;
 
 __END__
 
