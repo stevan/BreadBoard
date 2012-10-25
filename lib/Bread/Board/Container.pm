@@ -5,6 +5,8 @@ use MooseX::Params::Validate;
 
 use Bread::Board::Types;
 
+use namespace::autoclean;
+
 with 'Bread::Board::Traversable';
 
 has 'name' => (
@@ -176,7 +178,7 @@ sub resolve {
 
 __PACKAGE__->meta->make_immutable;
 
-no Moose; 1;
+1;
 
 __END__
 
