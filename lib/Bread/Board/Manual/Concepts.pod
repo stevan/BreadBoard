@@ -111,7 +111,7 @@ container, a database connection.
   );
 
 Now lets add an authenticator to our container. The authenticator
-requires both a database connection and a logger instance in it's
+requires both a database connection and a logger instance in its
 constructor. We specify dependency relationships between services
 by providing a HASH of Bread::Board::Dependency objects which
 themselves have a path to the services they depend upon. In this
@@ -196,7 +196,7 @@ not adapt itself well to perl.
 
 =item Block Injection
 
-While not in the 'official' 3 types (mostly because its not
+While not in the 'official' 3 types (mostly because it's not
 possible in Java), but found in a few Ruby IoC frameworks,
 BlockInjection is by far the most versatile type. It simply
 requires a subroutine and a name and you do all the rest of
@@ -415,7 +415,7 @@ form of namespacing to organize your Bread::Board
 configuration better. As it is shown with the 'authenticator' service,
 it is possible to address services outside of your container
 using path notation. In this case the 'authenticator' service
-makes the assumption that it's parent container has both a
+makes the assumption that its parent container has both a
 'database' and a 'logging' sub-container and they contain a
 'db_conn' and 'logger' service respectively. And as is shown
 in the 'app' service, it is also possible to address services

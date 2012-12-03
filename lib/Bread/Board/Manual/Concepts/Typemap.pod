@@ -9,7 +9,7 @@ A new (read: experimental) feature of Bread::Board is typemapped services.
 These are services which are mapped to a particular type rather then just
 a name. This feature has the potential to make obsolete a large amount of the
 Bread::Board configuration by simply asking Bread::Board to figure things
-out on it's own. Here is a small example of how this works.
+out on its own. Here is a small example of how this works.
 
   # define the classes making sure
   # to specify required items and
