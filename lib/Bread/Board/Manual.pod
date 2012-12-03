@@ -29,18 +29,18 @@ is intended to help you manage this twisty maze and remove the need
 for you to manage this manually.
 
 Take your typical Catalyst application, the Catalyst framework
-itself contains it's own mini IoC framework through the
+itself contains its own mini IoC framework through the
 component subsystem. Catalyst will manage your models and views
 making sure that they will be available when you need them in
 the controllers. Catalyst makes all this easy to manage through
-it's configuration system. This is great inside your Catalyst
+its configuration system. This is great inside your Catalyst
 application, but what about outside of it? Any sufficiently
 complex web application will have a set of scripts and/or
 command-line applications to help support it. At this point
 you are left to your own devices and must manage these
 components and their dependency chains on your own.
 
-By decoupling IoC into it's own stand-alone subsystem it
+By decoupling IoC into its own stand-alone subsystem it
 becomes possible to get that same ease-of-use you get inside
 something like a Catalyst application, outside of it.
 

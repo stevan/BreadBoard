@@ -27,7 +27,7 @@ next few releases, for now I need to get this one out the door.
 =head2 Subclassing
 
 Bread::Board was built from the very start to be an open system and
-to allow for the subclassing of all it's internal components.
+to allow for the subclassing of all its internal components.
 
 Here is a simple example of extending L<Bread::Board::Container> to
 build a container specific to your application.
