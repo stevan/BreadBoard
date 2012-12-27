@@ -22,7 +22,7 @@ $board->add_service(
         name  => 'test',
         class => 'Test::Class',
         dependencies => {
-            dep => Bread::Board::Dependency->new(service_path => '/app/dep'),
+            dep => Bread::Board::Dependency->new(service_path => '/dep'),
         },
     )
 );
@@ -60,12 +60,12 @@ isnt($board->get_service('dep'), $board2->get_service('dep'), '... not the same 
 
 # test them ...
 
-is($board->fetch('/app/dep')->get(), 1, '... got correct dep');
-is($board->fetch('/app/test')->get()->dep, 1, '... test uses dep');
-is(refaddr $board->fetch('/app/test')->parent, refaddr $board, '... got the right board');
+is($board->fetch('/dep')->get(), 1, '... got correct dep');
+is($board->fetch('/test')->get()->dep, 1, '... test uses dep');
+is(refaddr $board->fetch('/test')->parent, refaddr $board, '... got the right board');
 
-is($board2->fetch('/app/dep')->get(), 2, '... got correct dep');
-is($board2->fetch('/app/test')->get()->dep, 2, '... test uses dep');
-is(refaddr $board2->fetch('/app/test')->parent, refaddr $board2, '... got the right board');
+is($board2->fetch('/dep')->get(), 2, '... got correct dep');
+is($board2->fetch('/test')->get()->dep, 2, '... test uses dep');
+is(refaddr $board2->fetch('/test')->parent, refaddr $board2, '... got the right board');
 
 done_testing;

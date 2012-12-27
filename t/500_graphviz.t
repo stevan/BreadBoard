@@ -24,15 +24,15 @@ sub cmp_edges {
 }
 
 is_deeply [ sort cmp_edges map { [$_->{from}, $_->{to}] } $g->edges ], [
-    ['/MyApp/config/config_file' => '/MyApp/name' ],
-    ['/MyApp/config/dsn'         => '/MyApp/config/config_file'],
-    ['/MyApp/config/dsn'         => '/MyApp/logger'],
-    ['/MyApp/database'           => '/MyApp/config/dsn'],
-    ['/MyApp/database'           => '/MyApp/logger'],
-    ['/MyApp/pages/login'        => '/MyApp/database'],
-    ['/MyApp/pages/login'        => '/MyApp/logger'],
-    ['/MyApp/pages/login'        => '/MyApp/templates/login'],
-    ['/MyApp/templates/login'    => '/MyApp/config/template_dir'],
+    ['/config/config_file' => '/name' ],
+    ['/config/dsn'         => '/config/config_file'],
+    ['/config/dsn'         => '/logger'],
+    ['/database'           => '/config/dsn'],
+    ['/database'           => '/logger'],
+    ['/pages/login'        => '/database'],
+    ['/pages/login'        => '/logger'],
+    ['/pages/login'        => '/templates/login'],
+    ['/templates/login'    => '/config/template_dir'],
 ], 'added all the edges';
 
 done_testing;

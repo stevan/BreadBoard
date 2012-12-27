@@ -15,7 +15,7 @@ container 'MyApp' => as {
 
     container 'config' => as {
         service 'config_file' => (
-            dependencies => [ depends_on('/MyApp/name') ],
+            dependencies => [ depends_on('/name') ],
             lifecycle    => 'Singleton',
             block        => sub {},
         );
@@ -27,7 +27,7 @@ container 'MyApp' => as {
 
         service 'dsn' => (
             lifecycle    => 'Singleton',
-            dependencies => [ depends_on('/MyApp/logger'), depends_on('config_file') ],
+            dependencies => [ depends_on('/logger'), depends_on('config_file') ],
             block        => sub {},
         );
     };
@@ -42,7 +42,7 @@ container 'MyApp' => as {
 
     container 'templates' => as {
         service 'login' => (
-            dependencies => [ depends_on('/MyApp/config/template_dir') ],
+            dependencies => [ depends_on('/config/template_dir') ],
             class        => 'Template',
             block        => sub {},
         );
@@ -52,9 +52,9 @@ container 'MyApp' => as {
         service 'login' => (
             class        => 'Page::Login',
             dependencies =>  [
-                depends_on('/MyApp/templates/login'),
-                depends_on('/MyApp/database'),
-                depends_on('/MyApp/logger'),
+                depends_on('/templates/login'),
+                depends_on('/database'),
+                depends_on('/logger'),
             ],
         );
     };

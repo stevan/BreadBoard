@@ -23,7 +23,7 @@ $board->add_service(
         name      => 'test',
         class     => 'Test::Class',
         dependencies => {
-            dep => Bread::Board::Dependency->new(service_path => '/app/dep'),
+            dep => Bread::Board::Dependency->new(service_path => '/dep'),
         },
     )
 );
@@ -38,7 +38,7 @@ isa_ok($board->get_service('dep'), 'Bread::Board::Literal');
 
 ## check the singleton-ness
 
-is($board->fetch('/app/test')->get, $board->fetch('/app/test')->get, '... got the singleton');
+is($board->fetch('/test')->get, $board->fetch('/test')->get, '... got the singleton');
 
 # clone ...
 
@@ -57,10 +57,10 @@ isnt($board->get_service('dep'), $board2->get_service('dep'), '... not the same 
 
 ## check the singleton-ness
 
-is($board2->fetch('/app/test')->get, $board2->fetch('/app/test')->get, '... got the singleton');
+is($board2->fetch('/test')->get, $board2->fetch('/test')->get, '... got the singleton');
 
 ## check the singleton-less-ness
 
-isnt($board->fetch('/app/test')->get, $board2->fetch('/app/test')->get, '... singleton are not shared');
+isnt($board->fetch('/test')->get, $board2->fetch('/test')->get, '... singleton are not shared');
 
 done_testing;
