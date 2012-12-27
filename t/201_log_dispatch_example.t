@@ -50,7 +50,7 @@ my $c = container 'Logging' => as {
     };
 };
 
-my $logger = $c->resolve( service => 'Logging/Logger' );
+my $logger = $c->resolve( service => 'Logger' );
 isa_ok($logger, 'Log::Dispatch');
 
 my $screen = $logger->output('screen');

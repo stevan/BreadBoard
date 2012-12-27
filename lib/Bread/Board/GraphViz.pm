@@ -39,7 +39,8 @@ has 'visitor' => (
 
 sub service_name {
     my $service = shift;
-    return '' unless $service;
+    return '/' . $service->name
+        if $service->parent == $service->get_root_container;
     return join '/', service_name($service->parent), $service->name;
 }
 

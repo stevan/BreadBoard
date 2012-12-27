@@ -36,15 +36,15 @@ my $db_conn_info = container 'DatabaseConnection' => as {
 };
 isa_ok($db_conn_info, 'Bread::Board::Container');
 
-my $db = $utils->fetch('Utils/Database');
+my $db = $utils->fetch('Database');
 isa_ok($db, 'Bread::Board::Container::Parameterized');
 
 isnt(exception {
-    $utils->fetch('Utils/Database')->fetch('handle');
+    $utils->fetch('Database')->fetch('handle');
 }, undef, '... cannot fetch on a parameterized container');
 
 isnt(exception {
-    $utils->fetch('Utils/Database/handle');
+    $utils->fetch('Database/handle');
 }, undef, '... cannot fetch within a parameterized container');
 
 my $dbh = $db->create( DBConnInfo => $db_conn_info )->resolve( service => 'handle' );

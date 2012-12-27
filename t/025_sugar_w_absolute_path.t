@@ -31,14 +31,14 @@ my $c = container 'Application' => as {
     container 'Controller';
 };
 
-my $model = $c->fetch('Application/Model');
+my $model = $c->fetch('Model');
 isa_ok($model, 'Bread::Board::Container');
 
 
 is($model->name, 'Model', '... got the right model');
 
 {
-    my $model2 = $c->fetch('/Application/Model');
+    my $model2 = $c->fetch('/Model');
     isa_ok($model2, 'Bread::Board::Container');
 
     is($model, $model2, '... they are the same thing');
@@ -50,7 +50,7 @@ isa_ok($dsn, 'Bread::Board::Dependency');
 is($dsn->service_path, 'dsn', '... got the right name');
 
 {
-    my $dsn2 = $c->fetch('/Application/Model/schema/dsn');
+    my $dsn2 = $c->fetch('/Model/schema/dsn');
     isa_ok($dsn2, 'Bread::Board::Dependency');
 
     is($dsn, $dsn2, '... they are the same thing');
@@ -61,7 +61,7 @@ isa_ok($root, 'Bread::Board::Container');
 
 is($root, $c, '... got the same container');
 
-is($model, $model->fetch('../Application/Model'), '... navigated back to myself');
+is($model, $model->fetch('../Model'), '... navigated back to myself');
 is($dsn, $model->fetch('../Model/schema/dsn'), '... navigated to dsn');
 
 is($model, $dsn->fetch('../Model'), '... got the model from the dsn');
