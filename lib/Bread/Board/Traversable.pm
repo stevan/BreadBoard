@@ -82,7 +82,19 @@ sub _get_container_or_service {
     # get_sub_container and get_service is implemented in Container
     # there must be a better way to do this
 
-    if ($c->isa('Bread::Board::Container')) {
+    if ($c->does('Bread::Board::Service')) {
+        if ($c->name eq $name) {
+            warn "Traversing into the current service ($name) is deprecated."
+               . " You should remove the $name component from the path.";
+            return $c;
+        }
+    }
+    elsif ($c->isa('Bread::Board::Container')) {
+        if ($c->name eq $name) {
+            warn "Traversing into the current container ($name) is deprecated;"
+               . " you should remove the $name component from the path";
+            return $c;
+        }
         return $c->get_sub_container($name) if $c->has_sub_container($name);
         return $c->get_service($name)       if $c->has_service($name);
     }
