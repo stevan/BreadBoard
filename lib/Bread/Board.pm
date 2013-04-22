@@ -548,6 +548,11 @@ it.
 Matt "mst" Trout, for finally coming up with the best name
 for this module.
 
+=head1 ARTICLES
+
+L<Bread::Board is the right tool for this job|http://domm.plix.at/perl/2013_04_bread_board_is_the_right_rool_for_this_job.html>
+Thomas Klausner showing a use-case for Bread::Board.
+
 =head1 SEE ALSO
 
 =over 4
