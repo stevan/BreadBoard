@@ -1,5 +1,6 @@
 package Bread::Board::Service;
 use Moose::Role;
+# ABSTRACT: Infrastructure used by all services
 
 with 'Bread::Board::Traversable';
 

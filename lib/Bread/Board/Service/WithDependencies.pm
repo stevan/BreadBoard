@@ -1,5 +1,6 @@
 package Bread::Board::Service::WithDependencies;
 use Moose::Role;
+# ABSTRACT: Services with dependencies
 
 use Try::Tiny;
 

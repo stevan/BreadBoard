@@ -1,5 +1,6 @@
 package Bread::Board::SetterInjection;
 use Moose;
+# ABSTRACT: Lazy service loaded automatically using setter methods
 
 use Bread::Board::Types;
 

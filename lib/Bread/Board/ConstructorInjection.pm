@@ -1,5 +1,6 @@
 package Bread::Board::ConstructorInjection;
 use Moose;
+# ABSTRACT: Lazy service loaded using the object constructor
 
 use Try::Tiny;
 

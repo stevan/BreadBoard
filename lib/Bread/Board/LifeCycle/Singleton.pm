@@ -1,5 +1,6 @@
 package Bread::Board::LifeCycle::Singleton;
 use Moose::Role;
+# ABSTRACT: Define services that are constructed once and reused
 
 use Try::Tiny;
 

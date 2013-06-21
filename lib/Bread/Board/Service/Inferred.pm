@@ -1,6 +1,7 @@
 package Bread::Board::Service::Inferred;
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
+# ABSTRACT: Helper for inferring a service from a Moose object
 
 use Try::Tiny;
 use Bread::Board::Types;

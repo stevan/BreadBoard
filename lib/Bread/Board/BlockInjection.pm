@@ -1,5 +1,6 @@
 package Bread::Board::BlockInjection;
 use Moose;
+# ABSTRACT: Lazy service loaded via custom subroutine
 
 with 'Bread::Board::Service::WithParameters',
      'Bread::Board::Service::WithDependencies',

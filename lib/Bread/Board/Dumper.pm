@@ -1,5 +1,6 @@
 package Bread::Board::Dumper;
 use Moose;
+# ABSTRACT: Pretty printer for seeing the layout of your Bread::Board
 
 sub dump {
     my ($self, $thing, $indent) = @_;

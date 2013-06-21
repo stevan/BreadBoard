@@ -1,5 +1,6 @@
 package Bread::Board::Traversable;
 use Moose::Role;
+# ABSTRACT: Tools for finding a container or service on your Bread::Board
 
 with 'MooseX::Clone';
 
