@@ -74,6 +74,17 @@ sub create {
     my $from_parameterized_meta = find_meta('Bread::Board::Container::FromParameterized');
     $clone = $from_parameterized_meta->rebless_instance($clone);
 
+    if ($self->has_parent) {
+        my $cloned_parent = $self->parent->clone;
+
+        $cloned_parent->sub_containers({
+            %{ $cloned_parent->sub_containers },
+            $self->name => $clone,
+        });
+
+        $clone->parent($cloned_parent);
+    }
+
     foreach my $key ( @given_names ) {
         $clone->add_sub_container(
             $params{ $key }->clone( name => $key )
