@@ -13,8 +13,11 @@ enum 'Bread::Board::Service::LifeCycles' => qw[
 
 ## for Bread::Board::Container
 
+class_type 'Bread::Board::Container';
+class_type 'Bread::Board::Container::Parameterized';
+
 subtype 'Bread::Board::Container::SubContainerList'
-    => as 'HashRef[Bread::Board::Container]';
+    => as 'HashRef[Bread::Board::Container|Bread::Board::Container::Parameterized]';
 
 coerce 'Bread::Board::Container::SubContainerList'
     => from 'ArrayRef[Bread::Board::Container]'
