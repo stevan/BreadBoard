@@ -9,6 +9,6 @@ perl:
 install:
     - cpanm -q --notest Dist::Zilla
     - dzil authordeps --missing | cpanm -q --notest
-    - dzil listdeps --author --missing | cpanm -q --notest
+    - dzil listdeps --author --missing | grep -v GraphViz | cpanm -q --notest
 script:
     - dzil test --all
