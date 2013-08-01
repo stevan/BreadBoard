@@ -573,6 +573,6 @@ Bread::Board is basically my re-write of IOC.
 
 All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+to Github Issues.
 
 =cut
