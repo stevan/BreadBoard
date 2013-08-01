@@ -1,6 +1,17 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+    - allow cloning containers with parameterized subcontainers (Florian
+      Ragwitz, #22)
+    - allow referencing parent services from parameterized subcontainers
+      (Florian Ragwitz, #23)
+    - deprecate special case in path traversal where a path component with the
+      name of the current container was ignored (doy, #20)
+    - fix setting the current container multiple times from outside of a
+      container (doy)
+    - make some error messages more helpful (Jason Galea, #14)
+    - doc improvements (Sterling Hanenkamp, zdk, Philippe Bruhat, and Gabor
+      Szabo; #15, #17, #19, #21)
 
 0.25  2011-10-20
     * Bread::Board
