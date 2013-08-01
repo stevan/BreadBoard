@@ -12,6 +12,7 @@ Revision history for Perl extension Bread::Board
     - make some error messages more helpful (Jason Galea, #14)
     - doc improvements (Sterling Hanenkamp, zdk, Philippe Bruhat, and Gabor
       Szabo; #15, #17, #19, #21)
+    - remove the (unmaintained) Bread::Board::GraphViz
 
 0.25  2011-10-20
     * Bread::Board
