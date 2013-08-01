@@ -55,7 +55,7 @@ Revision history for Perl extension Bread::Board
       discovered types.
     - Converted to Dist::Zilla
 
-0.21 Tues. Sept. 6th, 2011
+0.21 2011-09-06
     * Bread::Board
         - Allow service() and alias() sugar functions to
           return the newly-created objects if the context
@@ -73,13 +73,13 @@ Revision history for Perl extension Bread::Board
           in subclasses (thanks to Andre Walker)
             - added tests for this
 
-0.20 Wed. June 13, 2011
+0.20 2011-06-13
     * Bread::Board::Lifecycle::Singleton
         - fix bug in singletons with circular
           refs (thanks to doy)
             - added tests for this (thanks to perigrin)
 
-0.19 Wed. June 1, 2011
+0.19 2011-06-01
     * Bread::Board::GraphViz
         - added by jrockway, this allows you to visualise
           a Bread::Board system using GraphViz
@@ -102,7 +102,7 @@ Revision history for Perl extension Bread::Board
           prefix (thanks to jasonmay)
             - added tests for this
 
-0.18 Wed. Apr. 13, 2011
+0.18 2011-04-13
     * Bread::Board::Service::WithParameters
         - added has_parameter_defaults method to check
           if a parameter has default values
@@ -111,7 +111,7 @@ Revision history for Perl extension Bread::Board
           we make a Thunk
           - added test for this (thanks to rafl)
 
-0.17 Tues. Feb. 22, 2011
+0.17 2011-02-22
     * Bread::Board::Service::Inferred
       - make recrusive inferrence work
         - add tests for this
@@ -129,7 +129,7 @@ Revision history for Perl extension Bread::Board
         - adjust tests accordingly
         - this should fix RT#64478 as well
 
-0.16 Mon. Jan. 10, 2011
+0.16 2011-01-10
     * Bread::Board::service sugar
       - adding the 'service_class' param for the
         service sugar function which allows you
@@ -153,7 +153,7 @@ Revision history for Perl extension Bread::Board
       - improving the error messages when a container/service
         is not found
 
-0.15 Thurs. Sept. 30, 2010
+0.15 2010-09-30
     * Bread::Board::Service
       - removed the MooseX::Param dependency
         and implemented it internally so that
@@ -193,7 +193,7 @@ Revision history for Perl extension Bread::Board
       - added this to help explain the
         typemap feature
 
-0.14 Tues. Aug. 24, 2010
+0.14 2010-08-24
     * Bread::Board::Container
       - added the ->resolve method to replace
         the ->fetch( $service )->get pattern
@@ -217,7 +217,7 @@ Revision history for Perl extension Bread::Board
     * Bread::Board::Service::Deferred::Thunk
       - added this + tests for it
 
-0.13 Fri. April 23, 2010
+0.13 2010-04-23
     * Bread::Board
       - making the include keyword handle
         compilation errors better (doy)
@@ -235,7 +235,7 @@ Revision history for Perl extension Bread::Board
         Bread::Board to the manual
           - added tests to confirm they work
 
-0.12 Sun. April 18, 2010
+0.12 2010-04-18
     * Bread::Board
       - added the `include` keyword which will evaluate
         an external file within your Bread::Board
@@ -255,11 +255,11 @@ Revision history for Perl extension Bread::Board
       - moved, re-organizad and added too the docs
         that were previously in Bread::Board.pm
 
-0.11 Thu. Mar. 25, 2010
+0.11 2010-03-25
     * Much improved documentation.
     * Fixed inc/ to include all used Module-Install extensions.
 
-0.10 Mon. Feb. 22, 2010
+0.10 2010-02-22
     * Bread::Board
       - import strict and warnings into the caller
         upon import (Florian Ragwitz)
@@ -271,7 +271,7 @@ Revision history for Perl extension Bread::Board
         MooseX::Traits or other things which need an alternately
         named constructor. (Tomas Doran)
 
-0.09 Wed. July 29, 2009
+0.09 2009-07-29
     Add cloning support for containers and services
     (thanks to jrockway for this)
       - adding tests for this
@@ -284,7 +284,7 @@ Revision history for Perl extension Bread::Board
       - fixing a leak where we would hold onto
         parameters that were passed into get()
 
-0.08 Sat. July 18, 2009
+0.08 2009-07-18
     - updating dates on all files
 
     * Bread::Board::LifeCycle::Singleton::WithParameters
@@ -295,14 +295,14 @@ Revision history for Perl extension Bread::Board
     * Bread::Board::Traversable
       - fixed the is_weak_ref mis-spelling
 
-0.07 Wed. Feb. 18, 2009
+0.07 2009-02-18
     - Work with new MooseX::Params::Validate
     - Specify MX::P::Validate version number in Makefile.PL
 
-0.06 Mon. Nov. 3, 2008
+0.06 2008-11-03
     - Forgot to update MANIFEST before uploading to CPAN.
 
-0.05 Mon. Nov. 3, 2008
+0.05 2008-11-03
     - Applied immutablity to classes where applicable, and vigorously unimport
       Moose keywords when they are no longer needed. This results in
       x 2 performance as far as defining a Bread::Board model (Daisuke Maki).
@@ -315,7 +315,7 @@ Revision history for Perl extension Bread::Board
       - Unrolled recursive calls to loops, and removed Sub::Current dependency
         (Daisuke Maki)
 
-0.04 Fri. Oct. 31, 2008
+0.04 2008-10-31
     * Bread::Board
       Bread::Board::Traversable
       - fix root path handling (thanks to Daisuke Maki)
@@ -329,7 +329,7 @@ Revision history for Perl extension Bread::Board
       - fixing the plans so that new versions of
         Test::More stop complaining
 
-0.03 Tues. Jan. 8, 2008
+0.03 2008-01-08
     * Bread::Board::Service::WithParameters
       - fixed the parameter validation to
         use a custom cache key, this is so
@@ -337,9 +337,8 @@ Revision history for Perl extension Bread::Board
         MooseX::Params::Validate
         - added tests for this
 
-0.02 Tues. Jan. 8, 2008
+0.02 2008-01-08
     - forgot a dependency, whoops.
 
-0.01 Mon. Jan. 7, 2008
-    - Out with the old (IOC) and in
-      with the new (Bread::Board)
+0.01 2008-01-07
+    - Out with the old (IOC) and in with the new (Bread::Board)
