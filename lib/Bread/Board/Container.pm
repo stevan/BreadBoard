@@ -1,7 +1,7 @@
 package Bread::Board::Container;
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
-use MooseX::Params::Validate;
+use MooseX::Params::Validate 0.14;
 
 use Bread::Board::Types;
 

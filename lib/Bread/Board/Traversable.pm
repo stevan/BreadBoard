@@ -1,7 +1,7 @@
 package Bread::Board::Traversable;
 use Moose::Role;
 
-with 'MooseX::Clone';
+with 'MooseX::Clone' => { -version => 0.05 };
 
 has 'parent' => (
     is        => 'rw',
