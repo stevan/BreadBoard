@@ -147,4 +147,12 @@ All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 
+=begin Pod::Coverage
+
+  graph
+  name_prefix
+  service_name
+
+=end Pod::Coverage
+
 =cut

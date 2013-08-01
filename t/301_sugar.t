@@ -29,7 +29,7 @@ $exception = exception{ container $c, 'thing1', 'thing2' };
 like( $exception, qr/^container\(\$object, \.\.\.\) is not supported/, 'exception begins with: container($object, ...) is not supported' );
 
 
-$exception = exception{ 
+$exception = exception{
     container 'MyApp' => as { service 'service_name', 'thing1', 'thing2', 'trouble' }
 };
 like( $exception, qr/^A service is defined by/, 'exception begins with: A service is defined by' );
@@ -39,7 +39,7 @@ like( $exception, qr/^A service is defined by/, 'exception begins with: A servic
     use Moose;
 }
 
-$exception = exception{ 
+$exception = exception{
     container 'MyApp' => as {
         service 'service_name',
         'service_class' => 'MyNonService',
