@@ -11,4 +11,4 @@ install:
     - dzil authordeps --missing | cpanm -q --notest
     - dzil listdeps --author --missing | grep -v GraphViz | cpanm -q --notest
 script:
-    - dzil test --all
+    - PERL5LIB=.travis dzil test --all
