@@ -1,6 +1,8 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+
+0.26  2013-08-01
     - allow cloning containers with parameterized subcontainers (Florian
       Ragwitz, #22)
     - allow referencing parent services from parameterized subcontainers
