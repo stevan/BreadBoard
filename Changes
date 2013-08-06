@@ -1,6 +1,8 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+
+0.27  2013-08-06
     - allow the 'container $obj' sugar for parameterized containers (Florian
       Ragwitz, #25)
 
