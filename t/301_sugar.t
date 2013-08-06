@@ -59,4 +59,26 @@ $exception = exception{
 like( $exception, qr/isn't a service/, "exception contains: isn't a service" );
 
 
+{
+    my $parameterized_container = container 'Foo' => ['Bar'] => as {
+        service foo => (
+            block        => sub { shift->param('bar') },
+            dependencies => { bar => 'Bar/bar' },
+        );
+    };
+
+    is exception {
+        container $parameterized_container => as {
+            service moo => (
+                block        => sub { shift->param('foo') },
+                dependencies => [depends_on('foo')],
+            );
+        };
+    }, undef, 'contaner $parameterized_container => as {} succeeds';
+
+    is $parameterized_container->create(Bar => (container Bar => as {
+        service bar => 42;
+    }))->resolve(service => 'moo'), 42, 'container $parameterized_container => as {} modifies underlying container';
+}
+
 done_testing;
