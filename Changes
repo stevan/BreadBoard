@@ -1,6 +1,8 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+    - allow the 'container $obj' sugar for parameterized containers (Florian
+      Ragwitz, #25)
 
 0.26  2013-08-01
     - allow cloning containers with parameterized subcontainers (Florian
