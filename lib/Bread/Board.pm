@@ -48,8 +48,8 @@ sub container ($;$$) {
 
     my $name_is_obj = 0;
     if (blessed $name){
-        confess 'an object used as a container must inherit from Bread::Board::Container'
-            unless $name->isa('Bread::Board::Container');
+        confess 'an object used as a container must inherit from Bread::Board::Container or Bread::Board::Container::Parameterized'
+            unless $name->isa('Bread::Board::Container') || $name->isa('Bread::Board::Container::Parameterized');
         $name_is_obj = 1;
     }
 
