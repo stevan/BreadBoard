@@ -9,6 +9,7 @@ use Test::Moose;
 use Bread::Board::Container;
 use Bread::Board::ConstructorInjection;
 use Bread::Board::Literal;
+use Bread::Board::Dependency;
 
 my $c = Bread::Board::Container->new(name => '/');
 isa_ok($c, 'Bread::Board::Container');
@@ -26,8 +27,8 @@ $c->add_sub_container(
                         class => 'My::App::Schema',
                         dependencies => {
                             dsn  => Bread::Board::Dependency->new(service_path => '../dsn'),
-                            user => Bread::Board::Literal->new(name => 'user', value => ''),
-                            pass => Bread::Board::Literal->new(name => 'pass', value => ''),
+                            user => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'user', value => '')),
+                            pass => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'pass', value => '')),
                         },
                     )
                 ]
@@ -39,7 +40,7 @@ $c->add_sub_container(
                         name  => 'TT',
                         class => 'My::App::View::TT',
                         dependencies => {
-                            tt_include_path => Bread::Board::Literal->new(name => 'include_path',  value => []),
+                            tt_include_path => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'include_path',  value => [])),
                         },
                     )
                 ]
@@ -59,6 +60,7 @@ is($app->name, 'Application', '... got the right container');
     isa_ok($controller, 'Bread::Board::Container');
 
     is($controller->name, 'Controller', '... got the right container');
+
     is($controller->parent, $app, '... app is the parent of the controller');
 
     ok(!$controller->has_services, '... the controller has no services');
@@ -73,7 +75,7 @@ is($app->name, 'Application', '... got the right container');
     ok($view->has_services, '... the veiw has services');
 
     my $service = $view->get_service('TT');
-    does_ok($service, 'Bread::Board::Service');
+    ok($service->does('Bread::Board::Service'), '... this does the Service role');
 
     is($service->parent, $view, '... the parent of the service is the view');
 }
@@ -87,7 +89,7 @@ is($app->name, 'Application', '... got the right container');
     ok($model->has_services, '... the model has services');
 
     my $service = $model->get_service('schema');
-    does_ok($service, 'Bread::Board::Service');
+    ok($service->does('Bread::Board::Service'), '... this does the Service role');
 
     is($service->parent, $model, '... the parent of the service is the model');
 }

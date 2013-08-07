@@ -27,8 +27,6 @@ use Bread::Board::Dependency;
 
 use Bread::Board::Traversable;
 
-use Bread::Board::LifeCycle::Singleton;
-
 {
     package MyLogger;
     use Moose;

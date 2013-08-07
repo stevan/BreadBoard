@@ -1,3 +1,48 @@
+package Bread::Board;
+use v5.16;
+use warnings;
+use mop;
+
+use Carp 'confess';
+use Scalar::Util 'blessed';
+
+role Service with Bread::Board::Traversable {
+    has $name      is rw       = die '$name is required';
+    has $params    is rw, lazy = $_->init_params;
+    has $is_locked is rw       = 0;
+    has $lifecycle;
+
+    method clear_params      { undef $params }
+    method _clear_param ($k) { delete $params->{$k} }
+
+    method init_params { +{} }
+
+    method lifecycle ($cycle) {
+        return $lifecycle if not defined $cycle;
+        confess "punting on the lifecycle stuff for now";
+    }
+
+    method param {
+        return keys %$params      if scalar @_ == 0;
+        return $params->{ $_[0] } if scalar @_ == 1;
+        ((scalar @_ % 2) == 0)
+            || confess "parameter assignment must be an even numbered list";
+        my %new = @_;
+        while (my ($key, $value) = each %new) {
+            $params->{ $key } = $value;
+        }
+        return;
+    }
+
+    method get;
+
+    method lock   { $is_locked = 1 }
+    method unlock { $is_locked = 0 }
+
+}
+
+=pod
+
 package Bread::Board::Service;
 use Moose::Role;
 
@@ -69,6 +114,8 @@ sub lock   { (shift)->is_locked(1) }
 sub unlock { (shift)->is_locked(0) }
 
 no Moose::Role; 1;
+
+=cut
 
 __END__
 

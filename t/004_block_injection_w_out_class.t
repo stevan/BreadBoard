@@ -9,6 +9,7 @@ use Scalar::Util 'blessed';
 
 use Bread::Board::BlockInjection;
 use Bread::Board::Literal;
+use Bread::Board::Dependency;
 
 my $s = Bread::Board::BlockInjection->new(
     name  => 'NoClass',
@@ -17,13 +18,14 @@ my $s = Bread::Board::BlockInjection->new(
         return +{ foo => $s->param('foo') }
     },
     dependencies => {
-        foo => Bread::Board::Literal->new( name => 'foo', value => 'FOO' )
+        foo => Bread::Board::Dependency->new(service => Bread::Board::Literal->new( name => 'foo', value => 'FOO' ))
     }
 );
 isa_ok($s, 'Bread::Board::BlockInjection');
-does_ok($s, 'Bread::Board::Service::WithDependencies');
-does_ok($s, 'Bread::Board::Service::WithParameters');
-does_ok($s, 'Bread::Board::Service');
+ok($s->does('Bread::Board::Service::WithClass'), '... does the WithClass role');
+ok($s->does('Bread::Board::Service::WithDependencies'), '... does the WithDependencies role');
+ok($s->does('Bread::Board::Service::WithParameters'), '... does the WithParameters role');
+ok($s->does('Bread::Board::Service'), '... does the base Service role');
 
 my $x = $s->get;
 ok( !blessed($x), '... the result of the block injection is not blessed');

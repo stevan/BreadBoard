@@ -4,11 +4,11 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::Moose;
 use Test::Fatal;
 
 use Bread::Board::ConstructorInjection;
 use Bread::Board::Literal;
+use Bread::Board::Dependency;
 
 {
     package Needle;
@@ -32,18 +32,18 @@ my $s = Bread::Board::ConstructorInjection->new(
     name  => 'William',
     class => 'Addict',
     dependencies => {
-        needle => Bread::Board::ConstructorInjection->new(name => 'spike', class => 'Needle'),
-        spoon  => Bread::Board::Literal->new(name => 'works', value => 'Spoon!'),
+        needle => Bread::Board::Dependency->new(service => Bread::Board::ConstructorInjection->new(name => 'spike', class => 'Needle')),
+        spoon  => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'works', value => 'Spoon!')),
     },
     parameters => {
         stash => { isa => 'Mexican::Black::Tar' }
     }
 );
 isa_ok($s, 'Bread::Board::ConstructorInjection');
-does_ok($s, 'Bread::Board::Service::WithClass');
-does_ok($s, 'Bread::Board::Service::WithDependencies');
-does_ok($s, 'Bread::Board::Service::WithParameters');
-does_ok($s, 'Bread::Board::Service');
+ok($s->does('Bread::Board::Service::WithClass'), '... does the WithClass role');
+ok($s->does('Bread::Board::Service::WithDependencies'), '... does the WithDependencies role');
+ok($s->does('Bread::Board::Service::WithParameters'), '... does the WithParameters role');
+ok($s->does('Bread::Board::Service'), '... does the base Service role');
 
 {
     my $i = $s->get(stash => Mexican::Black::Tar->new);

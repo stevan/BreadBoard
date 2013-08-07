@@ -10,6 +10,7 @@ use Bread::Board::Container;
 use Bread::Board::ConstructorInjection;
 use Bread::Board::BlockInjection;
 use Bread::Board::Literal;
+use Bread::Board::Dependency;
 
 {
     package DBH;
@@ -24,9 +25,9 @@ my $c = Bread::Board::Container->new(
             name  => 'schema',
             class => 'My::App::Schema',
             dependencies => {
-                dsn  => Bread::Board::Literal->new(name => 'dsn',  value => ''),
-                user => Bread::Board::Literal->new(name => 'user', value => ''),
-                pass => Bread::Board::Literal->new(name => 'pass', value => ''),
+                dsn  => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'dsn',  value => '')),
+                user => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'user', value => '')),
+                pass => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'pass', value => '')),
             },
         ),
         Bread::Board::BlockInjection->new(
@@ -49,7 +50,7 @@ my $c = Bread::Board::Container->new(
 );
 
 my $s = $c->fetch('dbh');
-does_ok($s, 'Bread::Board::Service');
+ok($s->does('Bread::Board::Service'), '... this does the Service role');
 
 my $dbh = $s->get;
 isa_ok($dbh, 'DBH');

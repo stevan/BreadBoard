@@ -1,3 +1,26 @@
+package Bread::Board::Service;
+use v5.16;
+use warnings;
+use mop;
+
+role WithClass with Bread::Board::Service {
+    has $class_name;
+
+    method class ($c) {
+        $class_name = $c if $c;
+        $class_name;
+    }
+
+    method has_class { defined $class_name }
+
+    method get_class {
+        #Module::Runtime::use_package_optimistically( $class )
+        #    if $self->has_class;
+    }
+}
+
+=pod
+
 package Bread::Board::Service::WithClass;
 use Moose::Role;
 
@@ -18,6 +41,8 @@ before 'get' => sub {
 };
 
 no Moose::Role; 1;
+
+=cut
 
 __END__
 

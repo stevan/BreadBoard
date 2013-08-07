@@ -1,3 +1,115 @@
+package Bread::Board;
+use v5.16;
+use warnings;
+use mop;
+
+use Carp 'confess';
+use Scalar::Util 'blessed';
+
+class Container with Bread::Board::Traversable {
+
+    has $name           is rw   = die '$name is required';
+    has $services       is lazy = {};
+    has $sub_containers is lazy = {};
+
+    method new (%args) {
+        if (exists $args{'services'}) {
+            if (ref $args{'services'} eq 'ARRAY') {
+                $args{'services'} = { map { $_->name => $_ } @{$args{'services'}} };
+            }
+        }
+        if (exists $args{'sub_containers'}) {
+            if (ref $args{'sub_containers'} eq 'ARRAY') {
+                $args{'sub_containers'} = { map { $_->name => $_ } @{$args{'sub_containers'}} };
+            }
+        }
+        $class->next::method( %args );
+    }
+
+    submethod BUILD {
+        $_->parent($self) foreach values %$services;
+        $_->parent($self) foreach values %$sub_containers;
+    }
+
+    method services ($_services) {
+        if ($_services) {
+            $_->parent($self) foreach values %$_services;
+            $services = $_services;
+        }
+        $services;
+    }
+
+    method get_service ($name) { $services->{ $name }        }
+    method has_service ($name) { exists $services->{ $name } }
+    method get_service_list    { keys %$services             }
+    method has_services        { scalar keys %$services      }
+
+    method sub_containers ($_sub_containers) {
+        if ($_sub_containers) {
+            $_->parent($self) foreach values %$_sub_containers;
+            $sub_containers = $_sub_containers;
+        }
+        $sub_containers;
+    }
+
+    method get_sub_container ($name) { $sub_containers->{ $name }        }
+    method has_sub_container ($name) { exists $sub_containers->{ $name } }
+    method get_sub_container_list    { keys %$sub_containers             }
+    method has_sub_containers        { scalar keys %$sub_containers      }
+
+    method add_service ($service) {
+        (blessed $service && $service->does('Bread::Board::Service'))
+            || confess "You must pass in a Bread::Board::Service instance, not $service";
+        $service->parent($self);
+        $services->{$service->name} = $service;
+    }
+
+    method add_sub_container ($container) {
+        (
+            blessed $container &&
+            (
+                $container->isa('Bread::Board::Container')
+                ||
+                $container->isa('Bread::Board::Container::Parameterized')
+            )
+        ) || confess "You must pass in a Bread::Board::Container instance, not $container";
+        $container->parent($self);
+        $sub_containers->{$container->name} = $container;
+    }
+
+    method resolve {
+        my (%params) = validated_hash(\@_,
+            service    => { isa => 'Str',     optional => 1 },
+            parameters => { isa => 'HashRef', optional => 1 },
+        );
+
+        my %parameters = exists $params{'parameters'}
+            ? %{ $params{'parameters'} }
+            : ();
+
+        if (my $service_path = $params{'service'}) {
+            my $service = $self->fetch( $service_path );
+            # NOTE:
+            # we might want to allow Bread::Board::Service::Deferred::Thunk
+            # objects as well, but I am not sure that is a valid use case
+            # for this, so for now we just don't go there.
+            # - SL
+            (blessed $service && $service->does('Bread::Board::Service'))
+                || confess "You can only resolve services, "
+                         . (defined $service ? $service : 'undef')
+                         . " is not a Bread::Board::Service";
+            return $service->get( %parameters );
+        }
+        else {
+            confess "Cannot call resolve without telling it what to resolve.";
+        }
+
+    }
+
+}
+
+=pod
+
 package Bread::Board::Container;
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
@@ -183,6 +295,7 @@ no Moose;
 
 __END__
 
+=cut
 =pod
 
 =head1 DESCRIPTION

@@ -9,6 +9,7 @@ use Test::Moose;
 use Bread::Board::Container;
 use Bread::Board::ConstructorInjection;
 use Bread::Board::Literal;
+use Bread::Board::Dependency;
 
 my $c = Bread::Board::Container->new(
     name           => 'Application',
@@ -22,8 +23,8 @@ my $c = Bread::Board::Container->new(
                     class => 'My::App::Schema',
                     dependencies => {
                         dsn  => Bread::Board::Dependency->new(service_path => 'dsn'),
-                        user => Bread::Board::Literal->new(name => 'user', value => ''),
-                        pass => Bread::Board::Literal->new(name => 'pass', value => ''),
+                        user => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'user', value => '')),
+                        pass => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'pass', value => '')),
                     },
                 )
             ]
@@ -35,7 +36,7 @@ my $c = Bread::Board::Container->new(
                     name  => 'TT',
                     class => 'My::App::View::TT',
                     dependencies => {
-                        tt_include_path => Bread::Board::Literal->new(name => 'include_path',  value => []),
+                        tt_include_path => Bread::Board::Dependency->new(service => Bread::Board::Literal->new(name => 'include_path',  value => [])),
                     },
                 )
             ]

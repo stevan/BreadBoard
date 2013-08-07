@@ -1,3 +1,16 @@
+package Bread::Board::Service::Deferred;
+use v5.16;
+use warnings;
+use mop;
+
+class Thunk {
+    has $thunk = die '$thunk is required';
+
+    method inflate { $thunk->( @_ ) }
+}
+
+=pod
+
 package Bread::Board::Service::Deferred::Thunk;
 use Moose;
 
@@ -12,6 +25,8 @@ has 'thunk' => (
 );
 
 1;
+
+=cut
 
 __END__
 

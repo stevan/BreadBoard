@@ -1,3 +1,18 @@
+package Bread::Board;
+use v5.16;
+use warnings;
+use mop;
+
+class Literal with Bread::Board::Service {
+
+    has $value is rw = die '$value is required';
+
+    method get { $value }
+}
+
+
+=pod
+
 package Bread::Board::Literal;
 use Moose;
 
@@ -14,6 +29,8 @@ sub get { (shift)->value }
 __PACKAGE__->meta->make_immutable;
 
 no Moose; 1;
+
+=cut
 
 __END__
 

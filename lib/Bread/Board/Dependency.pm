@@ -1,3 +1,43 @@
+package Bread::Board;
+use v5.16;
+use warnings;
+use mop;
+
+use Carp 'confess';
+use Scalar::Util 'blessed';
+
+use Bread::Board::Service;
+
+class Dependency with Bread::Board::Traversable {
+
+    has $service_path   is ro;
+    has $service_params is ro;    
+    has $service_name   is ro, lazy = $_->_build_service_name;
+    has $service        is ro, lazy = $_->_build_service;
+
+    method has_service_path   { defined $service_path   }
+    method has_service_params { defined $service_params }
+
+    submethod _build_service_name {
+        ($self->has_service_path)
+            || confess "Could not determine service name without service path";
+        (split '/' => $service_path)[-1];
+    }
+
+    submethod _build_service {
+        ($self->has_service_path)
+            || confess "Could not fetch service without service path";
+        $self->fetch($service_path);
+    }
+
+    method get       { $service->get( @_ )       }
+    method is_locked { $service->is_locked( @_ ) }
+    method lock      { $service->lock( @_ )      }
+    method unlock    { $service->unlock( @_ )    }
+}
+
+=pod
+
 package Bread::Board::Dependency;
 use Moose;
 
@@ -45,6 +85,8 @@ has 'service' => (
 __PACKAGE__->meta->make_immutable;
 
 no Moose; 1;
+
+=cut
 
 __END__
 

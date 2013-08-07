@@ -14,7 +14,6 @@ use Bread::Board::Container;
 use Bread::Board::Container::Parameterized;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
-use Bread::Board::Service::Inferred;
 use Bread::Board::Service::Alias;
 
 use Moose::Exporter 1.00;
@@ -27,8 +26,6 @@ Moose::Exporter->setup_import_methods(
         alias
         wire_names
         include
-        typemap
-        infer
     ]],
 );
 
@@ -173,49 +170,6 @@ sub alias ($$@) {
     );
     return $s unless defined $CC;
     $CC->add_service($s);
-}
-
-sub typemap ($@) {
-    my $type = shift;
-
-    (scalar @_ == 1)
-        || confess "typemap takes a single argument";
-
-    my $service;
-    if (blessed $_[0]) {
-        if ($_[0]->does('Bread::Board::Service')) {
-            $service = $_[0];
-        }
-        elsif ($_[0]->isa('Bread::Board::Service::Inferred')) {
-            $service = $_[0]->infer_service( $type );
-        }
-        else {
-            confess $_[0] . " isn't a service";
-        }
-    }
-    else {
-        $service = $CC->fetch( $_[0] );
-    }
-
-    $CC->add_type_mapping_for( $type, $service );
-}
-
-sub infer {
-    if (@_ == 1) {
-        return Bread::Board::Service::Inferred->new(
-            current_container => $CC,
-            service           => $_[0],
-            infer_params      => 1,
-        );
-    }
-    else {
-        my %params = @_;
-        return Bread::Board::Service::Inferred->new(
-            current_container => $CC,
-            service_args      => \%params,
-            infer_params      => 1,
-        );
-    }
 }
 
 sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
