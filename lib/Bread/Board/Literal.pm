@@ -11,6 +11,10 @@ has 'value' => (
 
 sub get { (shift)->value }
 
+sub clone_and_inherit_params {
+    confess 'Trying to inherit from a literal service';
+}
+
 __PACKAGE__->meta->make_immutable;
 
 no Moose; 1;
@@ -28,6 +32,8 @@ __END__
 =item B<get>
 
 =item B<value>
+
+=item B<clone_and_inherit_params>
 
 =back
 
