@@ -87,6 +87,20 @@ use Bread::Board;
     }
 }
 
+{
+    my $parameterized = container MyApp => ['Config'] => as {
+        service foo => (block => sub { 42 });
+    };
+
+    container $parameterized => as {
+        service '+foo' => (block => sub { 23 });
+    };
+
+    my $c = $parameterized->create(Config => container Config => as {});
+
+    is $c->resolve(service => 'foo'), 23;
+}
+
 like exception {
     service '+foo' => 42;
 }, qr/^Service inheritance doesn't make sense for literal services/;

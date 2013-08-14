@@ -161,7 +161,8 @@ sub service ($@) {
             confess "Inheriting services isn't possible outside of the context of a container"
                 unless defined $CC;
 
-            my $prototype_service = $CC->fetch($name);
+            my $container = ($CC->isa('Bread::Board::Container::Parameterized') ? $CC->container : $CC);
+            my $prototype_service = $container->fetch($name);
 
             confess sprintf(
                 "Trying to inherit from service '%s', but found a %s",
