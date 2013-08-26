@@ -36,7 +36,7 @@ my $c = container 'MyApp' => as {
 
     service 'logger' => (
         class        => 'FileLogger',
-        lifecycle    => 'Singleton',
+        #lifecycle    => 'Singleton',
         dependencies => ['log_file']
     );
 

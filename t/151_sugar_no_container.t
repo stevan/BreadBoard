@@ -25,7 +25,7 @@ ok($file_service->does('Bread::Board::Service'), '... this does Bread::Board::Se
 
 my $logger_service = service 'logger' => (
     class        => 'FileLogger',
-    lifecycle    => 'Singleton',
+    #lifecycle    => 'Singleton',
     dependencies => {
         log_file => depends_on('log_file'),
     }

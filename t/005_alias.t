@@ -228,7 +228,7 @@ use Bread::Board;
     my $c = container 'MyApp' => as {
         service 'foo' => (
             class     => 'Some::Class',
-            lifecycle => 'Singleton',
+            #lifecycle => 'Singleton',
         );
         alias 'foo_alias' => 'foo';
     };

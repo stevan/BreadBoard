@@ -10,17 +10,11 @@ role Service with Bread::Board::Traversable {
     has $name      is rw       = die '$name is required';
     has $params    is rw, lazy = $_->init_params;
     has $is_locked is rw       = 0;
-    has $lifecycle;
 
     method clear_params      { undef $params }
     method _clear_param ($k) { delete $params->{$k} }
 
     method init_params { +{} }
-
-    method lifecycle ($cycle) {
-        return $lifecycle if not defined $cycle;
-        confess "punting on the lifecycle stuff for now";
-    }
 
     method param {
         return keys %$params      if scalar @_ == 0;
