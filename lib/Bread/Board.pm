@@ -5,14 +5,12 @@ use Carp qw(confess);
 use Scalar::Util qw(blessed);
 # ABSTRACT: A solderless way to wire up your application components
 
-use Bread::Board::Types;
 use Bread::Board::ConstructorInjection;
 use Bread::Board::SetterInjection;
 use Bread::Board::BlockInjection;
 use Bread::Board::Literal;
 use Bread::Board::Container;
 use Bread::Board::Dependency;
-use Bread::Board::LifeCycle::Singleton;
 use Bread::Board::Service::Alias;
 
 use Moose::Exporter 1.00;
