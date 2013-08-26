@@ -6,6 +6,7 @@ use Scalar::Util qw(blessed);
 # ABSTRACT: A solderless way to wire up your application components
 
 use Bread::Board::ConstructorInjection;
+use Bread::Board::ConstructorInjection::Singleton;
 use Bread::Board::SetterInjection;
 use Bread::Board::BlockInjection;
 use Bread::Board::Literal;
@@ -139,7 +140,10 @@ sub service ($@) {
             my $type = $params{service_type};
             $type = exists $params{block} ? 'Block' : 'Constructor'
                 unless defined $type;
-            $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
+            $s = (
+              "Bread::Board::${type}Injection"
+              . ($params{lifecycle} ? ('::' . $params{lifecycle}) : '')
+            )->new(name => $name, %params);
         }
     }
     else {

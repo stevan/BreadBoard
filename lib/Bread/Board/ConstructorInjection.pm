@@ -8,8 +8,8 @@ use Bread::Board::Util qw(coerce_dependencies);
 use Carp 'confess';
 use Scalar::Util 'blessed';
 
-class ConstructorInjection with Bread::Board::Service::WithClass, 
-                                Bread::Board::Service::WithParameters, 
+class ConstructorInjection with Bread::Board::Service::WithClass,
+                                Bread::Board::Service::WithParameters,
                                 Bread::Board::Service::WithDependencies {
 
     has $constructor_name is rw, lazy = $_->_build_constructor_name;
@@ -45,7 +45,7 @@ class ConstructorInjection with Bread::Board::Service::WithClass,
         return $result;
     }
 
-    submethod _build_constructor_name { 'new' }
+    method _build_constructor_name { 'new' }
 }
 
 =pod

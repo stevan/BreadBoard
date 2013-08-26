@@ -222,13 +222,11 @@ use Bread::Board;
       "error with circular aliases with larger cycles");
 }
 
-=pod
-
 {
     my $c = container 'MyApp' => as {
         service 'foo' => (
             class     => 'Some::Class',
-            #lifecycle => 'Singleton',
+            lifecycle => 'Singleton',
         );
         alias 'foo_alias' => 'foo';
     };
@@ -238,7 +236,5 @@ use Bread::Board;
     is($c->resolve(service => 'foo_alias'), $c->resolve(service => 'foo_alias'),
        "same object, since it's a singleton");
 }
-
-=cut
 
 done_testing;

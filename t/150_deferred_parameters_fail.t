@@ -34,7 +34,7 @@ my $c = container 'MyApp' => as {
 
     service model => (
         class        => 'Model',
-        #lifecycle    => 'Singleton',
+        lifecycle    => 'Singleton',
         parameters   => {
             extra_args => {
                 default => {
@@ -51,7 +51,7 @@ my $c = container 'MyApp' => as {
 
     service user_store => (
         class        => 'UserStore',
-        #lifecycle    => 'Singleton',
+        lifecycle    => 'Singleton',
         dependencies => {
             model => depends_on('/model'),
         },

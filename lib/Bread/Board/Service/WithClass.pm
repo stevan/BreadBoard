@@ -4,7 +4,7 @@ use warnings;
 use mop;
 
 role WithClass with Bread::Board::Service {
-    has $class_name;
+    has $class_name is ro;
 
     method class ($c) {
         $class_name = $c if $c;

@@ -9,24 +9,24 @@ container 'MyApp' => as {
     service 'name' => 'My Application!'; # need to test ::Literal :)
 
     service 'logger' => (
-        #lifecycle => 'Singleton',
+        lifecycle => 'Singleton',
         class     => 'Logger',
     );
 
     container 'config' => as {
         service 'config_file' => (
             dependencies => [ depends_on('/name') ],
-            #lifecycle    => 'Singleton',
+            lifecycle    => 'Singleton',
             block        => sub {},
         );
 
         service 'template_dir' => (
-            #lifecycle => 'Singleton',
+            lifecycle => 'Singleton',
             block     => sub {},
         );
 
         service 'dsn' => (
-            #lifecycle    => 'Singleton',
+            lifecycle    => 'Singleton',
             dependencies => [ depends_on('/logger'), depends_on('config_file') ],
             block        => sub {},
         );

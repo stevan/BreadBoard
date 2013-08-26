@@ -25,7 +25,7 @@ ok($file_service->does('Bread::Board::Service'), '... this does Bread::Board::Se
 
 my $logger_service = service 'logger' => (
     class        => 'FileLogger',
-    #lifecycle    => 'Singleton',
+    lifecycle    => 'Singleton',
     dependencies => {
         log_file => depends_on('log_file'),
     }
@@ -67,10 +67,10 @@ my $app = $c->resolve( service => 'application' );
 isa_ok($app, 'MyApplication');
 
 isa_ok($app->logger, 'FileLogger');
-#is($app->logger, $logger, '... got the right logger (singleton)');
+is($app->logger, $logger, '... got the right logger (singleton)');
 
 my $bunyan = $c->resolve( service => 'paul_bunyan' );
 isa_ok($bunyan, 'FileLogger');
-#is($bunyan, $logger, 'standalone alias works.');
+is($bunyan, $logger, 'standalone alias works.');
 
 done_testing;

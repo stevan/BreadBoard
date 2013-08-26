@@ -6,7 +6,7 @@ use Bread::Board;
 
 service 'logger' => (
     class        => 'FileLogger',
-    #lifecycle    => 'Singleton',
+    lifecycle    => 'Singleton',
     dependencies => {
         log_file => depends_on('log_file'),
     }
