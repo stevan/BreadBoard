@@ -13,6 +13,37 @@ role Singleton with Bread::Board::LifeCycle {
     method has_instance   { defined $instance }
     method flush_instance { undef $instance   }
 
+    method get_or_create_instance ($creator) {
+
+        # return it if we got it ...
+        return $self->instance if $self->has_instance;
+
+        my $instance;
+        if ($self->resolving_singleton) {
+            $instance = Bread::Board::Service::Deferred->new(service => $self);
+        }
+        else {
+            $self->resolving_singleton(1);
+            try {
+                # otherwise fetch it ...
+                $instance = $creator->();
+            }
+            catch {
+                die $_;
+            }
+            finally {
+                $self->resolving_singleton(0);
+            };
+        }
+
+        # if we get a copy, and our copy
+        # has not already been set ...
+        $self->instance($instance);
+
+        # return whatever we have ...
+        return $self->instance;
+    }
+
 }
 
 =pod
