@@ -12,3 +12,6 @@ install:
     - dzil listdeps --author --missing | cpanm -q --notest
 script:
     - dzil test --all
+branches:
+  except:
+    - p5-mop
