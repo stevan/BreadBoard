@@ -2,6 +2,8 @@ package Bread::Board::Service::Deferred;
 use strict;
 use warnings;
 
+use Carp;
+
 use overload
     # cover your basic operatins ...
     'bool' => sub { 1 },
