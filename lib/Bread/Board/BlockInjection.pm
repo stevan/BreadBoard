@@ -3,6 +3,8 @@ use v5.16;
 use warnings;
 use mop;
 
+use Bread::Board::Util qw(coerce_dependencies);
+
 class BlockInjection with Bread::Board::Service::WithParameters,
                           Bread::Board::Service::WithDependencies,
                           Bread::Board::Service::WithClass {
@@ -11,6 +13,7 @@ class BlockInjection with Bread::Board::Service::WithParameters,
 
     method new (%args) {
         $args{'class_name'} = delete $args{'class'};
+        coerce_dependencies( \%args );
         $class->next::method( %args );
     }
 

@@ -3,6 +3,8 @@ use v5.16;
 use warnings;
 use mop;
 
+use Bread::Board::Util qw(coerce_dependencies);
+
 use Carp 'confess';
 use Scalar::Util 'blessed';
 
@@ -16,6 +18,7 @@ class ConstructorInjection with Bread::Board::Service::WithClass,
         confess '$class is required'
             unless exists $args{'class'};
         $args{'class_name'} = delete $args{'class'};
+        coerce_dependencies( \%args );
         $class->next::method( %args );
     }
 

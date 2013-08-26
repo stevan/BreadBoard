@@ -6,6 +6,8 @@ use mop;
 use Carp 'confess';
 use Scalar::Util 'blessed';
 
+use Bread::Board::Util qw(coerce_dependencies);
+
 class SetterInjection with Bread::Board::Service::WithClass,
                            Bread::Board::Service::WithParameters,
                            Bread::Board::Service::WithDependencies {
@@ -14,6 +16,7 @@ class SetterInjection with Bread::Board::Service::WithClass,
         confess '$class is required'
             unless exists $args{'class'};
         $args{'class_name'} = delete $args{'class'};
+        coerce_dependencies( \%args );
         $class->next::method( %args );
     }
 

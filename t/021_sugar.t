@@ -22,7 +22,7 @@ sub loggers {
 
     service 'logger' => (
         class        => 'FileLogger',
-        lifecycle    => 'Singleton',
+        #lifecycle    => 'Singleton',
         dependencies => {
             log_file => depends_on('log_file'),
         }
@@ -54,6 +54,6 @@ my $app = $c->resolve( service => 'application' );
 isa_ok($app, 'MyApplication');
 
 isa_ok($app->logger, 'FileLogger');
-is($app->logger, $logger, '... got the right logger (singleton)');
+#is($app->logger, $logger, '... got the right logger (singleton)');
 
 done_testing;

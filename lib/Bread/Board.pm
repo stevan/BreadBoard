@@ -11,7 +11,6 @@ use Bread::Board::SetterInjection;
 use Bread::Board::BlockInjection;
 use Bread::Board::Literal;
 use Bread::Board::Container;
-use Bread::Board::Container::Parameterized;
 use Bread::Board::Dependency;
 use Bread::Board::LifeCycle::Singleton;
 use Bread::Board::Service::Alias;
@@ -45,8 +44,8 @@ sub container ($;$$) {
 
     my $name_is_obj = 0;
     if (blessed $name){
-        confess 'an object used as a container must inherit from Bread::Board::Container or Bread::Board::Container::Parameterized'
-            unless $name->isa('Bread::Board::Container') || $name->isa('Bread::Board::Container::Parameterized');
+        confess 'an object used as a container must inherit from Bread::Board::Container'
+            unless $name->isa('Bread::Board::Container');
         $name_is_obj = 1;
     }
 
@@ -82,13 +81,7 @@ sub container ($;$$) {
     # container, so we need to
     # act accordingly
     else {
-        confess 'container($object, ...) is not supported for parameterized containers'
-            if $name_is_obj;
-        my $param_names = shift;
-        $c = Bread::Board::Container::Parameterized->new(
-            name                    => $name,
-            allowed_parameter_names => $param_names,
-        )
+        confess 'parameterized containers are not supported';
     }
 
     # now, if we are here, then

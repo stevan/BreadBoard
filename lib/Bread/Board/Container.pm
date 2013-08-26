@@ -6,6 +6,10 @@ use mop;
 use Carp 'confess';
 use Scalar::Util 'blessed';
 
+use Bread::Board::Util qw(coerce_key_from_array_to_name_map);
+
+use MooseX::Params::Validate qw(validated_hash);
+
 class Container with Bread::Board::Traversable {
 
     has $name           is rw   = die '$name is required';
@@ -13,16 +17,8 @@ class Container with Bread::Board::Traversable {
     has $sub_containers is lazy = {};
 
     method new (%args) {
-        if (exists $args{'services'}) {
-            if (ref $args{'services'} eq 'ARRAY') {
-                $args{'services'} = { map { $_->name => $_ } @{$args{'services'}} };
-            }
-        }
-        if (exists $args{'sub_containers'}) {
-            if (ref $args{'sub_containers'} eq 'ARRAY') {
-                $args{'sub_containers'} = { map { $_->name => $_ } @{$args{'sub_containers'}} };
-            }
-        }
+        coerce_key_from_array_to_name_map( \%args, 'services' );
+        coerce_key_from_array_to_name_map( \%args, 'sub_containers' );
         $class->next::method( %args );
     }
 
@@ -65,14 +61,8 @@ class Container with Bread::Board::Traversable {
     }
 
     method add_sub_container ($container) {
-        (
-            blessed $container &&
-            (
-                $container->isa('Bread::Board::Container')
-                ||
-                $container->isa('Bread::Board::Container::Parameterized')
-            )
-        ) || confess "You must pass in a Bread::Board::Container instance, not $container";
+        (blessed $container && $container->isa('Bread::Board::Container')) 
+            || confess "You must pass in a Bread::Board::Container instance, not $container";
         $container->parent($self);
         $sub_containers->{$container->name} = $container;
     }
