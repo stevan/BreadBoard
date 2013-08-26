@@ -1,8 +1,9 @@
 package Bread::Board::Dumper;
-use Moose;
+use v5.16;
+use warnings;
 
 sub dump {
-    my ($self, $thing, $indent) = @_;
+    my ($pkg, $thing, $indent) = @_;
 
     $indent = defined $indent ? $indent . '  ' : '';
 
@@ -16,7 +17,7 @@ sub dump {
 
         if ($thing->does('Bread::Board::Service::WithDependencies')) {
             while (my($key, $value) = each %{ $thing->dependencies }) {
-                $output .= $self->dump($value, $indent);
+                $output .= $pkg->dump($value, $indent);
             }
         }
     }
@@ -26,20 +27,18 @@ sub dump {
         my ($key, $value);
 
         while (($key, $value) = each %{ $thing->sub_containers }) {
-            $output .= $self->dump($value, $indent);
+            $output .= $pkg->dump($value, $indent);
         }
 
         while (($key, $value) = each %{ $thing->services }) {
-            $output .= $self->dump($value, $indent);
+            $output .= $pkg->dump($value, $indent);
         }
     }
 
     return $output;
 }
 
-__PACKAGE__->meta->make_immutable;
-
-no Moose; 1;
+1;
 
 __END__
 

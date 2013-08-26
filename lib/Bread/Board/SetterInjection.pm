@@ -45,32 +45,6 @@ class SetterInjection with Bread::Board::Service::WithClass,
     }
 }
 
-=pod
-
-package Bread::Board::SetterInjection;
-use Moose;
-
-use Bread::Board::Types;
-
-with 'Bread::Board::Service::WithClass',
-     'Bread::Board::Service::WithParameters',
-     'Bread::Board::Service::WithDependencies';
-
-has '+class' => (required => 1);
-
-sub get {
-    my $self = shift;
-    my $o = $self->class->new;
-    $o->$_($self->param($_)) foreach $self->param;
-    return $o;
-}
-
-__PACKAGE__->meta->make_immutable;
-
-no Moose; 1;
-
-=cut
-
 __END__
 
 =pod

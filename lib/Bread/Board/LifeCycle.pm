@@ -5,13 +5,6 @@ use mop;
 
 role LifeCycle {}
 
-=pod
-package Bread::Board::LifeCycle;
-use Moose::Role;
-
-no Moose::Role; 1;
-
-=cut
 
 __END__
 

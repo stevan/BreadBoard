@@ -14,35 +14,10 @@ role WithClass with Bread::Board::Service {
     method has_class { defined $class_name }
 
     method get_class {
-        #Module::Runtime::use_package_optimistically( $class )
-        #    if $self->has_class;
+        Module::Runtime::use_package_optimistically( $class )
+            if $self->has_class;
     }
 }
-
-=pod
-
-package Bread::Board::Service::WithClass;
-use Moose::Role;
-
-use Bread::Board::Types;
-
-with 'Bread::Board::Service';
-
-has 'class' => (
-    is        => 'rw',
-    isa       => 'Str',
-    predicate => 'has_class',
-);
-
-before 'get' => sub {
-    my $self = shift;
-    Class::MOP::load_class($self->class)
-        if $self->has_class;
-};
-
-no Moose::Role; 1;
-
-=cut
 
 __END__
 

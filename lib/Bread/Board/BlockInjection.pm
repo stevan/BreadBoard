@@ -42,32 +42,6 @@ class BlockInjection with Bread::Board::Service::WithParameters,
 
 }
 
-=pod
-
-package Bread::Board::BlockInjection;
-use Moose;
-
-with 'Bread::Board::Service::WithParameters',
-     'Bread::Board::Service::WithDependencies',
-     'Bread::Board::Service::WithClass';
-
-has 'block' => (
-    is       => 'rw',
-    isa      => 'CodeRef',
-    required => 1,
-);
-
-
-sub get {
-    my $self = shift;
-    $self->block->($self)
-}
-__PACKAGE__->meta->make_immutable;
-
-no Moose; 1;
-
-=cut
-
 __END__
 
 =pod

@@ -48,47 +48,6 @@ class ConstructorInjection with Bread::Board::Service::WithClass,
     method _build_constructor_name { 'new' }
 }
 
-=pod
-
-package Bread::Board::ConstructorInjection;
-use Moose;
-
-use Try::Tiny;
-
-use Bread::Board::Types;
-
-with 'Bread::Board::Service::WithClass',
-     'Bread::Board::Service::WithParameters',
-     'Bread::Board::Service::WithDependencies';
-
-has 'constructor_name' => (
-    is       => 'rw',
-    isa      => 'Str',
-    lazy     => 1,
-    builder  => '_build_constructor_name',
-);
-
-has '+class' => (required => 1);
-
-sub _build_constructor_name {
-    my $self = shift;
-
-    try { Class::MOP::class_of($self->class)->constructor_name } || 'new';
-}
-
-sub get {
-    my $self = shift;
-
-    my $constructor = $self->constructor_name;
-    $self->class->$constructor( %{ $self->params } );
-}
-
-__PACKAGE__->meta->make_immutable;
-
-no Moose; 1;
-
-=cut
-
 __END__
 
 =pod

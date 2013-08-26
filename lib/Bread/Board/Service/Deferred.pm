@@ -1,5 +1,6 @@
 package Bread::Board::Service::Deferred;
-use Moose ();
+use strict;
+use warnings;
 
 use overload
     # cover your basic operatins ...

@@ -9,25 +9,6 @@ class Thunk {
     method inflate { $thunk->( @_ ) }
 }
 
-=pod
-
-package Bread::Board::Service::Deferred::Thunk;
-use Moose;
-
-has 'thunk' => (
-    traits   => [ 'Code' ],
-    is       => 'bare',
-    isa      => 'CodeRef',
-    required => 1,
-    handles  => {
-        'inflate' => 'execute'
-    }
-);
-
-1;
-
-=cut
-
 __END__
 
 =pod

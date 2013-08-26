@@ -10,28 +10,6 @@ class Literal with Bread::Board::Service {
     method get { $value }
 }
 
-
-=pod
-
-package Bread::Board::Literal;
-use Moose;
-
-with 'Bread::Board::Service';
-
-has 'value' => (
-    is       => 'rw',
-    isa      => 'Defined',
-    required => 1,
-);
-
-sub get { (shift)->value }
-
-__PACKAGE__->meta->make_immutable;
-
-no Moose; 1;
-
-=cut
-
 __END__
 
 =pod
