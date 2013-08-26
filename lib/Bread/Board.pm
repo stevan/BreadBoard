@@ -6,9 +6,13 @@ use Scalar::Util qw(blessed);
 # ABSTRACT: A solderless way to wire up your application components
 
 use Bread::Board::ConstructorInjection;
-use Bread::Board::ConstructorInjection::Singleton;
 use Bread::Board::SetterInjection;
 use Bread::Board::BlockInjection;
+
+use Bread::Board::ConstructorInjection::Singleton;
+use Bread::Board::SetterInjection::Singleton;
+use Bread::Board::BlockInjection::Singleton;
+
 use Bread::Board::Literal;
 use Bread::Board::Container;
 use Bread::Board::Dependency;

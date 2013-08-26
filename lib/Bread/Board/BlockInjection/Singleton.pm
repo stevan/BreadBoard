@@ -1,4 +1,4 @@
-package Bread::Board::ConstructorInjection;
+package Bread::Board::BlockInjection;
 use v5.16;
 use warnings;
 use mop;
@@ -10,7 +10,7 @@ use Scalar::Util 'blessed';
 
 use Bread::Board::Service::Deferred;
 
-class Singleton extends Bread::Board::ConstructorInjection
+class Singleton extends Bread::Board::BlockInjection
                    with Bread::Board::LifeCycle::Singleton {
 
     method get {
