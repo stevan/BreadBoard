@@ -44,7 +44,7 @@ ok($app_service->does('Bread::Board::Service'), '... this does Bread::Board::Ser
 
 my $bunyan_service = alias 'paul_bunyan' => 'logger';
 
-ok($bunyan_service->('Bread::Board::Service'), '... this does Bread::Board::Service');;
+ok($bunyan_service->does('Bread::Board::Service'), '... this does Bread::Board::Service');;
 isa_ok($bunyan_service, 'Bread::Board::Service::Alias');
 
 my $c = container 'MyApp';
