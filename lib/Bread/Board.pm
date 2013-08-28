@@ -53,6 +53,10 @@ sub container ($;$$) {
         $name_is_obj = 1;
     }
 
+    my $is_inheriting = !$name_is_obj && $name =~ s/^\+//;
+    confess "Inheriting containers isn't possible outside of the context of a container"
+        if $is_inheriting && !defined $CC;
+
     my $c;
     if ($name_is_obj) {
         confess 'container($object, ...) is not supported for parameterized containers'
@@ -66,6 +70,9 @@ sub container ($;$$) {
         # if we have more than 1 argument, then we are a parameterized
         # container, so we need to act accordingly
         if (scalar @_ > 1) {
+            confess 'Declaring container parameters when inheriting is not supported'
+                if $is_inheriting;
+
             my $param_names = shift;
             $c = Bread::Board::Container::Parameterized->new({
                 name                    => $name,
@@ -73,7 +80,9 @@ sub container ($;$$) {
             });
         }
         else {
-            $c = Bread::Board::Container->new({ name => $name });
+            $c = $is_inheriting
+                ? $CC->fetch($name)
+                : Bread::Board::Container->new({ name => $name });
         }
     }
 
