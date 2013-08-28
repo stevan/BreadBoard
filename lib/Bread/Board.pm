@@ -85,8 +85,9 @@ sub container ($;$$) {
 
     # if we already have a root
     # container, then we are a
-    # subcontainer of it ...
-    if (defined $CC) {
+    # subcontainer of it, unless
+    # we already have a parent
+    if (defined $CC && !$c->has_parent) {
         $CC->add_sub_container($c);
     }
 
