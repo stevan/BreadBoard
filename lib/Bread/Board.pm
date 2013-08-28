@@ -44,7 +44,7 @@ sub set_root_container {
 }
 
 sub container ($;$$) {
-    my $name        = shift;
+    my $name = shift;
 
     my $name_is_obj = 0;
     if (blessed $name){
@@ -54,50 +54,28 @@ sub container ($;$$) {
     }
 
     my $c;
-    if ( scalar @_ == 0 ) {
-        if ( $name_is_obj ) {
-            # this is basically:
-            # container( A::Bread::Board::Container->new )
-            # which should work
-            $c = $name;
+    if ($name_is_obj) {
+        confess 'container($object, ...) is not supported for parameterized containers'
+            if scalar @_ > 1;
+        # this is basically:
+        # container( A::Bread::Board::Container->new, ... )
+        # or someone using &container as a constructor
+        $c = $name;
+    }
+    else {
+        # if we have more than 1 argument, then we are a parameterized
+        # container, so we need to act accordingly
+        if (scalar @_ > 1) {
+            my $param_names = shift;
+            $c = Bread::Board::Container::Parameterized->new({
+                name                    => $name,
+                allowed_parameter_names => $param_names,
+            });
         }
         else {
-            # otherwise it is just
-            # someone using &container
-            # as a constructor
-            $c = Bread::Board::Container->new(
-                name => $name
-            );
+            $c = Bread::Board::Container->new({ name => $name });
         }
     }
-    # if we have one more arg
-    # then we have block to
-    # follow us, that we want
-    # to use to create stuff
-    # with.
-    elsif ( scalar @_ == 1 ) {
-        $c = $name_is_obj
-            ? $name
-            : Bread::Board::Container->new( name => $name );
-    }
-    # if we have even more
-    # then we are a parameterized
-    # container, so we need to
-    # act accordingly
-    else {
-        confess 'container($object, ...) is not supported for parameterized containers'
-            if $name_is_obj;
-        my $param_names = shift;
-        $c = Bread::Board::Container::Parameterized->new(
-            name                    => $name,
-            allowed_parameter_names => $param_names,
-        )
-    }
-
-    # now, if we are here, then
-    # we obviously have something
-    # more to contribute to the
-    # container world ...
 
     # if we already have a root
     # container, then we are a
