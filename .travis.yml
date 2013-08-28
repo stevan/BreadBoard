@@ -8,7 +8,7 @@ perl:
     - "5.10"
 install:
     - cpanm -q --notest Dist::Zilla
-    - dzil authordeps --missing | cpanm -q --notest
-    - dzil listdeps --author --missing | cpanm -q --notest
+    - dzil authordeps --missing | cpanm -q --notest || cat /home/travis/.cpanm/build.log
+    - dzil listdeps --author --missing | cpanm -q --notest || cat /home/travis/.cpanm/build.log
 script:
     - dzil test --all
