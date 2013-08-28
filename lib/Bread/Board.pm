@@ -46,27 +46,24 @@ sub set_root_container {
 sub container ($;$$) {
     my $name = shift;
 
-    my $name_is_obj = 0;
-    if (blessed $name){
+    my $c;
+    if (blessed $name) {
         confess 'an object used as a container must inherit from Bread::Board::Container or Bread::Board::Container::Parameterized'
             unless $name->isa('Bread::Board::Container') || $name->isa('Bread::Board::Container::Parameterized');
-        $name_is_obj = 1;
-    }
 
-    my $is_inheriting = !$name_is_obj && $name =~ s/^\+//;
-    confess "Inheriting containers isn't possible outside of the context of a container"
-        if $is_inheriting && !defined $CC;
-
-    my $c;
-    if ($name_is_obj) {
         confess 'container($object, ...) is not supported for parameterized containers'
             if scalar @_ > 1;
+
         # this is basically:
         # container( A::Bread::Board::Container->new, ... )
         # or someone using &container as a constructor
         $c = $name;
     }
     else {
+        my $is_inheriting = $name =~ s/^\+//;
+        confess "Inheriting containers isn't possible outside of the context of a container"
+            if $is_inheriting && !defined $CC;
+
         # if we have more than 1 argument, then we are a parameterized
         # container, so we need to act accordingly
         if (scalar @_ > 1) {
