@@ -65,7 +65,7 @@ sub container ($;$$) {
             # otherwise it is just
             # someone using &container
             # as a constructor
-            return Bread::Board::Container->new(
+            $c = Bread::Board::Container->new(
                 name => $name
             );
         }
