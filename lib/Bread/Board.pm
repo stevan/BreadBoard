@@ -137,21 +137,45 @@ sub include ($) {
 sub service ($@) {
     my $name = shift;
     my $s;
+
+    my $is_inheriting = ($name =~ s/^\+//);
+
     if (scalar @_ == 1) {
+        confess "Service inheritance doesn't make sense for literal services"
+            if $is_inheriting;
+
         $s = Bread::Board::Literal->new(name => $name, value => $_[0]);
     }
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
-        if ($params{service_class}) {
-            ($params{service_class}->does('Bread::Board::Service'))
-                || confess "The service class must do the Bread::Board::Service role";
-            $s = $params{service_class}->new(name => $name, %params);
+
+        my $class = $params{service_class};
+        $class ||= defined $params{service_type} ? "Bread::Board::$params{service_type}Injection"
+                  : exists $params{block}        ? 'Bread::Board::BlockInjection'
+                  :                                'Bread::Board::ConstructorInjection';
+
+        $class->does('Bread::Board::Service')
+            or confess "The service class must do the Bread::Board::Service role";
+
+        if ($is_inheriting) {
+            confess "Inheriting services isn't possible outside of the context of a container"
+                unless defined $CC;
+
+            my $container = ($CC->isa('Bread::Board::Container::Parameterized') ? $CC->container : $CC);
+            my $prototype_service = $container->fetch($name);
+
+            confess sprintf(
+                "Trying to inherit from service '%s', but found a %s",
+                $name, blessed $prototype_service,
+            ) unless $prototype_service->does('Bread::Board::Service');
+
+            $s = $prototype_service->clone_and_inherit_params(
+                service_class => $class,
+                %params,
+            );
         }
         else {
-            my $type = $params{service_type};
-            $type = exists $params{block} ? 'Block' : 'Constructor'
-                unless defined $type;
-            $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
+            $s = $class->new(name => $name, %params);
         }
     }
     else {
