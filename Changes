@@ -1,6 +1,11 @@
 Revision history for Perl extension Bread::Board
 
 {{$NEXT}}
+    - Allow overriding of services and containers. This is useful when using
+      the common pattern of "sub BUILD { my $self = shift; container $self =>
+      as { ... } }" since the BUILD method in a subclass can modify existing
+      services and containers that were defined in a superclass, rather than
+      only being able to replace them (Florian Ragwitz, #26, #27).
 
 0.27  2013-08-06
     - allow the 'container $obj' sugar for parameterized containers (Florian
