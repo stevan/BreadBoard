@@ -1,6 +1,8 @@
 package Bread::Board::Service;
 use Moose::Role;
 
+use Moose::Util::TypeConstraints 'find_type_constraint';
+
 with 'Bread::Board::Traversable';
 
 has 'name' => (
@@ -63,12 +65,52 @@ sub param {
     return;
 }
 
+{
+    my %mergeable_params = (
+        dependencies => {
+            interface  => 'Bread::Board::Service::WithDependencies',
+            constraint => 'Bread::Board::Service::Dependencies',
+        },
+        parameters => {
+            interface  => 'Bread::Board::Service::WithParameters',
+            constraint => 'Bread::Board::Service::Parameters',
+        },
+    );
+
+    sub clone_and_inherit_params {
+        my ($self, %params) = @_;
+
+        confess "Changing a service's class is not possible when inheriting"
+            unless $params{service_class} eq blessed $self;
+
+        for my $p (keys %mergeable_params) {
+            if (exists $params{$p}) {
+                if ($self->does($mergeable_params{$p}->{interface})) {
+                    my $type = find_type_constraint $mergeable_params{$p}->{constraint};
+
+                    my $val = $type->assert_coerce($params{$p});
+
+                    $params{$p} = {
+                        %{ $self->$p },
+                        %{ $val },
+                    };
+                }
+                else {
+                    confess "Trying to add $p to a service not supporting them";
+                }
+            }
+        }
+
+        $self->clone(%params);
+    }
+}
+
 requires 'get';
 
 sub lock   { (shift)->is_locked(1) }
 sub unlock { (shift)->is_locked(0) }
 
-no Moose::Role; 1;
+no Moose::Util::TypeConstraints; no Moose::Role; 1;
 
 __END__
 
@@ -95,6 +137,8 @@ __END__
 =item B<init_params>
 
 =item B<param>
+
+=item B<clone_and_inherit_params>
 
 =back
 
