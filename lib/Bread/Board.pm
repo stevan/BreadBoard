@@ -58,6 +58,10 @@ sub container ($;$$) {
         # container( A::Bread::Board::Container->new, ... )
         # or someone using &container as a constructor
         $c = $name;
+
+        # if we're in the context of another container
+        # then we're a subcontainer of it
+        $CC->add_sub_container($c) if defined $CC;
     }
     else {
         my $is_inheriting = $name =~ s/^\+//;
@@ -81,16 +85,12 @@ sub container ($;$$) {
                 ? $CC->fetch($name)
                 : Bread::Board::Container->new({ name => $name });
         }
-    }
 
-    # if we already have a root
-    # container, then we are a
-    # subcontainer of it, unless
-    # we already have a parent
-    if (defined $CC && !$c->has_parent) {
-        $CC->add_sub_container($c);
+        # if we're in the context of another container
+        # then we're a subcontainer of it, unless we're inheriting,
+        # in which case we already got a parent
+        $CC->add_sub_container($c) if !$is_inheriting && defined $CC;
     }
-
 
     my $body = shift;
     # if we have more arguments
