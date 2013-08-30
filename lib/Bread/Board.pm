@@ -44,68 +44,53 @@ sub set_root_container {
 }
 
 sub container ($;$$) {
-    my $name        = shift;
-
-    my $name_is_obj = 0;
-    if (blessed $name){
-        confess 'an object used as a container must inherit from Bread::Board::Container or Bread::Board::Container::Parameterized'
-            unless $name->isa('Bread::Board::Container') || $name->isa('Bread::Board::Container::Parameterized');
-        $name_is_obj = 1;
-    }
+    my $name = shift;
 
     my $c;
-    if ( scalar @_ == 0 ) {
-        if ( $name_is_obj ) {
-            # this is basically:
-            # container( A::Bread::Board::Container->new )
-            # which should work
-            $c = $name;
+    if (blessed $name) {
+        confess 'an object used as a container must inherit from Bread::Board::Container or Bread::Board::Container::Parameterized'
+            unless $name->isa('Bread::Board::Container') || $name->isa('Bread::Board::Container::Parameterized');
+
+        confess 'container($object, ...) is not supported for parameterized containers'
+            if scalar @_ > 1;
+
+        # this is basically:
+        # container( A::Bread::Board::Container->new, ... )
+        # or someone using &container as a constructor
+        $c = $name;
+
+        # if we're in the context of another container
+        # then we're a subcontainer of it
+        $CC->add_sub_container($c) if defined $CC;
+    }
+    else {
+        my $is_inheriting = $name =~ s/^\+//;
+        confess "Inheriting containers isn't possible outside of the context of a container"
+            if $is_inheriting && !defined $CC;
+
+        # if we have more than 1 argument, then we are a parameterized
+        # container, so we need to act accordingly
+        if (scalar @_ > 1) {
+            confess 'Declaring container parameters when inheriting is not supported'
+                if $is_inheriting;
+
+            my $param_names = shift;
+            $c = Bread::Board::Container::Parameterized->new({
+                name                    => $name,
+                allowed_parameter_names => $param_names,
+            });
         }
         else {
-            # otherwise it is just
-            # someone using &container
-            # as a constructor
-            return Bread::Board::Container->new(
-                name => $name
-            );
+            $c = $is_inheriting
+                ? $CC->fetch($name)
+                : Bread::Board::Container->new({ name => $name });
         }
-    }
-    # if we have one more arg
-    # then we have block to
-    # follow us, that we want
-    # to use to create stuff
-    # with.
-    elsif ( scalar @_ == 1 ) {
-        $c = $name_is_obj
-            ? $name
-            : Bread::Board::Container->new( name => $name );
-    }
-    # if we have even more
-    # then we are a parameterized
-    # container, so we need to
-    # act accordingly
-    else {
-        confess 'container($object, ...) is not supported for parameterized containers'
-            if $name_is_obj;
-        my $param_names = shift;
-        $c = Bread::Board::Container::Parameterized->new(
-            name                    => $name,
-            allowed_parameter_names => $param_names,
-        )
-    }
 
-    # now, if we are here, then
-    # we obviously have something
-    # more to contribute to the
-    # container world ...
-
-    # if we already have a root
-    # container, then we are a
-    # subcontainer of it ...
-    if (defined $CC) {
-        $CC->add_sub_container($c);
+        # if we're in the context of another container
+        # then we're a subcontainer of it, unless we're inheriting,
+        # in which case we already got a parent
+        $CC->add_sub_container($c) if !$is_inheriting && defined $CC;
     }
-
 
     my $body = shift;
     # if we have more arguments
@@ -137,21 +122,45 @@ sub include ($) {
 sub service ($@) {
     my $name = shift;
     my $s;
+
+    my $is_inheriting = ($name =~ s/^\+//);
+
     if (scalar @_ == 1) {
+        confess "Service inheritance doesn't make sense for literal services"
+            if $is_inheriting;
+
         $s = Bread::Board::Literal->new(name => $name, value => $_[0]);
     }
     elsif (scalar(@_) % 2 == 0) {
         my %params = @_;
-        if ($params{service_class}) {
-            ($params{service_class}->does('Bread::Board::Service'))
-                || confess "The service class must do the Bread::Board::Service role";
-            $s = $params{service_class}->new(name => $name, %params);
+
+        my $class = $params{service_class};
+        $class ||= defined $params{service_type} ? "Bread::Board::$params{service_type}Injection"
+                  : exists $params{block}        ? 'Bread::Board::BlockInjection'
+                  :                                'Bread::Board::ConstructorInjection';
+
+        $class->does('Bread::Board::Service')
+            or confess "The service class must do the Bread::Board::Service role";
+
+        if ($is_inheriting) {
+            confess "Inheriting services isn't possible outside of the context of a container"
+                unless defined $CC;
+
+            my $container = ($CC->isa('Bread::Board::Container::Parameterized') ? $CC->container : $CC);
+            my $prototype_service = $container->fetch($name);
+
+            confess sprintf(
+                "Trying to inherit from service '%s', but found a %s",
+                $name, blessed $prototype_service,
+            ) unless $prototype_service->does('Bread::Board::Service');
+
+            $s = $prototype_service->clone_and_inherit_params(
+                service_class => $class,
+                %params,
+            );
         }
         else {
-            my $type = $params{service_type};
-            $type = exists $params{block} ? 'Block' : 'Constructor'
-                unless defined $type;
-            $s = "Bread::Board::${type}Injection"->new(name => $name, %params);
+            $s = $class->new(name => $name, %params);
         }
     }
     else {

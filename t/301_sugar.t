@@ -81,4 +81,12 @@ like( $exception, qr/isn't a service/, "exception contains: isn't a service" );
     }))->resolve(service => 'moo'), 42, 'container $parameterized_container => as {} modifies underlying container';
 }
 
+{
+    my $c = container Foo => as {
+        container 'Bar';
+    };
+
+    isa_ok $c->fetch('Bar'), 'Bread::Board::Container';
+}
+
 done_testing;
