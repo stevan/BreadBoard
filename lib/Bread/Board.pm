@@ -365,6 +365,10 @@ For example,
       );
   };
 
+If C<$name> starts with C<'+'>, and the container is being declared inside
+another container, then this declaration will instead extend an existing
+container with the name C<$name> (without the C<'+'>).
+
 =item I<container ($container_instance, &body)>
 
 In many cases, subclassing L<Bread::Board::Container> is the easiest route to
@@ -440,6 +444,16 @@ injection will be performed using L<Bread::Board::BlockInjection>. If neither
 of these is present, constructor injection will be used with
 L<Bread::Board::ConstructorInjection> (and you must provide the C<class>
 option).
+
+If the C<$name> starts with a C<'+'>, the service definition will instead
+extend an existing service with the given C<$name> (without the C<'+'>). This
+works similarly to the C<has '+foo'> syntax in Moose. It is most useful when
+defining a container class where the container is built up in C<BUILD> methods,
+as each class in the inheritance hierarchy can modify services defined in
+superclasses. The C<dependencies> and C<parameters> options will be merged with
+the existing values, rather than overridden. Note that literal services can't
+be extended, because there's nothing to extend. You can still override them
+entirely by declaring the service name without a leading C<'+'>.
 
 =item I<depends_on ($service_path)>
 
