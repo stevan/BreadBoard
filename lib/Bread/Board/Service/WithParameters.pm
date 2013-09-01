@@ -7,14 +7,14 @@ use MooseX::Params::Validate qw(validated_hash);
 
 role WithParameters with Bread::Board::Service {
 
-    has $parameters is ro, lazy = $_->_build_parameters;
+    has $!parameters is ro, lazy = $_->_build_parameters;
 
-    has $_parameter_keys_to_remove is rw;
+    has $!_parameter_keys_to_remove is rw;
 
-    method has_parameters { scalar keys %$parameters }
+    method has_parameters { scalar keys %{$!parameters} }
 
-    method _clear_parameter_keys_to_remove { undef   $_parameter_keys_to_remove }
-    method _has_parameter_keys_to_remove   { defined $_parameter_keys_to_remove }
+    method _clear_parameter_keys_to_remove { undef   $!_parameter_keys_to_remove }
+    method _has_parameter_keys_to_remove   { defined $!_parameter_keys_to_remove }
 
     method prepare_parameters {
         my %params = $self->check_parameters(@_);
@@ -32,7 +32,7 @@ role WithParameters with Bread::Board::Service {
 
     method check_parameters {
         return validated_hash(\@_, (
-            %$parameters,
+            %{$!parameters},
             # NOTE:
             # cache the parameters in a per-service
             # basis, this should be more than adequate
@@ -47,12 +47,12 @@ role WithParameters with Bread::Board::Service {
     }
 
     method has_required_parameters {
-        scalar grep { ! $_->{optional} } values %$parameters;
+        scalar grep { ! $_->{optional} } values %{$!parameters};
     }
 
     method has_parameter_defaults {
         my $self = shift;
-        scalar grep { $_->{default} } values %$parameters;
+        scalar grep { $_->{default} } values %{$!parameters};
     }
 
 }

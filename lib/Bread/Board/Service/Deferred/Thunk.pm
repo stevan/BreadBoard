@@ -4,9 +4,9 @@ use warnings;
 use mop;
 
 class Thunk {
-    has $thunk = die '$thunk is required';
+    has $!thunk = die '$!thunk is required';
 
-    method inflate { $thunk->( @_ ) }
+    method inflate { $!thunk->( @_ ) }
 }
 
 __END__

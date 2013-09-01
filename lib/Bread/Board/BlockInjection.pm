@@ -9,7 +9,7 @@ class BlockInjection with Bread::Board::Service::WithParameters,
                           Bread::Board::Service::WithDependencies,
                           Bread::Board::Service::WithClass {
 
-    has $block is rw = die '$block is required';
+    has $!block is rw = die '$!block is required';
 
     method new (%args) {
         $args{'class_name'} = delete $args{'class'};

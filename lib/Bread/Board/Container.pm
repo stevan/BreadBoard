@@ -12,9 +12,9 @@ use MooseX::Params::Validate qw(validated_hash);
 
 class Container with Bread::Board::Traversable {
 
-    has $name           is rw   = die '$name is required';
-    has $services       is lazy = {};
-    has $sub_containers is lazy = {};
+    has $!name           is rw   = die '$!name is required';
+    has $!services       is lazy = {};
+    has $!sub_containers is lazy = {};
 
     method new (%args) {
         coerce_key_from_array_to_name_map( \%args, 'services' );
@@ -23,48 +23,48 @@ class Container with Bread::Board::Traversable {
     }
 
     submethod BUILD {
-        $_->parent($self) foreach values %$services;
-        $_->parent($self) foreach values %$sub_containers;
+        $_->parent($self) foreach values %{$!services};
+        $_->parent($self) foreach values %{$!sub_containers};
     }
 
-    method services ($_services) {
-        if ($_services) {
-            $_->parent($self) foreach values %$_services;
-            $services = $_services;
+    method services ($services) {
+        if ($services) {
+            $_->parent($self) foreach values %$services;
+            $!services = $services;
         }
-        $services;
+        $!services;
     }
 
-    method get_service ($name) { $services->{ $name }        }
-    method has_service ($name) { exists $services->{ $name } }
-    method get_service_list    { keys %$services             }
-    method has_services        { scalar keys %$services      }
+    method get_service ($name) { $!services->{ $name }        }
+    method has_service ($name) { exists $!services->{ $name } }
+    method get_service_list    { keys %{$!services}             }
+    method has_services        { scalar keys %{$!services}      }
 
-    method sub_containers ($_sub_containers) {
-        if ($_sub_containers) {
-            $_->parent($self) foreach values %$_sub_containers;
-            $sub_containers = $_sub_containers;
+    method sub_containers ($sub_containers) {
+        if ($sub_containers) {
+            $_->parent($self) foreach values %$sub_containers;
+            $!sub_containers = $sub_containers;
         }
-        $sub_containers;
+        $!sub_containers;
     }
 
-    method get_sub_container ($name) { $sub_containers->{ $name }        }
-    method has_sub_container ($name) { exists $sub_containers->{ $name } }
-    method get_sub_container_list    { keys %$sub_containers             }
-    method has_sub_containers        { scalar keys %$sub_containers      }
+    method get_sub_container ($name) { $!sub_containers->{ $name }        }
+    method has_sub_container ($name) { exists $!sub_containers->{ $name } }
+    method get_sub_container_list    { keys %{$!sub_containers}             }
+    method has_sub_containers        { scalar keys %{$!sub_containers}      }
 
     method add_service ($service) {
         (blessed $service && $service->does('Bread::Board::Service'))
             || confess "You must pass in a Bread::Board::Service instance, not $service";
         $service->parent($self);
-        $services->{$service->name} = $service;
+        $!services->{$service->name} = $service;
     }
 
     method add_sub_container ($container) {
         (blessed $container && $container->isa('Bread::Board::Container'))
             || confess "You must pass in a Bread::Board::Container instance, not $container";
         $container->parent($self);
-        $sub_containers->{$container->name} = $container;
+        $!sub_containers->{$container->name} = $container;
     }
 
     method resolve {

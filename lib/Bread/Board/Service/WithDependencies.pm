@@ -10,20 +10,20 @@ use Scalar::Util 'blessed';
 
 role WithDependencies with Bread::Board::Service {
 
-    has $dependencies is lazy = {};
+    has $!dependencies is lazy = {};
 
     method dependencies ($deps) {
-        return $dependencies if not defined $deps;
+        return $!dependencies if not defined $deps;
         $_->parent($self) foreach values %$deps;
-        $dependencies = $deps;
+        $!dependencies = $deps;
     }
 
-    method add_dependency ($name, $dep) { $dependencies->{ $name } = $dep }
-    method get_dependency ($name)       { $dependencies->{ $name }        }
-    method has_dependency ($name)       { exists $dependencies->{ $name } }
-    method has_dependencies             { scalar keys %$dependencies      }
+    method add_dependency ($name, $dep) { $!dependencies->{ $name } = $dep }
+    method get_dependency ($name)       { $!dependencies->{ $name }        }
+    method has_dependency ($name)       { exists $!dependencies->{ $name } }
+    method has_dependencies             { scalar keys %{$!dependencies}      }
     method get_all_dependencies {
-        map { [ $_, $dependencies->{ $_ } ] } keys %$dependencies
+        map { [ $_, $!dependencies->{ $_ } ] } keys %{$!dependencies}
     }
 
     method resolve_dependencies {

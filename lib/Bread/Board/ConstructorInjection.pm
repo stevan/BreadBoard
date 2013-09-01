@@ -12,7 +12,7 @@ class ConstructorInjection with Bread::Board::Service::WithClass,
                                 Bread::Board::Service::WithParameters,
                                 Bread::Board::Service::WithDependencies {
 
-    has $constructor_name is rw, lazy = $_->_build_constructor_name;
+    has $!constructor_name is rw, lazy = $_->_build_constructor_name;
 
     method new (%args) {
         confess '$class is required'
@@ -39,7 +39,7 @@ class ConstructorInjection with Bread::Board::Service::WithClass,
     method get {
         $self->get_class;
         $self->prepare_parameters( @_ );
-        my $result = $self->class->$constructor_name( %{ $self->params } );
+        my $result = $self->class->$!constructor_name( %{ $self->params } );
         $self->clean_parameters;
         $self->clear_params;
         return $result;

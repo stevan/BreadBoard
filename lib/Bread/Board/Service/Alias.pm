@@ -8,11 +8,11 @@ use Scalar::Util 'blessed';
 use Try::Tiny;
 
 class Alias with Bread::Board::Service {
-    has $aliased_from_path is ro;
+    has $!aliased_from_path is ro;
 
-    has $aliased_from is ro, lazy = $_->_build_aliased_from;
+    has $!aliased_from is ro, lazy = $_->_build_aliased_from;
 
-    method get { $aliased_from->get( @_ ) }
+    method get { $!aliased_from->get( @_ ) }
 
     method _build_aliased_from {
         my $path = $self->aliased_from_path;

@@ -7,11 +7,11 @@ use Carp 'confess';
 use Scalar::Util 'blessed';
 
 role Traversable {
-    has $parent is rw, weak_ref;
+    has $!parent is rw, weak_ref;
 
-    method detach_from_parent { undef $parent }
+    method detach_from_parent { undef $!parent }
 
-    method has_parent { defined $parent }
+    method has_parent { defined $!parent }
 
     method get_root_container {
         my $c = $self;

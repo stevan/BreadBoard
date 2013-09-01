@@ -4,17 +4,17 @@ use warnings;
 use mop;
 
 role WithClass with Bread::Board::Service {
-    has $class_name is ro;
+    has $!class_name is ro;
 
     method class ($c) {
-        $class_name = $c if $c;
-        $class_name;
+        $!class_name = $c if $c;
+        $!class_name;
     }
 
-    method has_class { defined $class_name }
+    method has_class { defined $!class_name }
 
     method get_class {
-        Module::Runtime::use_package_optimistically( $class )
+        Module::Runtime::use_package_optimistically( $!class_name )
             if $self->has_class;
     }
 }

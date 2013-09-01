@@ -7,11 +7,11 @@ use Try::Tiny;
 
 role Singleton with Bread::Board::LifeCycle {
 
-    has $instance            is rw;
-    has $resolving_singleton is rw = 0;
+    has $!instance            is rw;
+    has $!resolving_singleton is rw = 0;
 
-    method has_instance   { defined $instance }
-    method flush_instance { undef $instance   }
+    method has_instance   { defined $!instance }
+    method flush_instance { undef $!instance   }
 
     method get_or_create_instance ($creator) {
 

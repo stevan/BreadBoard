@@ -5,9 +5,9 @@ use mop;
 
 class Literal with Bread::Board::Service {
 
-    has $value is rw = die '$value is required';
+    has $!value is rw = die '$!value is required';
 
-    method get { $value }
+    method get { $!value }
 }
 
 __END__
