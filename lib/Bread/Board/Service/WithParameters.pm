@@ -51,7 +51,6 @@ role WithParameters with Bread::Board::Service {
     }
 
     method has_parameter_defaults {
-        my $self = shift;
         scalar grep { $_->{default} } values %{$!parameters};
     }
 
