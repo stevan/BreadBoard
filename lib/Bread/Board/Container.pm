@@ -16,7 +16,7 @@ class Container with Bread::Board::Traversable {
     has $!services       is lazy = {};
     has $!sub_containers is lazy = {};
 
-    method new (%args) {
+    method new ($class: %args) {
         coerce_key_from_array_to_name_map( \%args, 'services' );
         coerce_key_from_array_to_name_map( \%args, 'sub_containers' );
         $class->next::method( %args );

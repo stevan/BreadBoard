@@ -14,7 +14,7 @@ class ConstructorInjection with Bread::Board::Service::WithClass,
 
     has $!constructor_name is rw, lazy = $_->_build_constructor_name;
 
-    method new (%args) {
+    method new ($class: %args) {
         confess '$class is required'
             unless exists $args{'class'};
         $args{'class_name'} = delete $args{'class'};

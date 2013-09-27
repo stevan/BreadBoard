@@ -12,7 +12,7 @@ class SetterInjection with Bread::Board::Service::WithClass,
                            Bread::Board::Service::WithParameters,
                            Bread::Board::Service::WithDependencies {
 
-    method new (%args) {
+    method new ($class: %args) {
         confess '$class is required'
             unless exists $args{'class'};
         $args{'class_name'} = delete $args{'class'};

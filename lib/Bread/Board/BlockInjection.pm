@@ -11,7 +11,7 @@ class BlockInjection with Bread::Board::Service::WithParameters,
 
     has $!block is rw = die '$!block is required';
 
-    method new (%args) {
+    method new ($class: %args) {
         $args{'class_name'} = delete $args{'class'};
         coerce_dependencies( \%args );
         $class->next::method( %args );
