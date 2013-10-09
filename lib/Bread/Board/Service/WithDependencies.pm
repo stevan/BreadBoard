@@ -89,6 +89,7 @@ role WithDependencies with Bread::Board::Service {
     }
 }
 
+no mop;
 __END__
 
 =pod

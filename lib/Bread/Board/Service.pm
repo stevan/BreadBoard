@@ -35,6 +35,7 @@ role Service with Bread::Board::Traversable {
 
 }
 
+no mop;
 __END__
 
 =pod

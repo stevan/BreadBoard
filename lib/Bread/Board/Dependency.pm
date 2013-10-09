@@ -36,6 +36,7 @@ class Dependency with Bread::Board::Traversable {
     method unlock    { $!service->unlock( @_ )    }
 }
 
+no mop;
 __END__
 
 =pod

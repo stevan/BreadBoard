@@ -27,6 +27,7 @@ class Alias with Bread::Board::Service {
     }
 }
 
+no mop;
 __END__
 
 =pod

@@ -48,6 +48,8 @@ class ConstructorInjection with Bread::Board::Service::WithClass,
     method _build_constructor_name { 'new' }
 }
 
+no mop;
+
 __END__
 
 =pod

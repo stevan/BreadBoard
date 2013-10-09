@@ -103,6 +103,7 @@ role Traversable {
     }
 }
 
+no mop;
 __END__
 
 =pod

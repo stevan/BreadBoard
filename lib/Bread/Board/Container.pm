@@ -98,6 +98,7 @@ class Container with Bread::Board::Traversable {
 
 }
 
+no mop;
 1;
 
 __END__

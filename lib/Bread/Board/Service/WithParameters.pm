@@ -56,6 +56,7 @@ role WithParameters with Bread::Board::Service {
 
 }
 
+no mop;
 __END__
 
 =pod

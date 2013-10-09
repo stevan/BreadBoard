@@ -45,6 +45,7 @@ class SetterInjection with Bread::Board::Service::WithClass,
     }
 }
 
+no mop;
 __END__
 
 =pod

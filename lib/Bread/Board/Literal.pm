@@ -10,6 +10,7 @@ class Literal with Bread::Board::Service {
     method get { $!value }
 }
 
+no mop;
 __END__
 
 =pod

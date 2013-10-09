@@ -46,6 +46,8 @@ role Singleton with Bread::Board::LifeCycle {
 
 }
 
+no mop;
+
 =pod
 
 package Bread::Board::LifeCycle::Singleton;

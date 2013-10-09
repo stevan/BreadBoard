@@ -5,6 +5,7 @@ use mop;
 
 role LifeCycle {}
 
+no mop;
 
 __END__
 

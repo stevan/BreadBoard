@@ -9,6 +9,7 @@ class Thunk {
     method inflate { $!thunk->( @_ ) }
 }
 
+no mop;
 __END__
 
 =pod

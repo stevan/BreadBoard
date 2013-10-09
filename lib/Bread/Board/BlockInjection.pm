@@ -42,6 +42,8 @@ class BlockInjection with Bread::Board::Service::WithParameters,
 
 }
 
+no mop;
+
 __END__
 
 =pod
