@@ -6,6 +6,9 @@ use warnings;
 use Test::More;
 use Test::Moose;
 
+# XXX this shouldn't be necessary, but see p5-mop-redux/#100
+use Bread::Board ();
+
 use Bread::Board::ConstructorInjection::Singleton;
 use Bread::Board::Literal;
 
