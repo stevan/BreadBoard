@@ -17,7 +17,7 @@ class BlockInjection with Bread::Board::Service::WithParameters,
         $class->next::method( %args );
     }
 
-    submethod BUILD {
+    method BUILD {
         $_->parent($self) foreach values %{ $self->dependencies };
     }
 

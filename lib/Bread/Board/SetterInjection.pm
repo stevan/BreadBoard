@@ -20,7 +20,7 @@ class SetterInjection with Bread::Board::Service::WithClass,
         $class->next::method( %args );
     }
 
-    submethod BUILD {
+    method BUILD {
         $_->parent($self) foreach values %{ $self->dependencies };
     }
 

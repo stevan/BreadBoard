@@ -22,7 +22,7 @@ class Container with Bread::Board::Traversable {
         $class->next::method( %args );
     }
 
-    submethod BUILD {
+    method BUILD {
         $_->parent($self) foreach values %{$!services};
         $_->parent($self) foreach values %{$!sub_containers};
     }

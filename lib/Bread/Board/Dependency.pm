@@ -18,13 +18,13 @@ class Dependency with Bread::Board::Traversable {
     method has_service_path   { defined $!service_path   }
     method has_service_params { defined $!service_params }
 
-    submethod _build_service_name {
+    method _build_service_name {
         ($self->has_service_path)
             || confess "Could not determine service name without service path";
         (split '/' => $!service_path)[-1];
     }
 
-    submethod _build_service {
+    method _build_service {
         ($self->has_service_path)
             || confess "Could not fetch service without service path";
         $self->fetch($!service_path);
