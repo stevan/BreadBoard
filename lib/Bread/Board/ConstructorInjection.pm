@@ -7,7 +7,8 @@ use Bread::Board::Types;
 
 with 'Bread::Board::Service::WithClass',
      'Bread::Board::Service::WithParameters',
-     'Bread::Board::Service::WithDependencies';
+     'Bread::Board::Service::WithDependencies',
+     'Bread::Board::Service::WithRoles';
 
 has 'constructor_name' => (
     is       => 'rw',
