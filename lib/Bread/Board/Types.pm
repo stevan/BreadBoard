@@ -6,11 +6,6 @@ use Scalar::Util qw(blessed);
 use Bread::Board::Service;
 use Bread::Board::Dependency;
 
-enum 'Bread::Board::Service::LifeCycles' => qw[
-    Null
-    Singleton
-];
-
 ## for Bread::Board::Container
 
 class_type 'Bread::Board::Container';
