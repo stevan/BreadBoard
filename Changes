@@ -1,6 +1,8 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+
+0.29  2013-11-21
     - Fix deprecated enum syntax
 
 0.28  2013-08-30
