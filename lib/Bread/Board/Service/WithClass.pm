@@ -1,5 +1,6 @@
 package Bread::Board::Service::WithClass;
 use Moose::Role;
+use Module::Runtime ();
 
 use Bread::Board::Types;
 
@@ -13,7 +14,7 @@ has 'class' => (
 
 before 'get' => sub {
     my $self = shift;
-    Class::MOP::load_class($self->class)
+    Module::Runtime::use_package_optimistically($self->class)
         if $self->has_class;
 };
 

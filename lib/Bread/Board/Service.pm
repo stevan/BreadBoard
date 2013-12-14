@@ -1,5 +1,6 @@
 package Bread::Board::Service;
 use Moose::Role;
+use Module::Runtime ();
 
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
@@ -46,7 +47,7 @@ has 'lifecycle' => (
         my $lifecycle_role = $lifecycle =~ /^\+/
                  ? substr($lifecycle, 1)
                  : "Bread::Board::LifeCycle::${lifecycle}";
-        Class::MOP::load_class($lifecycle_role);
+        Module::Runtime::use_package_optimistically($lifecycle_role);
         Class::MOP::class_of($lifecycle_role)->apply($self);
     }
 );
