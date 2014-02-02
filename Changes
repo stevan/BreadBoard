@@ -1,6 +1,8 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+
+0.30  2014-02-02
     - fix deprecated use of Class::MOP::load_class (Caleb Cushing, #33)
 
 0.29  2013-11-21
