@@ -1,6 +1,7 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+    - fix deprecated use of Class::MOP::load_class (Caleb Cushing, #33)
 
 0.29  2013-11-21
     - Fix deprecated enum syntax
