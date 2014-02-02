@@ -17,7 +17,7 @@ use Bread::Board::LifeCycle::Singleton;
 use Bread::Board::Service::Inferred;
 use Bread::Board::Service::Alias;
 
-use Moose::Exporter 1.00;
+use Moose::Exporter 2.1200;
 Moose::Exporter->setup_import_methods(
     as_is => [qw[
         as

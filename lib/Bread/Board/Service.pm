@@ -47,7 +47,7 @@ has 'lifecycle' => (
         my $lifecycle_role = $lifecycle =~ /^\+/
                  ? substr($lifecycle, 1)
                  : "Bread::Board::LifeCycle::${lifecycle}";
-        Module::Runtime::use_package_optimistically($lifecycle_role);
+        Module::Runtime::require_module($lifecycle_role);
         Class::MOP::class_of($lifecycle_role)->apply($self);
     }
 );

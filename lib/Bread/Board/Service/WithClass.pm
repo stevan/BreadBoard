@@ -14,7 +14,7 @@ has 'class' => (
 
 before 'get' => sub {
     my $self = shift;
-    Module::Runtime::use_package_optimistically($self->class)
+    Module::Runtime::require_module($self->class)
         if $self->has_class;
 };
 
