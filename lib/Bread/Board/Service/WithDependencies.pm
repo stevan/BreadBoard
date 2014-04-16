@@ -18,7 +18,14 @@ has 'dependencies' => (
     default   => sub { +{} },
     trigger   => sub {
         my $self = shift;
-        $_->parent($self) foreach values %{$self->dependencies};
+        foreach my $d (values %{$self->dependencies}) {
+            if (ref($d) eq 'ARRAY') {
+                $_->parent($self) for @$d;
+            }
+            else {
+                $d->parent($self);
+            }
+        }
     },
     handles  => {
         'add_dependency'       => 'set',
@@ -37,13 +44,8 @@ around 'init_params' => sub {
 
 after 'get' => sub { (shift)->clear_params };
 
-sub resolve_dependencies {
-    my $self = shift;
-    my %deps;
-    if ($self->has_dependencies) {
-        foreach my $dep ($self->get_all_dependencies) {
-            my ($key, $dependency) = @$dep;
-
+sub _resolve_one_dependency {
+    my ($self, $dependency) = @_;
             my $service = $dependency->service;
 
             # NOTE:
@@ -55,7 +57,7 @@ sub resolve_dependencies {
                     if $service->does('Bread::Board::Service::WithParameters')
                     && $service->has_parameters;
 
-                $deps{$key} = Bread::Board::Service::Deferred->new(service => $service);
+                return Bread::Board::Service::Deferred->new(service => $service);
             }
             else {
                 # since we can't pass in parameters here,
@@ -70,7 +72,7 @@ sub resolve_dependencies {
                     &&
                     (not $dependency->has_service_params)
                    ) {
-                    $deps{$key} = Bread::Board::Service::Deferred::Thunk->new(
+                    return Bread::Board::Service::Deferred::Thunk->new(
                         thunk => sub {
                             my %params = @_;
                             $service->lock;
@@ -82,8 +84,9 @@ sub resolve_dependencies {
                 }
                 else {
                     $service->lock;
+                    my $ret;
                     try {
-                        $deps{$key} = $dependency->has_service_params
+                        $ret = $dependency->has_service_params
                             ? $service->get( %{ $dependency->service_params })
                             : $service->get;
                     } finally {
@@ -91,8 +94,28 @@ sub resolve_dependencies {
                     } catch {
                         die $_
                     };
+                    return $ret;
                 }
             }
+}
+
+sub resolve_dependencies {
+    my $self = shift;
+    my %deps;
+    if ($self->has_dependencies) {
+        foreach my $dep ($self->get_all_dependencies) {
+            my ($key, $dependency) = @$dep;
+
+            if (ref($dependency) eq 'ARRAY') {
+                $deps{$key} = [
+                    map {$self->_resolve_one_dependency($_)}
+                        @$dependency
+                    ];
+            }
+            else {
+                $deps{$key} = $self->_resolve_one_dependency($dependency);
+            }
+
         }
     }
     return %deps;

@@ -27,32 +27,45 @@ coerce 'Bread::Board::Container::ServiceList'
 
 ## for Bread::Board::Service::WithDependencies ...
 
+subtype 'Bread::Board::DependenciesArray'
+    => as 'ArrayRef[Bread::Board::Dependency]';
+
 subtype 'Bread::Board::Service::Dependencies'
-    => as 'HashRef[Bread::Board::Dependency]';
+    => as 'HashRef[Bread::Board::Dependency|Bread::Board::DependenciesArray]';
+
+sub _coerce_one_dep {
+    my ($dep) = @_;
+    if (!blessed($dep)) {
+        if (ref $dep) {
+            my ($service_path)   = keys %$dep;
+            my ($service_params) = values %$dep;
+            $dep = Bread::Board::Dependency->new(
+                service_path   => $service_path,
+                service_params => $service_params
+            );
+        }
+        else {
+            $dep = Bread::Board::Dependency->new(service_path => $dep);
+        }
+    }
+    return ($dep->isa('Bread::Board::Dependency')
+                ? $dep
+                : Bread::Board::Dependency->new(service => $dep));
+}
 
 coerce 'Bread::Board::Service::Dependencies'
-    => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef]'
+    => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef | ArrayRef]'
         => via {
             +{
                 map {
-
                     my $dep = $_[0]->{$_};
-                    if (!blessed($dep)) {
-                        if (ref $dep) {
-                            my ($service_path)   = keys %$dep;
-                            my ($service_params) = values %$dep;
-                            $dep = Bread::Board::Dependency->new(
-                                service_path   => $service_path,
-                                service_params => $service_params
-                            );
-                        }
-                        else {
-                            $dep = Bread::Board::Dependency->new(service_path => $dep);
-                        }
+                    if (!blessed($dep) && ref($dep) eq 'ARRAY') {
+                        $dep = [ map { _coerce_one_dep($_) } @$dep ];
                     }
-                    ($_ => ($dep->isa('Bread::Board::Dependency')
-                            ? $dep
-                            : Bread::Board::Dependency->new(service => $dep)))
+                    else {
+                        $dep = _coerce_one_dep($dep);
+                    }
+                    ($_ => $dep)
                 } keys %{$_[0]}
             }
         }
