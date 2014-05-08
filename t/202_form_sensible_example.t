@@ -6,6 +6,8 @@ use warnings;
 use Test::More;
 use Test::Moose;
 
+BEGIN { plan skip_all => 'Form::Sensible is broken at the moment' }
+
 use Test::Requires { 'Form::Sensible' => '0.11220' };
 
 use Bread::Board;
