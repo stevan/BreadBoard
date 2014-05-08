@@ -30,16 +30,34 @@ coerce 'Bread::Board::Container::ServiceList'
 subtype 'Bread::Board::Service::Dependencies'
     => as 'HashRef[Bread::Board::Dependency]';
 
+my $ANON_INDEX = 1;
 sub coerce_to_dependency {
     my ($dep) = @_;
 
     if (!blessed($dep)) {
-        if (ref $dep) {
+        if (ref $dep eq 'HASH') {
             my ($service_path)   = keys %$dep;
             my ($service_params) = values %$dep;
             $dep = Bread::Board::Dependency->new(
                 service_path   => $service_path,
                 service_params => $service_params
+            );
+        }
+        elsif (ref $dep eq 'ARRAY') {
+            require Bread::Board::BlockInjection;
+            my $name = '_ANON_COERCE_' . $ANON_INDEX++ . '_';
+            my @deps = map { coerce_to_dependency($_) } @$dep;
+            my @dep_names = map { $_->[0] } @deps;
+            $dep = Bread::Board::Dependency->new(
+                service_name => $name,
+                service      => Bread::Board::BlockInjection->new(
+                    name         => $name,
+                    dependencies => { map { @$_ } @deps },
+                    block        => sub {
+                        my ($s) = @_;
+                        return [ map { $s->param($_) } @dep_names ];
+                    },
+                ),
             );
         }
         else {
@@ -48,25 +66,25 @@ sub coerce_to_dependency {
     }
 
     if ($dep->isa('Bread::Board::Dependency')) {
-        return ($dep->service_name => $dep);
+        return [$dep->service_name => $dep];
     }
     else {
-        return ($dep->name => Bread::Board::Dependency->new(service => $dep));
+        return [$dep->name => Bread::Board::Dependency->new(service => $dep)];
     }
 }
 
 coerce 'Bread::Board::Service::Dependencies'
-    => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef]'
+    => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef | ArrayRef]'
         => via {
             +{
-                map { $_ => (coerce_to_dependency($_[0]->{$_}))[1] }
+                map { $_ => coerce_to_dependency($_[0]->{$_})->[1] }
                     keys %{$_[0]}
             }
         }
     => from 'ArrayRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef]'
         => via {
             +{
-                map { coerce_to_dependency($_) } @{$_[0]}
+                map { @{ coerce_to_dependency($_) } } @{$_[0]}
             }
         };
 
