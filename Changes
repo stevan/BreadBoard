@@ -1,6 +1,8 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+
+0.31  2014-05-08
     - allow specifying dependency values as arrayrefs, which will resolve to an
       arrayref containing the resolved service values (dakkar, #34)
 
