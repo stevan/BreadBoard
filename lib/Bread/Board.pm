@@ -444,6 +444,65 @@ of these is present, constructor injection will be used with
 L<Bread::Board::ConstructorInjection> (and you must provide the C<class>
 option).
 
+The C<dependencies> parameter takes a hashref of dependency names mapped to
+L<Bread::Board::Dependency> objects, but there are several coercions and sugar
+functions available to make specifying dependencies as easy as possible. The
+simplest case is when the names of the services you're depending on are the
+same as the names that the service you're defining will be accessing them with.
+In this case, you can just specify an arrayref of service names:
+
+  service foo => (
+      dependencies => [ 'bar', 'baz' ],
+      # ...
+  );
+
+If you need to use a different name, you can specify the dependencies as a
+hashref instead:
+
+  service foo => (
+      dependencies => {
+          dbh => 'foo_dbh',
+      },
+      # ...
+  );
+
+You can also specify parameters when depending on a parameterized service:
+
+  service foo => (
+      dependencies => [
+          { bar => { bar_param => 1 } },
+          'baz',
+      ],
+      # ...
+  );
+
+Finally, services themselves can also be specified as dependencies, in which
+case they will just be resolved directly:
+
+  service foo => (
+      dependencies => {
+          dsn => Bread::Board::Literal->new(
+              name  => 'dsn',
+              value => 'dbi:mysql:mydb',
+          ),
+      },
+      # ...
+  );
+
+As a special case, an arrayref of dependencies will be interpreted as a service
+which returns an arrayref containing the resolved values of those dependencies:
+
+  service foo => (
+      dependencies => {
+          # items will resolve to [ $bar_service->get, $baz_service->get ]
+          items => [
+              'bar',
+              Bread::Board::Literal->new(name => 'baz', value => 'BAZ'),
+          ],
+      },
+      # ...
+  );
+
 If the C<$name> starts with a C<'+'>, the service definition will instead
 extend an existing service with the given C<$name> (without the C<'+'>). This
 works similarly to the C<has '+foo'> syntax in Moose. It is most useful when
@@ -462,7 +521,8 @@ named C<$service_path> and returns it.
 =item I<wire_names (@service_names)>
 
 This function is just a shortcut for passing a hash reference of dependencies
-into the service. It is not typically needed, since Bread::Board can usually understand what you mean - these declarations are all equivalent:
+into the service. It is not typically needed, since Bread::Board can usually
+understand what you mean - these declarations are all equivalent:
 
   service foo => (
       class => 'Pity::TheFoo',
