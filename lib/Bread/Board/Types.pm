@@ -30,57 +30,43 @@ coerce 'Bread::Board::Container::ServiceList'
 subtype 'Bread::Board::Service::Dependencies'
     => as 'HashRef[Bread::Board::Dependency]';
 
+sub coerce_to_dependency {
+    my ($dep) = @_;
+
+    if (!blessed($dep)) {
+        if (ref $dep) {
+            my ($service_path)   = keys %$dep;
+            my ($service_params) = values %$dep;
+            $dep = Bread::Board::Dependency->new(
+                service_path   => $service_path,
+                service_params => $service_params
+            );
+        }
+        else {
+            $dep = Bread::Board::Dependency->new(service_path => $dep);
+        }
+    }
+
+    if ($dep->isa('Bread::Board::Dependency')) {
+        return ($dep->service_name => $dep);
+    }
+    else {
+        return ($dep->name => Bread::Board::Dependency->new(service => $dep));
+    }
+}
+
 coerce 'Bread::Board::Service::Dependencies'
     => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef]'
         => via {
             +{
-                map {
-
-                    my $dep = $_[0]->{$_};
-                    if (!blessed($dep)) {
-                        if (ref $dep) {
-                            my ($service_path)   = keys %$dep;
-                            my ($service_params) = values %$dep;
-                            $dep = Bread::Board::Dependency->new(
-                                service_path   => $service_path,
-                                service_params => $service_params
-                            );
-                        }
-                        else {
-                            $dep = Bread::Board::Dependency->new(service_path => $dep);
-                        }
-                    }
-                    ($_ => ($dep->isa('Bread::Board::Dependency')
-                            ? $dep
-                            : Bread::Board::Dependency->new(service => $dep)))
-                } keys %{$_[0]}
+                map { $_ => (coerce_to_dependency($_[0]->{$_}))[1] }
+                    keys %{$_[0]}
             }
         }
     => from 'ArrayRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef]'
         => via {
-            # auto-wire the dependencies with
-            # the service name if we get them
-            # as an array
             +{
-                map {
-                    my $dep = $_;
-                    if (!blessed($dep)) {
-                        if (ref $dep) {
-                            my ($service_path)   = keys %$dep;
-                            my ($service_params) = values %$dep;
-                            $dep = Bread::Board::Dependency->new(
-                                service_path   => $service_path,
-                                service_params => $service_params
-                            );
-                        }
-                        else {
-                            $dep = Bread::Board::Dependency->new(service_path => $dep);
-                        }
-                    }
-                    ($dep->isa('Bread::Board::Dependency')
-                        ? ($dep->service_name => $dep)
-                        : ($dep->name         => Bread::Board::Dependency->new(service => $dep)))
-                } @{$_[0]}
+                map { coerce_to_dependency($_) } @{$_[0]}
             }
         };
 
