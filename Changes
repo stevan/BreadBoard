@@ -1,6 +1,8 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+    - allow specifying dependency values as arrayrefs, which will resolve to an
+      arrayref containing the resolved service values (dakkar, #34)
 
 0.30  2014-02-02
     - fix deprecated use of Class::MOP::load_class (Caleb Cushing, #33)
