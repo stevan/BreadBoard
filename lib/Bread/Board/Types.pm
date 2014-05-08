@@ -31,7 +31,7 @@ subtype 'Bread::Board::Service::Dependencies'
     => as 'HashRef[Bread::Board::Dependency]';
 
 my $ANON_INDEX = 1;
-sub coerce_to_dependency {
+sub _coerce_to_dependency {
     my ($dep) = @_;
 
     if (!blessed($dep)) {
@@ -46,7 +46,7 @@ sub coerce_to_dependency {
         elsif (ref $dep eq 'ARRAY') {
             require Bread::Board::BlockInjection;
             my $name = '_ANON_COERCE_' . $ANON_INDEX++ . '_';
-            my @deps = map { coerce_to_dependency($_) } @$dep;
+            my @deps = map { _coerce_to_dependency($_) } @$dep;
             my @dep_names = map { $_->[0] } @deps;
             $dep = Bread::Board::Dependency->new(
                 service_name => $name,
@@ -77,14 +77,14 @@ coerce 'Bread::Board::Service::Dependencies'
     => from 'HashRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef | ArrayRef]'
         => via {
             +{
-                map { $_ => coerce_to_dependency($_[0]->{$_})->[1] }
+                map { $_ => _coerce_to_dependency($_[0]->{$_})->[1] }
                     keys %{$_[0]}
             }
         }
     => from 'ArrayRef[Bread::Board::Service | Bread::Board::Dependency | Str | HashRef]'
         => via {
             +{
-                map { @{ coerce_to_dependency($_) } } @{$_[0]}
+                map { @{ _coerce_to_dependency($_) } } @{$_[0]}
             }
         };
 
