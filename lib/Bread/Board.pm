@@ -251,8 +251,7 @@ __END__
       service 'logger' => (
           class        => 'FileLogger',
           lifecycle    => 'Singleton',
-          dependencies => [
-              depends_on('log_file_name'),
+          dependencies => [ 'log_file_name' ],
           ]
       );
 
@@ -271,15 +270,15 @@ __END__
                       $s->param('password'),
                   ) || die "Could not connect";
               },
-              dependencies => wire_names(qw[dsn username password])
+              dependencies => [ 'dsn', 'username', 'password' ]
           );
       };
 
       service 'application' => (
           class        => 'MyApplication',
           dependencies => {
-              logger => depends_on('logger'),
-              dbh    => depends_on('Database/dbh'),
+              logger => 'logger',
+              dbh    => 'Database/dbh',
           }
       );
 
@@ -463,14 +462,7 @@ named C<$service_path> and returns it.
 =item I<wire_names (@service_names)>
 
 This function is just a shortcut for passing a hash reference of dependencies
-into the service.
-
-  service foo => (
-      class => "Pity::TheFoo',
-      dependencies => wire_names(qw( foo bar baz )),
-  );
-
-The above is identical to:
+into the service. It is not typically needed, since Bread::Board can usually understand what you mean - these declarations are all equivalent:
 
   service foo => (
       class => 'Pity::TheFoo',
@@ -479,6 +471,25 @@ The above is identical to:
           bar => depends_on('bar'),
           baz => depends_on('baz'),
       },
+  );
+
+  service foo => (
+      class => 'Pity::TheFoo',
+      dependencies => wire_names(qw( foo bar baz )),
+  );
+
+  service foo => (
+      class => 'Pity::TheFoo',
+      dependencies => {
+          foo => 'foo',
+          bar => 'bar',
+          baz => 'baz',
+      },
+  );
+
+  service foo => (
+      class => 'Pity::TheFoo',
+      dependencies => [ qw(foo bar baz ) ],
   );
 
 =item I<typemap ($type, $service | $service_path)>
