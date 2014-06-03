@@ -1,6 +1,8 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+
+0.32  2014-06-03
     - fixes to arrayref dependencies (dakkar, #35)
 
 0.31  2014-05-08
