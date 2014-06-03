@@ -1,4 +1,8 @@
 package Bread::Board::Service::WithDependencies;
+BEGIN {
+  $Bread::Board::Service::WithDependencies::AUTHORITY = 'cpan:STEVAN';
+}
+$Bread::Board::Service::WithDependencies::VERSION = '0.32';
 use Moose::Role;
 
 use Try::Tiny;
@@ -104,6 +108,16 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Service::WithDependencies
+
+=head1 VERSION
+
+version 0.32
+
 =head1 DESCRIPTION
 
 =head1 METHODS
@@ -133,5 +147,16 @@ __END__
 All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
