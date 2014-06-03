@@ -47,18 +47,20 @@ sub _coerce_to_dependency {
             require Bread::Board::BlockInjection;
             my $name = '_ANON_COERCE_' . $ANON_INDEX++ . '_';
             my @deps = map { _coerce_to_dependency($_) } @$dep;
-            my @dep_names = map { $_->[0] } @deps;
+            my @dep_names = map { "${name}DEP_$_" } 0..$#deps;
             $dep = Bread::Board::Dependency->new(
                 service_name => $name,
                 service      => Bread::Board::BlockInjection->new(
                     name         => $name,
-                    dependencies => { map { @$_ } @deps },
+                    dependencies => { map { $dep_names[$_] => $deps[$_]->[1] }
+                                          0..$#deps },
                     block        => sub {
                         my ($s) = @_;
                         return [ map { $s->param($_) } @dep_names ];
                     },
                 ),
             );
+            $dep->service->parent($dep);
         }
         else {
             $dep = Bread::Board::Dependency->new(service_path => $dep);
