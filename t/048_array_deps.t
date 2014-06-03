@@ -24,7 +24,7 @@ use Bread::Board::Dependency;
     has 'items' => (is => 'ro', isa => 'ArrayRef');
 }
 
-subtest 'no container' => sub {
+{
     my $s = Bread::Board::ConstructorInjection->new(
         name => 'list_of_items',
         class => 'ListOfItems',
@@ -51,11 +51,11 @@ subtest 'no container' => sub {
     is(
         $output,
         'one,two,three',
-        'it worked'
+        'no container worked'
     );
-};
+}
 
-subtest 'container, no ambiguous path names' => sub {
+{
     my $c = Bread::Board::Container->new(
         name => 'list_container',
         services => [
@@ -85,11 +85,11 @@ subtest 'container, no ambiguous path names' => sub {
     is(
         $output,
         'one,two,three',
-        'it worked'
+        'container with no ambiguous path names worked'
     );
-};
+}
 
-subtest 'multiple containers, ambiguous names' => sub {
+{
     my $c = Bread::Board::Container->new(
         name => 'list_container',
         sub_containers => [
@@ -127,8 +127,8 @@ subtest 'multiple containers, ambiguous names' => sub {
     is(
         $output,
         'one,two,three',
-        'it worked'
+        'multiple containers with ambiguous names worked'
     );
-};
+}
 
 done_testing;
