@@ -29,6 +29,7 @@ Moose::Exporter->setup_import_methods(
         include
         typemap
         infer
+        literal
     ]],
 );
 
@@ -232,6 +233,15 @@ sub wire_names { +{ map { $_ => depends_on($_) } @_ }; }
 sub depends_on ($) {
     my $path = shift;
     Bread::Board::Dependency->new(service_path => $path);
+}
+
+my $LITERAL_ANON = 0;
+sub literal($) {
+    my $value = shift;
+    Bread::Board::Literal->new(
+        name => 'LITERAL_ANON_' . $LITERAL_ANON++,
+        value => $value,
+    );
 }
 
 1;
@@ -512,6 +522,28 @@ superclasses. The C<dependencies> and C<parameters> options will be merged with
 the existing values, rather than overridden. Note that literal services can't
 be extended, because there's nothing to extend. You can still override them
 entirely by declaring the service name without a leading C<'+'>.
+
+=item I<literal($value)>
+
+Creates an anonymous L<Bread::Board::Literal> object with the given value.
+
+          service 'dbh' => (
+              block => sub {
+                  my $s = shift;
+                  require DBI;
+                  DBI->connect(
+                      $s->param('dsn'),
+                      $s->param('username'),
+                      $s->param('password'),
+                  ) || die "Could not connect";
+              },
+              dependencies => {
+                dsn      => literal 'dbi:SQLite:somedb',
+                username => literal 'foo',
+                password => literal 'password',
+
+              },
+          );
 
 =item I<depends_on ($service_path)>
 
