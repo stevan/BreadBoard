@@ -1,6 +1,7 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+    - add 'literal' keyword (Yanick Champoux, #31)
 
 0.32  2014-06-03
     - fixes to arrayref dependencies (dakkar, #35)
