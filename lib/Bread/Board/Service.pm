@@ -173,6 +173,10 @@ resolve to.
 Builder for the service parameters, defaults to returning an empty
 hashref.
 
+=item B<clear_params>
+
+Clearer of the service parameters.
+
 =item B<param>
 
   my @param_names = $service->param();

@@ -104,6 +104,24 @@ constraints:
     },
   );
 
+This attribute uses coercions on L<<
+C<Bread::Board::Service::Parameters>|Bread::Board::Types/Bread::Board::Service::Parameters
+>> so that you can also say:
+
+  service something => (
+    class => 'Thing',
+    parameters => ['type'],
+  );
+
+and it will be equivalent to:
+
+  service something => (
+    class => 'Thing',
+    parameters => {
+       type => { optional => 0 },
+    },
+  );
+
 =item B<has_parameters>
 
 Predicate for the L</parameters> attribute.
