@@ -41,11 +41,37 @@ __END__
 
 =head1 DESCRIPTION
 
+This L<service|Bread::Board::Service> class instantiates objects by
+calling the constructor on a class.
+
+This class consumes L<Bread::Board::Service::WithClass>,
+L<Bread::Board::Service::WithParameters>,
+L<Bread::Board::Service::WithDependencies>.
+
 =head1 METHODS
 
 =over 4
 
+=item B<class>
+
+Attribute provided by L<Bread::Board::Service::WithClass>. This
+service makes it a required attribute: you can't call a constructor if
+you don't have a class.
+
+=item B<constructor_name>
+
+Optional string, indicates the name of the class method to invoke to
+construct the object. If not provided, defaults to the constructor
+name obtained via L<Class::MOP::Class>, or C<new> if introspection
+does not work.
+
 =item B<get>
+
+Calls the constructor (as indicated by L</constructor_name>) on the
+L</class>, passing all the L<service
+parameters|Bread::Board::Service/params> as a B<hash>. Returns
+whatever the constructor returned (hopefully a correctly-constructed
+object of the right class).
 
 =back
 

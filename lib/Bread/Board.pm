@@ -624,10 +624,13 @@ However, you might find it more readable to use C<include>.
 
 =item I<alias ($service_name, $service_path, %service_description)>
 
-This helper allows for the creation of service aliases, which allows you to
-define a service in one place and then reuse that service with a different name
-somewhere else. This is sort of like a symbolic link for services. Aliases will
-be resolved recursively, so an alias can alias an alias.
+This helper allows for the creation of L<service
+aliases|Bread::Board::Service::Alias>, which allows you to define a
+service in one place and then reuse that service with a different name
+somewhere else. This is sort of like a symbolic link for
+services. Aliases will be L<resolved
+recursively|Bread::Board::Traversable/fetch>, so an alias can alias an
+alias.
 
 For example,
 

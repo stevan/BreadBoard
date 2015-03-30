@@ -153,7 +153,12 @@ container this object is a part of.
 Given a (relative or absolute) path to a service or container, this
 method walks the tree and returns the L<Bread::Board::Service> or
 L<Bread::Board::Container> instance for that path. Dies if no object
-can be found for the given path.
+can be found for the given
+path.
+
+L<Aliases|Bread::Board::Service::Alias> are resolved in this call, by
+calling L<< C<aliased_from>|Bread::Board::Service::Alias/aliased_from
+>> until we get an actual service.
 
 =back
 

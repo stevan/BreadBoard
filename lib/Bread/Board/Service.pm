@@ -186,6 +186,13 @@ Clearer of the service parameters.
 Getter/setter for the service parameters; notice that calling thes
 method with no arguments returns the list of parameter names.
 
+I<Please note>: these are not the same as the L<parameters for a
+parametric service|Bread::Board::Service::WithParameters> (although
+those will be copied here before C<get> is called), nor are they the
+same thing as L<dependencies|Bread::Board::Service::WithDependencies>
+(although the resolved dependencies will be copied here before C<get>
+is called).
+
 =item B<clone_and_inherit_params>
 
 When declaring a service using the L<< C<service> helper
