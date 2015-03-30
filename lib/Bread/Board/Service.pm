@@ -119,27 +119,77 @@ __END__
 
 =head1 DESCRIPTION
 
+This role is the basis for all services in L<Bread::Board>. It
+provides (or requires the implementation of) the minimum necessary
+building blocks: creating an instance, setting/getting parameters,
+instance lifecycle.
+
 =head1 METHODS
 
 =over 4
 
 =item B<name>
 
+Read/write string, required. Every service needs a name, by which it
+can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
+
 =item B<is_locked>
+
+Boolean, defaults to false. Used during L<dependency
+resolution|Bread::Board::Service::WithDependencies/resolve_dependencies>
+to detect loops.
 
 =item B<lock>
 
+Locks the service; you should never need to call this method in normal
+code.
+
 =item B<unlock>
+
+Unlocks the service; you should never need to call this method in
+normal code.
 
 =item B<lifecycle>
 
+  $service->lifecycle('Singleton');
+
+Read/write string; it should be either a partial class name under the
+C<Bread::Board::LifeCycle::> namespace (like C<Singleton> for
+C<Bread::Board::LifeCycle::Singleton>) or a full class name prefixed
+with C<+> (like C<+My::Special::Lifecycle>). The name is expected to
+refer to a loadable I<role>, which will be applied to the service
+instance.
+
 =item B<get>
+
+  my $value = $service->get();
+
+This method I<must> be implemented by the consuming class. It's
+expected to instantiate whatever object or value this service should
+resolve to.
 
 =item B<init_params>
 
+Builder for the service parameters, defaults to returning an empty
+hashref.
+
 =item B<param>
 
+  my @param_names = $service->param();
+  my $param_value = $service->param($param_name);
+  $service->param($name1=>$value1,$name2=>$value2);
+
+Getter/setter for the service parameters; notice that calling thes
+method with no arguments returns the list of parameter names.
+
 =item B<clone_and_inherit_params>
+
+When declaring a service using the L<< C<service> helper
+function|Bread::Board/service >>, if the name you use starts with a
+C<'+'>, the service definition will extend an existing service with
+the given name (without the C<'+'>). This method implements the
+extension semantics: the C<dependencies> and C<parameters> options
+will be merged with the existing values, rather than overridden.
 
 =back
 

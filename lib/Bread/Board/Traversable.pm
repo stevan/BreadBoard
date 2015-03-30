@@ -110,7 +110,15 @@ __END__
 
 =head1 SYNOPSIS
 
+  my $service = $container->fetch('/some/service/path');
+
+  my $root = $service->get_root_container;
+
 =head1 DESCRIPTION
+
+This role provides the basic functionality to traverse a container /
+service tree. Instances of classes consuming this role will get a
+parent-child relationship between them.
 
 =head1 METHODS
 
@@ -118,13 +126,34 @@ __END__
 
 =item B<parent>
 
+Weak ref to another L<Bread::Board::Traversable> object, read/write
+accessor (although you should probably not change this value directly
+in normal code).
+
 =item B<has_parent>
+
+Predicate for the L</parent> attribute, true if a parent has been set.
 
 =item B<detach_from_parent>
 
+Clearer for the L</parent> attribute, you should probably not call
+this method in normal code.
+
 =item B<get_root_container>
 
+Returns the farthest ancestor of the invocant, i.e. the top-most
+container this object is a part of.
+
 =item B<fetch>
+
+  my $service = $this->fetch('/absolute/path');
+  my $service = $this->fetch('relative/path');
+  my $service = $this->fetch('../relative/path');
+
+Given a (relative or absolute) path to a service or container, this
+method walks the tree and returns the L<Bread::Board::Service> or
+L<Bread::Board::Container> instance for that path. Dies if no object
+can be found for the given path.
 
 =back
 

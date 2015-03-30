@@ -19,7 +19,13 @@ __END__
 
 =head1 DESCRIPTION
 
-No user servicable parts. Read the source if you are interested.
+=head1 METHODS
+
+=over 4
+
+=item B<inflate>
+
+=back
 
 =head1 BUGS
 

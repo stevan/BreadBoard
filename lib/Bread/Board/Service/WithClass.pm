@@ -26,13 +26,26 @@ __END__
 
 =head1 DESCRIPTION
 
+This a sub-role of L<Bread::Board::Service> for services that return
+instances of a given class.
+
 =head1 METHODS
 
 =over 4
 
 =item B<class>
 
+Reaw/write string attribute, the name of the class that this service
+will probably instantiate.
+
+=item B<has_class>
+
+Predicate for the L</class> attribute, true if it has been set.
+
 =item B<get>
+
+This role adds a C<before> modifier to the C<get> method, ensuring
+that the module implementing the L</class> is loaded.
 
 =back
 
