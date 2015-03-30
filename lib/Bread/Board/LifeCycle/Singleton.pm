@@ -62,17 +62,36 @@ __END__
 
 =head1 DESCRIPTION
 
+Sub-role of L<Bread::Board::LifeCycle>, this role defines the
+"singleton" lifecycle for a service. The C<get> method will only do
+its work the first time it is invoked; subsequent invocations will
+return the same object.
+
 =head1 METHODS
 
 =over 4
 
 =item B<get>
 
+The first time this is called (or the first time after calling
+L</flush_instance>), the actual C<get> method will be invoked, and its
+return value cached in the L</instance> attribute. The value of that
+attribute will always be returned, so you can call C<get> as many time
+as you need, and always receive the same instance.
+
 =item B<instance>
+
+The object build by the last call to C<get> to actually do any work,
+and returned by any subsequent call to C<get>.
 
 =item B<has_instance>
 
+Predicate for the L</instance> attribute.
+
 =item B<flush_instance>
+
+Clearer for the L</instance> attribute. Clearing the attribute will
+cause the next call to C<get> to instantiate a new object.
 
 =back
 

@@ -52,25 +52,47 @@ __END__
 
 =head1 DESCRIPTION
 
+This class holds the information for a dependency of a
+L<service|Bread::Board::Service::WithDependencies>. When L<resolving
+dependencies|Bread::Board::Service::WithDependencies/resolve_dependencies>,
+instances of this class will be used to access the services that will
+provide the depended-on values.
+
+This class consumes the L<Bread::Board::Traversable> role to retrieve
+services given their path.
+
 =head1 METHODS
 
 =over 4
 
-=item B<get>
+=item B<service_path>
+
+The path to use (possibly relative to the dependency itself) to access
+the L</service>.
 
 =item B<has_service_path>
+
+Predicate for the L</service_path> attribute.
+
+=item B<service>
+
+The service this dependency points at. Usually built lazyly from the
+L</service_path>, but could just be passed in to the constructor.
+
+=item B<service_name>
+
+Name of the L</service>, defaults to the last element of the
+L</service_path>.
+
+=item B<get>
 
 =item B<is_locked>
 
 =item B<lock>
 
-=item B<service>
-
-=item B<service_name>
-
-=item B<service_path>
-
 =item B<unlock>
+
+These methods are delegated to the L</service>.
 
 =back
 
