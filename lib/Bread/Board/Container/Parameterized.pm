@@ -169,6 +169,12 @@ as sub-containers, and returns the clone.
 If this was not a top-level container, the parent is also cloned, and
 the container clone is added to the parent clone.
 
+Please note that the container returned by this method does I<not>
+have the same name as the parameterized container, and that calling
+this method with different parameter values will return different
+containers, but all with the same name. It's probably a bad idea to
+instantiate a non-top-level parameterized container more than once.
+
 =item B<fetch>
 
 =item B<resolve>
