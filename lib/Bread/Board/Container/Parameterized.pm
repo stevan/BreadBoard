@@ -104,15 +104,31 @@ __END__
 
 =head1 DESCRIPTION
 
+This class implements a sort of container factory for L<Bread::Board>:
+a parameterized container is a, in practice, a function from a set of
+parameters (which must be containers) to an actual container. See
+L<Bread::Board::Manual::Example::FormSensible> for an example.
+
 =head1 ATTRIBUTES
 
 =over 4
 
 =item B<name>
 
+Read/write string, required. Every container needs a name, by which it
+can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
+
 =item B<allowed_parameter_names>
 
+Read-only arrayref of strings, required. These are the names of the
+containers that must be passed to L<< C<create>|create ( %params ) >>
+to get an actual container out of this parameterized object.
+
 =item B<container>
+
+This attribute holds the "prototype" container. Services inside it can
+depend on service paths that include the container names given in
+L</allowed_parameter_names>.
 
 =back
 
@@ -120,13 +136,46 @@ __END__
 
 =over 4
 
+=item B<add_service>
+
+=item B<get_service>
+
+=item B<has_service>
+
+=item B<get_service_list>
+
+=item B<has_services>
+
+=item B<add_sub_container>
+
+=item B<get_sub_container>
+
+=item B<has_sub_container>
+
+=item B<get_sub_container_list>
+
+=item B<has_sub_containers>
+
+All these methods are delegated to the "prototype" L</container>, so
+that this object can be defined as if it were a normal container.
+
 =item B<create ( %params )>
 
+After checking that the keys of C<%params> are exactly the same
+strings that are present in L</allowed_parameter_names>, this method
+clones the prototype L</container>, adds the C<%params> to the clone
+as sub-containers, and returns the clone.
+
+If this was not a top-level container, the parent is also cloned, and
+the container clone is added to the parent clone.
+
 =item B<fetch>
+
 =item B<resolve>
 
-These two methods die, they are not appropriate, but are here for
-completeness.
+These two methods die, since services in a parameterized container
+won't usually resolve, and attempting to do so is almost always a
+mistake.
 
 =back
 

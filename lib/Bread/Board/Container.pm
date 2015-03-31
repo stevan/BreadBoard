@@ -187,45 +187,167 @@ __END__
 
 =head1 DESCRIPTION
 
+This class implements the container for L<Bread::Board>: a container
+is a thing that contains services and other containers. Each container
+and service has a name, so you end up with a tree of named nodes, just
+like files and directories in a filesystem: each item can be
+referenced using a path (see L<Bread::Board::Traversable> for the
+details).
+
 =head1 METHODS
 
 =over 4
 
-=item B<add_service>
-
-=item B<add_sub_container>
-
-=item B<get_service>
-
-=item B<get_service_list>
-
-=item B<get_sub_container>
-
-=item B<get_sub_container_list>
-
-=item B<has_service>
-
-=item B<has_services>
-
-=item B<has_sub_container>
-
-=item B<has_sub_containers>
-
 =item B<name>
+
+Read/write string, required. Every container needs a name, by which it
+can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
 
 =item B<services>
 
+Hashref, constrained by L<<
+C<Bread::Board::Container::ServiceList>|Bread::Board::Types/Bread::Board::Container::ServiceList
+>>, mapping names to services directly contained in this
+container. Every service added here will have its L<<
+C<parent>|Bread::Board::Traversable/parent >> set to this container.
+
+You can pass an arrayref of services instead of a hashref, the keys
+will be the names of the services.
+
+You should probably use L</add_service> and L</get_service> to
+manipulate this attribute, instead of modifying it directly.
+
+=item B<add_service>
+
+  $container->add_service($service);
+
+Adds a service into the L</services> map, using its name as the key.
+
+=item B<get_service>
+
+  my $service = $container->get_service($name);
+
+Returns a service by name, or C<undef> if there's no such service in
+the L</services> map.
+
+=item B<has_service>
+
+  if ($container->has_service($name)) { ... }
+
+Returns true if a service with the given name name exists in the
+L</services> map, false otherwise.
+
+=item B<has_services>
+
+  if ($container->has_services) { ... }
+
+Returns true if the L</services> map contains any services, false if
+it's empty.
+
+=item B<get_service_list>
+
+  my @service_names = $container->get_service_list();
+
+Returns the names off all services present in the L</services> map.
+
 =item B<sub_containers>
 
-=item B<fetch ( $service_name )>
+Hashref, constrained by L<<
+C<Bread::Board::Container::SubContainerList>|Bread::Board::Types/Bread::Board::Container::SubContainerList
+>>, mapping names to containers directly contained in this
+container. Every container added here will have its L<<
+C<parent>|Bread::Board::Traversable/parent >> set to this container.
 
-=item B<resolve ( ?service => $service_name, ?type => $type, ?parameters => { ... } )>
+You can pass an arrayref of containers instead of a hashref, the keys
+will be the names of the containers.
+
+You should probably use L</add_sub_container> and
+L</get_sub_container> to manipulate this attribute, instead of
+modifying it directly.
+
+Containers added here can either be normal L<Bread::Board::Container>
+or L<Bread::Board::Container::Parameterized>.
+
+=item B<add_sub_container>
+
+  $container->add_sub_container($container);
+
+Adds a container into the L</sub_containers> map, using its name as
+the key.
+
+=item B<get_sub_container>
+
+  my $container = $container->get_sub_container($name);
+
+Returns a container by name, or C<undef> if there's no such container
+in the L</sub_containers> map.
+
+=item B<has_sub_container>
+
+  if ($container->has_sub_container($name)) { ... }
+
+Returns true if a container with the given name name exists in the
+L</sub_containers> map, false otherwise.
+
+=item B<has_sub_containers>
+
+  if ($container->has_sub_containers) { ... }
+
+Returns true if the L</sub_containers> map contains any contains,
+false if it's empty.
+
+=item B<get_sub_container_list>
+
+  my @container_names = $container->get_sub_container_list();
+
+Returns the names off all containers present in the L</sub_containers>
+map.
 
 =item B<add_type_mapping_for ( $type_name, $service )>
 
+Adds a mapping from a L<Moose type|Moose::Util::TypeConstraints> to a
+service: whenever we try to L<< resolve|/resolve ( ?service =>
+$service_name, ?type => $type, ?parameters => { ... } ) >> that type,
+we'll use that service to instantiate it.
+
 =item B<get_type_mapping_for ( $type_name )>
 
+Returns the service to use to instantiate the given type name.
+
+Important: if a mapping for the exact type can't be found, but a
+mapping for a I<subtype> of it can, you'll get the latter instead:
+
+  package Superclass { use Moose };
+  package Subclass { use Moose; exends 'Superclass' };
+
+  $c->add_type_mapping_for(
+   'Subclass',
+   Bread::Board::ConstructorInjection->new(name=>'sc',class=>'Subclass'),
+ );
+ my $o = $c->get_type_mapping_for('Superclass')->get;
+
+C<$o> is an instance of C<Subclass>. If there are more than one
+sub-type mapped, you get a random one. This is probably a bad idea.
+
 =item B<has_type_mapping_for ( $type_name )>
+
+Returns true if we have a service defined to instantiate the given
+type name, but see the note on
+L<get_type_mapping_for|/get_type_mapping_for ( $type_name )> about
+subtype mapping.
+
+=item B<< resolve ( ?service => $service_name, ?type => $type, ?parameters => { ... } ) >>
+
+When given a service name, this method will
+L<fetch|Bread::Board::Traversable/fetch> the service, then call L<<
+C<get>|Bread::Board::Service/get >> on it, optionally passing the
+given parameters.
+
+When given a type name, this method will use
+L<get_type_mapping_for|/get_type_mapping_for ( $type_name )> to get
+the service, then call L<< C<get>|Bread::Board::Service/get >> on it,
+optionally passing the given parameters. If the instance is not of the
+expected type, the method will die.
 
 =back
 
