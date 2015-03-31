@@ -34,8 +34,6 @@ This class consumes L<Bread::Board::Service::WithClass>,
 L<Bread::Board::Service::WithParameters>,
 L<Bread::Board::Service::WithDependencies>.
 
-=back
-
 =head1 METHODS
 
 =over 4
