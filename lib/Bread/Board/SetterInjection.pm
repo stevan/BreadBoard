@@ -4,7 +4,7 @@ use Moose;
 
 use Bread::Board::Types;
 
-with 'Bread::Board::Service::WithClass',
+with 'Bread::Board::Service::WithConstructor',
      'Bread::Board::Service::WithParameters',
      'Bread::Board::Service::WithDependencies';
 
@@ -12,7 +12,8 @@ has '+class' => (required => 1);
 
 sub get {
     my $self = shift;
-    my $o = $self->class->new;
+    my $constructor = $self->constructor_name;
+    my $o = $self->class->$constructor();
     $o->$_($self->param($_)) foreach $self->param;
     return $o;
 }

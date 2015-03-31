@@ -20,9 +20,12 @@ use Bread::Board::Literal;
     package Addict;
     use Moose;
 
+    sub shoot_up_good { shift->new(@_, overdose => 1) }
+
     has 'needle' => (is => 'rw');
     has 'spoon'  => (is => 'rw');
     has 'stash'  => (is => 'rw');
+    has 'overdose' => (is => 'ro', isa => 'Bool', default => 0);
 }
 
 my $s = Bread::Board::SetterInjection->new(
@@ -55,6 +58,15 @@ does_ok($s, 'Bread::Board::Service');
         my $i2 = $s->get(stash => Mexican::Black::Tar->new);
         isnt($i, $i2, '... calling it again returns an new object');
     }
+}
+
+$s->constructor_name('shoot_up_good');
+
+{
+    my $i = $s->get(stash => Mexican::Black::Tar->new);
+
+    isa_ok($i, 'Addict');
+    ok $i->overdose, 'Alternate constructor called';
 }
 
 is($s->name, 'William', '... got the right name');
