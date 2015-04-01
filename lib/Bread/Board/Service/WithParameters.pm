@@ -72,8 +72,6 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
 This is a sub-role of L<Bread::Board::Service>, for parameterized
@@ -85,11 +83,7 @@ C<Bread::Board::Dependency>|Bread::Board::Dependency/service_params
 C<Bread::Board::Service::Deferred::Thunk>|Bread::Board::Service::Deferred::Thunk/inflate
 >>.
 
-=head1 METHODS
-
-=over 4
-
-=item B<parameters>
+=attr C<parameters>
 
 Read-only hashref, will be passed as-is to L<<
 C<MooseX::Params::Validate>'s
@@ -122,20 +116,20 @@ and it will be equivalent to:
     },
   );
 
-=item B<has_parameters>
+=method C<has_parameters>
 
 Predicate for the L</parameters> attribute.
 
-=item B<has_parameter_defaults>
+=method C<has_parameter_defaults>
 
 Returns true if any of the L</parameters> have a C<default> value.
 
-=item B<has_required_parameters>
+=method C<has_required_parameters>
 
 Returns true if any of the L</parameters> does I<not> have C<optional>
 set to true.
 
-=item B<check_parameters>
+=method C<check_parameters>
 
   my %parameters = $service->check_parameters(name1=>$value1,name2=>$value2);
   my %parameters = $service->check_parameters({name1=>$value1,name2=>$value2});
@@ -146,20 +140,10 @@ L<MooseX::Params::Validate>). It will die if the validation fails, or
 return the validated parameters (including default value) if it
 succeeds.
 
-=item B<get>
+=method C<get>
 
 I<Before> the C<get> method, arguments to C<get> are passed through
 L</check_parameters> and added to the L<<
 C<params>|Bread::Board::Service/params >> hashref. I<After> the C<get>
 method, those keys/values will be removed. In practice, this makes all
 parameters available to the actual C<get> method body.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut

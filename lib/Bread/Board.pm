@@ -248,8 +248,6 @@ sub literal($) {
 
 __END__
 
-=pod
-
 =head1 SYNOPSIS
 
   use Bread::Board;
@@ -357,9 +355,11 @@ Bread::Board configuration. You can build such a configuration by constructing
 the objects manually instead, but your code may be more difficult to
 understand.
 
-=over 4
+=head2 C<container>
 
-=item I<container ($name, &body)>
+=head3 simple case
+
+  container $name, \&body;
 
 This function constructs and returns an instance of L<Bread::Board::Container>.
 The (optional) C<&body> block may be used to add services or sub-containers
@@ -378,7 +378,9 @@ If C<$name> starts with C<'+'>, and the container is being declared inside
 another container, then this declaration will instead extend an existing
 container with the name C<$name> (without the C<'+'>).
 
-=item I<container ($container_instance, &body)>
+=head3 from an instance
+
+  container $container_instance, \&body
 
 In many cases, subclassing L<Bread::Board::Container> is the easiest route to
 getting access to this framework. You can do this and still get all the
@@ -401,7 +403,9 @@ your class:
       };
   }
 
-=item I<container ($name, [ @parameters ], &body)>
+=head3 with parameters
+
+  container $name, \@parameters, \&body
 
 A third way of using the C<container> function is to build a parameterized
 container. These are useful as a way of providing a placeholder for parts of
@@ -411,22 +415,31 @@ object in place of the C<$name> in this case.
 For more detail on how you might use parameterized containers, see
 L<Bread::Board::Manual::Concepts::Advanced/Parameterized Containers>.
 
-=item I<as (&body)>
+=head2 C<as>
+
+  as { some_code() };
 
 This is just a replacement for the C<sub> keyword that is easier to read when
 defining containers.
 
-=item I<service ($name, $literal | %service_description)>
+=head2 C<service>
+
+  service $name, $literal;
+  service $name, %service_description;
 
 Within the C<as> blocks for your containers, you may construct services using
 the C<service> function. This can construct several different kinds of services
 based upon how it is called.
+
+=head3 literal services
 
 To build a literal service (a L<Bread::Board::Literal> object), just specify a
 scalar value or reference you want to use as the literal value:
 
   # In case you need to adjust the gravitational constant of the Universe
   service gravitational_constant => 6.673E-11;
+
+=head3 using injections
 
 To build a service using one of the injection services, just fill in all the
 details required to use that sort of injection:
@@ -453,6 +466,8 @@ injection will be performed using L<Bread::Board::BlockInjection>. If neither
 of these is present, constructor injection will be used with
 L<Bread::Board::ConstructorInjection> (and you must provide the C<class>
 option).
+
+=head3 service dependencies
 
 The C<dependencies> parameter takes a hashref of dependency names mapped to
 L<Bread::Board::Dependency> objects, but there are several coercions and sugar
@@ -513,6 +528,8 @@ which returns an arrayref containing the resolved values of those dependencies:
       # ...
   );
 
+=head3 inheriting and extending services
+
 If the C<$name> starts with a C<'+'>, the service definition will instead
 extend an existing service with the given C<$name> (without the C<'+'>). This
 works similarly to the C<has '+foo'> syntax in Moose. It is most useful when
@@ -523,7 +540,9 @@ the existing values, rather than overridden. Note that literal services can't
 be extended, because there's nothing to extend. You can still override them
 entirely by declaring the service name without a leading C<'+'>.
 
-=item I<literal($value)>
+=head2 C<literal>
+
+  literal($value);
 
 Creates an anonymous L<Bread::Board::Literal> object with the given value.
 
@@ -545,12 +564,16 @@ Creates an anonymous L<Bread::Board::Literal> object with the given value.
               },
           );
 
-=item I<depends_on ($service_path)>
+=head2 C<depends_on>
+
+  depends_on($service_path);
 
 The C<depends_on> function creates a L<Bread::Board::Dependency> object for the
 named C<$service_path> and returns it.
 
-=item I<wire_names (@service_names)>
+=head2 C<wire_names>
+
+  wire_names(@service_names);
 
 This function is just a shortcut for passing a hash reference of dependencies
 into the service. It is not typically needed, since Bread::Board can usually
@@ -584,7 +607,10 @@ understand what you mean - these declarations are all equivalent:
       dependencies => [ qw(foo bar baz ) ],
   );
 
-=item I<typemap ($type, $service | $service_path)>
+=head2 C<typemap>
+
+  typemap $type, $service;
+  typemap $type, $service_path;
 
 This creates a type mapping for the named type. Typically, it is paired with
 the C<infer> call like so:
@@ -594,7 +620,10 @@ the C<infer> call like so:
 For more details on what type mapping is and how it works, see
 L<Bread::Board::Manual::Concepts::Typemap>.
 
-=item I<infer (?%hints)>
+=head2 C<infer>
+
+  infer;
+  infer(%hints);
 
 This is used with C<typemap> to help create the typemap inference. It can be
 used with no arguments to do everything automatically. However, in some cases,
@@ -610,7 +639,9 @@ this:
 For more details on what type mapping is and how it works, see
 L<Bread::Board::Manual::Concepts::Typemap>.
 
-=item I<include ($file)>
+=head2 C<include>
+
+  include $file;
 
 This is a shortcut for loading a Bread::Board configuration from another file.
 
@@ -622,7 +653,9 @@ The above is pretty much identical to running:
 
 However, you might find it more readable to use C<include>.
 
-=item I<alias ($service_name, $service_path, %service_description)>
+=head2 C<alias>
+
+  alias $service_name, $service_path, %service_description;
 
 This helper allows for the creation of L<service
 aliases|Bread::Board::Service::Alias>, which allows you to define a
@@ -640,15 +673,13 @@ For example,
 
   alias my_logger => 'file_logger';
 
-=back
-
 =head1 OTHER FUNCTIONS
 
 These are not exported, but might be helpful to you.
 
-=over 4
+=head2 C<set_root_container>
 
-=item I<set_root_container ($container)>
+  set_root_container $container;
 
 You may use this to set a top-level root container for all container
 definitions.
@@ -663,8 +694,6 @@ For example,
 
 Here the C<$config> container would be created as a sub-container of C<$app>.
 
-=back
-
 =head1 ACKNOWLEDGEMENTS
 
 Thanks to Daisuke Maki for his contributions and for really
@@ -676,6 +705,9 @@ it.
 
 Matt "mst" Trout, for finally coming up with the best name
 for this module.
+
+Gianni "dakkar" Ceccarelli for writing lots of documentation, and
+Net-a-Porter.com for paying his salary while he was doing it.
 
 =head1 ARTICLES
 
@@ -697,11 +729,3 @@ Bread::Board is basically my re-write of IOC.
 =item L<http://en.wikipedia.org/wiki/Breadboard>
 
 =back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to Github Issues.
-
-=cut

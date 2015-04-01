@@ -48,8 +48,6 @@ no Moose; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
 This class holds the information for a dependency of a
@@ -61,45 +59,31 @@ provide the depended-on values.
 This class consumes the L<Bread::Board::Traversable> role to retrieve
 services given their path.
 
-=head1 METHODS
-
-=over 4
-
-=item B<service_path>
+=attr C<service_path>
 
 The path to use (possibly relative to the dependency itself) to access
 the L</service>.
 
-=item B<has_service_path>
+=method C<has_service_path>
 
 Predicate for the L</service_path> attribute.
 
-=item B<service>
+=attr C<service>
 
 The service this dependency points at. Usually built lazyly from the
 L</service_path>, but could just be passed in to the constructor.
 
-=item B<service_name>
+=attr C<service_name>
 
 Name of the L</service>, defaults to the last element of the
 L</service_path>.
 
-=item B<get>
+=method C<get>
 
-=item B<is_locked>
+=method C<is_locked>
 
-=item B<lock>
+=method C<lock>
 
-=item B<unlock>
+=method C<unlock>
 
 These methods are delegated to the L</service>.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut

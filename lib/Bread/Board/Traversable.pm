@@ -106,8 +106,6 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 SYNOPSIS
 
   my $service = $container->fetch('/some/service/path');
@@ -120,31 +118,27 @@ This role provides the basic functionality to traverse a container /
 service tree. Instances of classes consuming this role will get a
 parent-child relationship between them.
 
-=head1 METHODS
-
-=over 4
-
-=item B<parent>
+=attr C<parent>
 
 Weak ref to another L<Bread::Board::Traversable> object, read/write
 accessor (although you should probably not change this value directly
 in normal code).
 
-=item B<has_parent>
+=method C<has_parent>
 
 Predicate for the L</parent> attribute, true if a parent has been set.
 
-=item B<detach_from_parent>
+=method C<detach_from_parent>
 
 Clearer for the L</parent> attribute, you should probably not call
 this method in normal code.
 
-=item B<get_root_container>
+=method C<get_root_container>
 
 Returns the farthest ancestor of the invocant, i.e. the top-most
 container this object is a part of.
 
-=item B<fetch>
+=method C<fetch>
 
   my $service = $this->fetch('/absolute/path');
   my $service = $this->fetch('relative/path');
@@ -159,13 +153,3 @@ path.
 L<Aliases|Bread::Board::Service::Alias> are resolved in this call, by
 calling L<< C<aliased_from>|Bread::Board::Service::Alias/aliased_from
 >> until we get an actual service.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut

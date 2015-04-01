@@ -48,8 +48,6 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
 Sub-role of L<Bread::Board::LifeCycle>, this role defines the
@@ -58,11 +56,7 @@ will only do its work the first time it is invoked for each set of
 parameters; subsequent invocations with the same parameters will
 return the same object.
 
-=head1 METHODS
-
-=over 4
-
-=item B<get>
+=method C<get>
 
 Generates a key using L</generate_instance_key> (passing it all the
 arguments); if the L</instances> attribute does not hold an object for
@@ -70,23 +64,13 @@ that key, it will build it (by calling the underlying C<get> method)
 and store it in L</instances>. The object (either retrieved from
 L</instances> or freshly built) will be returned.
 
-=item B<instances>
+=attr C<instances>
 
 Hashref mapping keys to objects, used to cache the results of L</get>
 
-=item B<generate_instance_key>
+=method C<generate_instance_key>
 
 Generates a (hopefully) unique key from the given arguments (usually,
 whatever was passed to L</get>). The current implementation
 stringifies all arguments, so different references to identical values
 will be considered different.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut

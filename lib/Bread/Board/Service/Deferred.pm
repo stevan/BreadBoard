@@ -82,8 +82,6 @@ sub AUTOLOAD {
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
 Class for proxy objects used when L<resolving circular
@@ -99,19 +97,4 @@ C<Bread::Board::Service::Deferred> will have its value changed to the
 actual value instantiated by the service at the first opportunity, and
 you should not notice that this class was ever there.
 
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=begin Pod::Coverage
-
-can
-isa
-meta
-new
-
-=end Pod::Coverage
-
-=cut
+=for Pod::Coverage can isa meta new

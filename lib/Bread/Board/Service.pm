@@ -115,8 +115,6 @@ no Moose::Util::TypeConstraints; no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
 This role is the basis for all services in L<Bread::Board>. It
@@ -124,32 +122,28 @@ provides (or requires the implementation of) the minimum necessary
 building blocks: creating an instance, setting/getting parameters,
 instance lifecycle.
 
-=head1 METHODS
-
-=over 4
-
-=item B<name>
+=attr C<name>
 
 Read/write string, required. Every service needs a name, by which it
 can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
 
-=item B<is_locked>
+=attr C<is_locked>
 
 Boolean, defaults to false. Used during L<dependency
 resolution|Bread::Board::Service::WithDependencies/resolve_dependencies>
 to detect loops.
 
-=item B<lock>
+=method C<lock>
 
 Locks the service; you should never need to call this method in normal
 code.
 
-=item B<unlock>
+=method C<unlock>
 
 Unlocks the service; you should never need to call this method in
 normal code.
 
-=item B<lifecycle>
+=attr C<lifecycle>
 
   $service->lifecycle('Singleton');
 
@@ -160,7 +154,7 @@ with C<+> (like C<+My::Special::Lifecycle>). The name is expected to
 refer to a loadable I<role>, which will be applied to the service
 instance.
 
-=item B<get>
+=method C<get>
 
   my $value = $service->get();
 
@@ -168,16 +162,16 @@ This method I<must> be implemented by the consuming class. It's
 expected to instantiate whatever object or value this service should
 resolve to.
 
-=item B<init_params>
+=method C<init_params>
 
 Builder for the service parameters, defaults to returning an empty
 hashref.
 
-=item B<clear_params>
+=method C<clear_params>
 
 Clearer of the service parameters.
 
-=item B<param>
+=method C<param>
 
   my @param_names = $service->param();
   my $param_value = $service->param($param_name);
@@ -193,7 +187,7 @@ same thing as L<dependencies|Bread::Board::Service::WithDependencies>
 (although the resolved dependencies will be copied here before C<get>
 is called).
 
-=item B<clone_and_inherit_params>
+=method C<clone_and_inherit_params>
 
 When declaring a service using the L<< C<service> helper
 function|Bread::Board/service >>, if the name you use starts with a
@@ -201,13 +195,3 @@ C<'+'>, the service definition will extend an existing service with
 the given name (without the C<'+'>). This method implements the
 extension semantics: the C<dependencies> and C<parameters> options
 will be merged with the existing values, rather than overridden.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut

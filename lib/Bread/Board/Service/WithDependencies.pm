@@ -102,19 +102,13 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
 This is a sub-role of L<Bread::Board::Service>, for services with
 dependencies. It provides the mechanism to recursively resolve
 dependencies.
 
-=head1 METHODS
-
-=over 4
-
-=item B<dependencies>
+=attr C<dependencies>
 
 Hashref, constrained by L<<
 C<Bread::Board::Service::Dependencies>|Bread::Board::Types/Bread::Board::Service::Dependencies
@@ -122,44 +116,44 @@ C<Bread::Board::Service::Dependencies>|Bread::Board::Types/Bread::Board::Service
 be coerced from various other types, see L<the type's
 docs|Bread::Board::Types/Bread::Board::Service::Dependencies>.
 
-=item B<add_dependency>
+=method C<add_dependency>
 
   $service->add_dependency(name=>$dep);
 
 Adds a new dependency.
 
-=item B<get_dependency>
+=method C<get_dependency>
 
   my $dep = $service->get_dependency('name');
 
 Gets a dependency by name.
 
-=item B<has_dependency>
+=method C<has_dependency>
 
   if ($service->has_dependency('name')) { ... }
 
 Returns true if this service has a dependency with the given name.
 
-=item B<has_dependencies>
+=method C<has_dependencies>
 
   if ($service->has_dependencies) { ... }
 
 Returns true if this service has any dependency.
 
-=item B<get_all_dependencies>
+=method C<get_all_dependencies>
 
   my %deps = $service->get_all_dependencies;
 
 Returns all the dependencies for this service, as a key-value list.
 
-=item B<init_params>
+=method C<init_params>
 
 Builder for the service parameters, augmented to inject all the
 L<resolved dependencies|/resolve_dependencies> into the L<<
 C<params>|Bread::Board::Service/params >> attribute, so that C<get>
 can use them.
 
-=item B<get>
+=method C<get>
 
 I<After> the C<get> method, the L<<
 C<params>|Bread::Board::Service/params >> attribute is cleared, to
@@ -168,7 +162,7 @@ course, if the service is using a L<singleton
 lifecycle|Bread::Board::LifeCycle::Singleton>, the whole "getting"
 only happens once).
 
-=item B<resolve_dependencies>
+=method C<resolve_dependencies>
 
   my %name_object_map = $self->resolve_dependencies;
 
@@ -177,38 +171,28 @@ C<service>|Bread::Board::Dependency/service >> method to retrieve the
 service we're dependent on, then tries to instantiate the value of the
 service. This can happen in a few different ways:
 
-=over 4
+=begin :list
 
-=item the service is not locked, and does not require any parameter
+= the service is not locked, and does not require any parameter
 
 just call C<get> on it
 
-=item the service is not locked, requires parameters, but the dependecy has values for them
+= the service is not locked, requires parameters, but the dependecy has values for them
 
 call C<< $service->get(%{$dependecy->service_params}) >>
 
-=item the service is not locked, requires parameters, and we don't have values for them
+= the service is not locked, requires parameters, and we don't have values for them
 
 we can't instantiate anything at this point, so we use a
 L<Bread::Board::Service::Deferred::Thunk> instance, on which you can
 call the C<inflate> method, passing it all the needed parameters, to
 get the actual instance
 
-=item the service is locked
+= the service is locked
 
 we return a L<Bread::Board::Service::Deferred> that will proxy to the
 instance that the service will eventually return; yes, this means that
 in many cases circular dependencies can be resolved, at the cost of a
 proxy object
 
-=back
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut
+=end :list

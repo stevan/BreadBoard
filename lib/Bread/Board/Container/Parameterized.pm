@@ -100,8 +100,6 @@ no Moose; no Moose::Util; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
 This class implements a sort of container factory for L<Bread::Board>:
@@ -109,57 +107,49 @@ a parameterized container is a, in practice, a function from a set of
 parameters (which must be containers) to an actual container. See
 L<Bread::Board::Manual::Example::FormSensible> for an example.
 
-=head1 ATTRIBUTES
-
-=over 4
-
-=item B<name>
+=attr C<name>
 
 Read/write string, required. Every container needs a name, by which it
 can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
 
-=item B<allowed_parameter_names>
+=attr C<allowed_parameter_names>
 
 Read-only arrayref of strings, required. These are the names of the
 containers that must be passed to L<< C<create>|create ( %params ) >>
 to get an actual container out of this parameterized object.
 
-=item B<container>
+=attr C<container>
 
 This attribute holds the "prototype" container. Services inside it can
 depend on service paths that include the container names given in
 L</allowed_parameter_names>.
 
-=back
+=method C<add_service>
 
-=head1 METHODS
+=method C<get_service>
 
-=over 4
+=method C<has_service>
 
-=item B<add_service>
+=method C<get_service_list>
 
-=item B<get_service>
+=method C<has_services>
 
-=item B<has_service>
+=method C<add_sub_container>
 
-=item B<get_service_list>
+=method C<get_sub_container>
 
-=item B<has_services>
+=method C<has_sub_container>
 
-=item B<add_sub_container>
+=method C<get_sub_container_list>
 
-=item B<get_sub_container>
-
-=item B<has_sub_container>
-
-=item B<get_sub_container_list>
-
-=item B<has_sub_containers>
+=method C<has_sub_containers>
 
 All these methods are delegated to the "prototype" L</container>, so
 that this object can be defined as if it were a normal container.
 
-=item B<create ( %params )>
+=method C<create>
+
+  my $container = $parameterized_container->create(%params);
 
 After checking that the keys of C<%params> are exactly the same
 strings that are present in L</allowed_parameter_names>, this method
@@ -175,20 +165,10 @@ this method with different parameter values will return different
 containers, but all with the same name. It's probably a bad idea to
 instantiate a non-top-level parameterized container more than once.
 
-=item B<fetch>
+=method C<fetch>
 
-=item B<resolve>
+=method C<resolve>
 
 These two methods die, since services in a parameterized container
 won't usually resolve, and attempting to do so is almost always a
 mistake.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut
