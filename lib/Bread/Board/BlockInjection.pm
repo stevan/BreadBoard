@@ -36,7 +36,7 @@ L<Bread::Board::Service::WithDependencies>.
 
 A coderef, required. Will be invoked as a method on the service
 object, so it can call L<<< C<< $_[0]->params
->>|Bread::Board::Service/params >>> to access parametrs and (resolved)
+>>|Bread::Board::Service/params >>> to access parameters and (resolved)
 dependencies. It should return an instance of L</class>.
 
 =attr C<class>

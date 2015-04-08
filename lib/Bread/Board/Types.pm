@@ -149,7 +149,7 @@ the coercions listed here); see below for an example
 
 = a L<service|Bread::Board::Service> object
 
-will be interpeted as a dependency on that service
+will be interpreted as a dependency on that service
 
 = a L<dependency|Bread::Board::Dependency> object
 
@@ -183,7 +183,7 @@ method.
    );
 
 The service C<foo> depends on the services C<bar> and C<baz>, and when
-instatiating C<foo>, its constructor will receive something like C<<
+instantiating C<foo>, its constructor will receive something like C<<
 things => [ $instance_of_bar, $instance_of_baz ] >>.
 
 

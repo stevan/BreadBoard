@@ -17,7 +17,7 @@ __END__
 When L<creating|Bread::Board::Container::Parameterized/create (
 %params )> an actual container from a L<parameterized
 container|Bread::Board::Container::Parameterized>, the returned
-container is reblessed into this class.
+container is re-blessed into this class.
 
 The only difference between this class and L<Bread::Board::Container>
 is that the C<parent> attribute here is a weak reference.

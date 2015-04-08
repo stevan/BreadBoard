@@ -24,7 +24,7 @@ __END__
 =head1 DESCRIPTION
 
 This L<service|Bread::Board::Service> class implements literal
-services. A literal service is costructed with a value, and it always
+services. A literal service is constructed with a value, and it always
 returns that when asked for an instance.
 
 =attr C<value>

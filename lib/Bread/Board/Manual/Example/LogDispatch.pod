@@ -63,7 +63,7 @@ any which way you want to.
 
 This example can be made even more dynamic if you build the
 'Logging' component as a parameterized container whose parameter
-is the 'Ouputs' container. Here is what that would look like.
+is the 'Outputs' container. Here is what that would look like.
 
   my $logging = container 'Logging' => [ 'Outputs' ] as {
       service 'Logger' => (

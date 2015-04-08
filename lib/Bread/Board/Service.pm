@@ -177,7 +177,7 @@ Clearer of the service parameters.
   my $param_value = $service->param($param_name);
   $service->param($name1=>$value1,$name2=>$value2);
 
-Getter/setter for the service parameters; notice that calling thes
+Getter/setter for the service parameters; notice that calling this
 method with no arguments returns the list of parameter names.
 
 I<Please note>: these are not the same as the L<parameters for a

@@ -157,7 +157,7 @@ can use them.
 
 I<After> the C<get> method, the L<<
 C<params>|Bread::Board::Service/params >> attribute is cleared, to
-make sure that dependecies will be resolved again on the next call (of
+make sure that dependencies will be resolved again on the next call (of
 course, if the service is using a L<singleton
 lifecycle|Bread::Board::LifeCycle::Singleton>, the whole "getting"
 only happens once).
@@ -166,7 +166,7 @@ only happens once).
 
   my %name_object_map = $self->resolve_dependencies;
 
-For each element of L</dependecies>, calls its L<<
+For each element of L</dependencies>, calls its L<<
 C<service>|Bread::Board::Dependency/service >> method to retrieve the
 service we're dependent on, then tries to instantiate the value of the
 service. This can happen in a few different ways:
@@ -177,9 +177,9 @@ service. This can happen in a few different ways:
 
 just call C<get> on it
 
-= the service is not locked, requires parameters, but the dependecy has values for them
+= the service is not locked, requires parameters, but the dependency has values for them
 
-call C<< $service->get(%{$dependecy->service_params}) >>
+call C<< $service->get(%{$dependency->service_params}) >>
 
 = the service is not locked, requires parameters, and we don't have values for them
 

@@ -70,7 +70,7 @@ Predicate for the L</service_path> attribute.
 
 =attr C<service>
 
-The service this dependency points at. Usually built lazyly from the
+The service this dependency points at. Usually built lazily from the
 L</service_path>, but could just be passed in to the constructor.
 
 =attr C<service_name>
