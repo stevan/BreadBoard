@@ -102,36 +102,97 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-=head1 METHODS
+This is a sub-role of L<Bread::Board::Service>, for services with
+dependencies. It provides the mechanism to recursively resolve
+dependencies.
 
-=over 4
+=attr C<dependencies>
 
-=item B<init_params>
+Hashref, constrained by L<<
+C<Bread::Board::Service::Dependencies>|Bread::Board::Types/Bread::Board::Service::Dependencies
+>>. Values must be instances of L<Bread::Board::Dependency>, but can
+be coerced from various other types, see L<the type's
+docs|Bread::Board::Types/Bread::Board::Service::Dependencies>.
 
-=item B<resolve_dependencies>
+=method C<add_dependency>
 
-=item B<dependencies>
+  $service->add_dependency(name=>$dep);
 
-=item B<add_dependency>
+Adds a new dependency.
 
-=item B<get_dependency>
+=method C<get_dependency>
 
-=item B<has_dependency>
+  my $dep = $service->get_dependency('name');
 
-=item B<has_dependencies>
+Gets a dependency by name.
 
-=item B<get_all_dependencies>
+=method C<has_dependency>
 
-=back
+  if ($service->has_dependency('name')) { ... }
 
-=head1 BUGS
+Returns true if this service has a dependency with the given name.
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+=method C<has_dependencies>
 
-=cut
+  if ($service->has_dependencies) { ... }
+
+Returns true if this service has any dependency.
+
+=method C<get_all_dependencies>
+
+  my %deps = $service->get_all_dependencies;
+
+Returns all the dependencies for this service, as a key-value list.
+
+=method C<init_params>
+
+Builder for the service parameters, augmented to inject all the
+L<resolved dependencies|/resolve_dependencies> into the L<<
+C<params>|Bread::Board::Service/params >> attribute, so that C<get>
+can use them.
+
+=method C<get>
+
+I<After> the C<get> method, the L<<
+C<params>|Bread::Board::Service/params >> attribute is cleared, to
+make sure that dependencies will be resolved again on the next call (of
+course, if the service is using a L<singleton
+lifecycle|Bread::Board::LifeCycle::Singleton>, the whole "getting"
+only happens once).
+
+=method C<resolve_dependencies>
+
+  my %name_object_map = $self->resolve_dependencies;
+
+For each element of L</dependencies>, calls its L<<
+C<service>|Bread::Board::Dependency/service >> method to retrieve the
+service we're dependent on, then tries to instantiate the value of the
+service. This can happen in a few different ways:
+
+=begin :list
+
+= the service is not locked, and does not require any parameter
+
+just call C<get> on it
+
+= the service is not locked, requires parameters, but the dependency has values for them
+
+call C<< $service->get(%{$dependency->service_params}) >>
+
+= the service is not locked, requires parameters, and we don't have values for them
+
+we can't instantiate anything at this point, so we use a
+L<Bread::Board::Service::Deferred::Thunk> instance, on which you can
+call the C<inflate> method, passing it all the needed parameters, to
+get the actual instance
+
+= the service is locked
+
+we return a L<Bread::Board::Service::Deferred> that will proxy to the
+instance that the service will eventually return; yes, this means that
+in many cases circular dependencies can be resolved, at the cost of a
+proxy object
+
+=end :list

@@ -23,30 +23,34 @@ no Moose; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-=head1 METHODS
+This L<service|Bread::Board::Service> class instantiates objects by
+calling a coderef supplied in the L</block> attribute.
 
-=over 4
+This class consumes L<Bread::Board::Service::WithClass>,
+L<Bread::Board::Service::WithParameters>,
+L<Bread::Board::Service::WithDependencies>.
 
-=item B<block>
+=attr C<block>
 
-=item B<class>
+A coderef, required. Will be invoked as a method on the service
+object, so it can call L<<< C<< $_[0]->params
+>>|Bread::Board::Service/params >>> to access parameters and (resolved)
+dependencies. It should return an instance of L</class>.
 
-=item B<has_class>
+=attr C<class>
 
-=item B<get>
+Attribute provided by L<Bread::Board::Service::WithClass>; if it is
+set, L</block> should return an instance of this class (and the class
+will be already loaded, so there's no need to C<require> it).
 
-=item B<meta>
+=method C<has_class>
 
-=back
+Predicate for L</class>. If the service does not declare a class, the
+L</block> can of course return whatever it wants.
 
-=head1 BUGS
+=method C<get>
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut
+Calls the L</block> as a method on the service, and returns whatever
+that returned.

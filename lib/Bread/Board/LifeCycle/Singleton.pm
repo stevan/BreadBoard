@@ -58,28 +58,31 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-=head1 METHODS
+Sub-role of L<Bread::Board::LifeCycle>, this role defines the
+"singleton" lifecycle for a service. The C<get> method will only do
+its work the first time it is invoked; subsequent invocations will
+return the same object.
 
-=over 4
+=method C<get>
 
-=item B<get>
+The first time this is called (or the first time after calling
+L</flush_instance>), the actual C<get> method will be invoked, and its
+return value cached in the L</instance> attribute. The value of that
+attribute will always be returned, so you can call C<get> as many time
+as you need, and always receive the same instance.
 
-=item B<instance>
+=attr C<instance>
 
-=item B<has_instance>
+The object build by the last call to C<get> to actually do any work,
+and returned by any subsequent call to C<get>.
 
-=item B<flush_instance>
+=method C<has_instance>
 
-=back
+Predicate for the L</instance> attribute.
 
-=head1 BUGS
+=method C<flush_instance>
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut
+Clearer for the L</instance> attribute. Clearing the attribute will
+cause the next call to C<get> to instantiate a new object.

@@ -106,32 +106,50 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 SYNOPSIS
+
+  my $service = $container->fetch('/some/service/path');
+
+  my $root = $service->get_root_container;
 
 =head1 DESCRIPTION
 
-=head1 METHODS
+This role provides the basic functionality to traverse a container /
+service tree. Instances of classes consuming this role will get a
+parent-child relationship between them.
 
-=over 4
+=attr C<parent>
 
-=item B<parent>
+Weak ref to another L<Bread::Board::Traversable> object, read/write
+accessor (although you should probably not change this value directly
+in normal code).
 
-=item B<has_parent>
+=method C<has_parent>
 
-=item B<detach_from_parent>
+Predicate for the L</parent> attribute, true if a parent has been set.
 
-=item B<get_root_container>
+=method C<detach_from_parent>
 
-=item B<fetch>
+Clearer for the L</parent> attribute, you should probably not call
+this method in normal code.
 
-=back
+=method C<get_root_container>
 
-=head1 BUGS
+Returns the farthest ancestor of the invocant, i.e. the top-most
+container this object is a part of.
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+=method C<fetch>
 
-=cut
+  my $service = $this->fetch('/absolute/path');
+  my $service = $this->fetch('relative/path');
+  my $service = $this->fetch('../relative/path');
+
+Given a (relative or absolute) path to a service or container, this
+method walks the tree and returns the L<Bread::Board::Service> or
+L<Bread::Board::Container> instance for that path. Dies if no object
+can be found for the given
+path.
+
+L<Aliases|Bread::Board::Service::Alias> are resolved in this call, by
+calling L<< C<aliased_from>|Bread::Board::Service::Alias/aliased_from
+>> until we get an actual service.

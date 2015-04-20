@@ -97,7 +97,7 @@ and set up dependencies and parameters accordingly.
 For the C<work_area> object, we saw the B<Cubicle> type and then
 basically called C<infer> on the B<Cubicle> object. We then saw
 the B<Desk> and B<Chair> objects and called C<infer> on those as well.
-The result of this recursive inferrence was that the B<Employee>,
+The result of this recursive inference was that the B<Employee>,
 B<Cubicle>, B<Desk> and B<Chair> relationships were modeled in
 Bread::Board as dependent services.
 
@@ -109,10 +109,10 @@ of the I<Object> type. We knew that it could introspect those classes
 and get more information. However, this was not the case with the
 I<first_name> and I<last_name> attributes of the B<Employee> object.
 In that case, we determined that we couldn't resolve those objects and
-(because it was a top-level inferrence) instead turned them into required
+(because it was a top-level inference) instead turned them into required
 parameters for the inferred B<Employee> service.
 
-And lastly, with a top-level inferrence (not one caused by recursion)
+And lastly, with a top-level inference (not one caused by recursion)
 Bread::Board will also look at all the remaining non-required attributes
 and turn them into optional parameters. In this case we have a C<stapler>
 attribute that is not required and so is listed as an optional parameter,

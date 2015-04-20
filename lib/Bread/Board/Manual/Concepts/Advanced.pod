@@ -8,7 +8,7 @@
 In the L<Bread::Board::Manual::Concepts> document we attempted to
 explain the conceptual foundations of Bread::Board. In that we exposed
 you to the idea of a container and a service and showed how they
-could be used. In that document we built a hierarchal container
+could be used. In that document we built a hierarchical container
 which organized different sets of services into what could be seen
 as subsystems within an overall application. While this alone has
 plenty of value, you might be asking yourself, what about re-use?
@@ -122,7 +122,7 @@ logs to a database.
 
 It is parameterized with a C<DBConnInfo> container which has
 three services, a C<dsn>, a C<username> and a C<password>.
-Now let's create a simple container which fufills these
+Now let's create a simple container which fulfills these
 requirements.
 
   my $db_conn_info = container 'DatabaseConnection' => as {

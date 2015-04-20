@@ -100,40 +100,75 @@ no Moose; no Moose::Util; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-=head1 ATTRIBUTES
+This class implements a sort of container factory for L<Bread::Board>:
+a parameterized container is a, in practice, a function from a set of
+parameters (which must be containers) to an actual container. See
+L<Bread::Board::Manual::Example::FormSensible> for an example.
 
-=over 4
+=attr C<name>
 
-=item B<name>
+Read/write string, required. Every container needs a name, by which it
+can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
 
-=item B<allowed_parameter_names>
+=attr C<allowed_parameter_names>
 
-=item B<container>
+Read-only arrayref of strings, required. These are the names of the
+containers that must be passed to L<< C<create>|create ( %params ) >>
+to get an actual container out of this parameterized object.
 
-=back
+=attr C<container>
 
-=head1 METHODS
+This attribute holds the "prototype" container. Services inside it can
+depend on service paths that include the container names given in
+L</allowed_parameter_names>.
 
-=over 4
+=method C<add_service>
 
-=item B<create ( %params )>
+=method C<get_service>
 
-=item B<fetch>
-=item B<resolve>
+=method C<has_service>
 
-These two methods die, they are not appropriate, but are here for
-completeness.
+=method C<get_service_list>
 
-=back
+=method C<has_services>
 
-=head1 BUGS
+=method C<add_sub_container>
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+=method C<get_sub_container>
 
-=cut
+=method C<has_sub_container>
+
+=method C<get_sub_container_list>
+
+=method C<has_sub_containers>
+
+All these methods are delegated to the "prototype" L</container>, so
+that this object can be defined as if it were a normal container.
+
+=method C<create>
+
+  my $container = $parameterized_container->create(%params);
+
+After checking that the keys of C<%params> are exactly the same
+strings that are present in L</allowed_parameter_names>, this method
+clones the prototype L</container>, adds the C<%params> to the clone
+as sub-containers, and returns the clone.
+
+If this was not a top-level container, the parent is also cloned, and
+the container clone is added to the parent clone.
+
+Please note that the container returned by this method does I<not>
+have the same name as the parameterized container, and that calling
+this method with different parameter values will return different
+containers, but all with the same name. It's probably a bad idea to
+instantiate a non-top-level parameterized container more than once.
+
+=method C<fetch>
+
+=method C<resolve>
+
+These two methods die, since services in a parameterized container
+won't usually resolve, and attempting to do so is almost always a
+mistake.

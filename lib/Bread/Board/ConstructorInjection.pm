@@ -37,22 +37,32 @@ no Moose; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-=head1 METHODS
+This L<service|Bread::Board::Service> class instantiates objects by
+calling the constructor on a class.
 
-=over 4
+This class consumes L<Bread::Board::Service::WithClass>,
+L<Bread::Board::Service::WithParameters>,
+L<Bread::Board::Service::WithDependencies>.
 
-=item B<get>
+=attr C<class>
 
-=back
+Attribute provided by L<Bread::Board::Service::WithClass>. This
+service makes it a required attribute: you can't call a constructor if
+you don't have a class.
 
-=head1 BUGS
+=attr C<constructor_name>
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+Optional string, indicates the name of the class method to invoke to
+construct the object. If not provided, defaults to the constructor
+name obtained via L<Class::MOP::Class>, or C<new> if introspection
+does not work.
 
-=cut
+=method C<get>
+
+Calls the constructor (as indicated by L</constructor_name>) on the
+L</class>, passing all the L<service
+parameters|Bread::Board::Service/params> as a B<hash>. Returns
+whatever the constructor returned (hopefully a correctly-constructed
+object of the right class).

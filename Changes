@@ -2,6 +2,8 @@ Revision history for Bread-Board
 
 {{$NEXT}}
     - add 'literal' keyword (Yanick Champoux, #31)
+    - added documentation for most of the classes (dakkar, sponsored
+      by Net-a-Porter.com)
 
 0.32  2014-06-03
     - fixes to arrayref dependencies (dakkar, #35)

@@ -149,7 +149,7 @@ using the C<include> keyword from Bread::Board itself, or some degree
 of subclassing of the Container objects.
 
 Jay also asked about passing in the Catalyst model into the fields so
-that he could populate something like a select pulldown menu. Again I
+that he could populate something like a select pull-down menu. Again I
 used parameterized modules, in this case we parameterized the FooFields
 container with a Model container which had a schema service (which was
 a DBIx::Class schema object).

@@ -15,16 +15,20 @@ has 'thunk' => (
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-No user servicable parts. Read the source if you are interested.
+This class is used when L<resolving dependencies that need
+parameters|Bread::Board::Service::WithDependencies/resolve_dependencies>.
 
-=head1 BUGS
+Since the service needs parameters to instantiate its value, and no
+values were provided for those parameters, the best we can do is use a
+coderef that will accept the parameters and call C<get> on the
+service.
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+=method C<inflate>
 
-=cut
+  my $service_value = $deferred_thunk->inflate(%service_parameters);
+
+This will call C<get> on the service, passing it all the
+C<%service_parameters>. Normal parameter validation and service
+lifecycle apply.

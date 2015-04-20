@@ -48,30 +48,29 @@ no Moose::Role; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-=head1 METHODS
+Sub-role of L<Bread::Board::LifeCycle>, this role defines the
+"singleton" lifecycle for a parameterized service. The C<get> method
+will only do its work the first time it is invoked for each set of
+parameters; subsequent invocations with the same parameters will
+return the same object.
 
-=over 4
+=method C<get>
 
-=item B<get>
+Generates a key using L</generate_instance_key> (passing it all the
+arguments); if the L</instances> attribute does not hold an object for
+that key, it will build it (by calling the underlying C<get> method)
+and store it in L</instances>. The object (either retrieved from
+L</instances> or freshly built) will be returned.
 
-=item B<instance>
+=attr C<instances>
 
-=item B<has_instance>
+Hashref mapping keys to objects, used to cache the results of L</get>
 
-=item B<flush_instance>
+=method C<generate_instance_key>
 
-=item B<generate_instance_key>
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=cut
+Generates a (hopefully) unique key from the given arguments (usually,
+whatever was passed to L</get>). The current implementation
+stringifies all arguments, so different references to identical values
+will be considered different.

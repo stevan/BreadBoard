@@ -48,36 +48,42 @@ no Moose; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-=head1 METHODS
+This class holds the information for a dependency of a
+L<service|Bread::Board::Service::WithDependencies>. When L<resolving
+dependencies|Bread::Board::Service::WithDependencies/resolve_dependencies>,
+instances of this class will be used to access the services that will
+provide the depended-on values.
 
-=over 4
+This class consumes the L<Bread::Board::Traversable> role to retrieve
+services given their path.
 
-=item B<get>
+=attr C<service_path>
 
-=item B<has_service_path>
+The path to use (possibly relative to the dependency itself) to access
+the L</service>.
 
-=item B<is_locked>
+=method C<has_service_path>
 
-=item B<lock>
+Predicate for the L</service_path> attribute.
 
-=item B<service>
+=attr C<service>
 
-=item B<service_name>
+The service this dependency points at. Usually built lazily from the
+L</service_path>, but could just be passed in to the constructor.
 
-=item B<service_path>
+=attr C<service_name>
 
-=item B<unlock>
+Name of the L</service>, defaults to the last element of the
+L</service_path>.
 
-=back
+=method C<get>
 
-=head1 BUGS
+=method C<is_locked>
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+=method C<lock>
 
-=cut
+=method C<unlock>
+
+These methods are delegated to the L</service>.

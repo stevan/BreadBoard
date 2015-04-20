@@ -39,24 +39,19 @@ no Moose; 1;
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-No user servicable parts. Read the source if you are interested.
+This L<service|Bread::Board::Service> class implements
+L<aliases|Bread::Board/alias ($service_name, $service_path,
+%service_description)>.
 
-=head1 BUGS
+=attr C<aliased_from_path>
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+Read-only string attribute, the path of the service this alias refers
+to (it can be an alias itself)
 
-=begin Pod::Coverage
+=attr C<aliased_from>
 
-aliased_from_path
-aliased_from
-_build_aliased_from
-
-=end Pod::Coverage
-
-=cut
+Lazy read-only attribute, built by calling L<<
+C<fetch>|Bread::Board::Traversable/fetch >> on this service using the
+L</aliased_from_path> as path to fetch

@@ -82,25 +82,19 @@ sub AUTOLOAD {
 
 __END__
 
-=pod
-
 =head1 DESCRIPTION
 
-No user servicable parts. Read the source if you are interested.
+Class for proxy objects used when L<resolving circular
+dependencies|Bread::Board::Service::WithDependencies/resolve_dependencies>.
 
-=head1 BUGS
+This class uses a few nasty tricks: replacing C<$_[0]>, using
+C<AUTOLOAD>, overriding C<isa> C<meta> and C<can>, heavy operator
+overloading... you should probably not take inspiration from this code
+unless you really know what you're doing.
 
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+In practice, a variable containing an instance of
+C<Bread::Board::Service::Deferred> will have its value changed to the
+actual value instantiated by the service at the first opportunity, and
+you should not notice that this class was ever there.
 
-=begin Pod::Coverage
-
-can
-isa
-meta
-new
-
-=end Pod::Coverage
-
-=cut
+=for Pod::Coverage can isa meta new
