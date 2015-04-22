@@ -1,6 +1,6 @@
 Revision history for Bread-Board
 
-{{$NEXT}}
+0.33  2015-04-21
     - add 'literal' keyword (Yanick Champoux, #31)
     - added documentation for most of the classes (dakkar, sponsored
       by Net-a-Porter.com)

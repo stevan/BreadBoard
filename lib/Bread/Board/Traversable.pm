@@ -1,4 +1,8 @@
 package Bread::Board::Traversable;
+BEGIN {
+  $Bread::Board::Traversable::AUTHORITY = 'cpan:STEVAN';
+}
+$Bread::Board::Traversable::VERSION = '0.33';
 use Moose::Role;
 
 with 'MooseX::Clone' => { -version => 0.05 };
@@ -106,6 +110,18 @@ no Moose::Role; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Traversable
+
+=head1 VERSION
+
+version 0.33
+
 =head1 SYNOPSIS
 
   my $service = $container->fetch('/some/service/path');
@@ -118,27 +134,31 @@ This role provides the basic functionality to traverse a container /
 service tree. Instances of classes consuming this role will get a
 parent-child relationship between them.
 
-=attr C<parent>
+=head1 ATTRIBUTES
+
+=head2 C<parent>
 
 Weak ref to another L<Bread::Board::Traversable> object, read/write
 accessor (although you should probably not change this value directly
 in normal code).
 
-=method C<has_parent>
+=head1 METHODS
+
+=head2 C<has_parent>
 
 Predicate for the L</parent> attribute, true if a parent has been set.
 
-=method C<detach_from_parent>
+=head2 C<detach_from_parent>
 
 Clearer for the L</parent> attribute, you should probably not call
 this method in normal code.
 
-=method C<get_root_container>
+=head2 C<get_root_container>
 
 Returns the farthest ancestor of the invocant, i.e. the top-most
 container this object is a part of.
 
-=method C<fetch>
+=head2 C<fetch>
 
   my $service = $this->fetch('/absolute/path');
   my $service = $this->fetch('relative/path');
@@ -153,3 +173,25 @@ path.
 L<Aliases|Bread::Board::Service::Alias> are resolved in this call, by
 calling L<< C<aliased_from>|Bread::Board::Service::Alias/aliased_from
 >> until we get an actual service.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

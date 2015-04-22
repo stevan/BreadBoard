@@ -1,4 +1,8 @@
 package Bread::Board::Service;
+BEGIN {
+  $Bread::Board::Service::AUTHORITY = 'cpan:STEVAN';
+}
+$Bread::Board::Service::VERSION = '0.33';
 use Moose::Role;
 use Module::Runtime ();
 
@@ -115,6 +119,18 @@ no Moose::Util::TypeConstraints; no Moose::Role; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Service
+
+=head1 VERSION
+
+version 0.33
+
 =head1 DESCRIPTION
 
 This role is the basis for all services in L<Bread::Board>. It
@@ -122,28 +138,20 @@ provides (or requires the implementation of) the minimum necessary
 building blocks: creating an instance, setting/getting parameters,
 instance lifecycle.
 
-=attr C<name>
+=head1 ATTRIBUTES
+
+=head2 C<name>
 
 Read/write string, required. Every service needs a name, by which it
 can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
 
-=attr C<is_locked>
+=head2 C<is_locked>
 
 Boolean, defaults to false. Used during L<dependency
 resolution|Bread::Board::Service::WithDependencies/resolve_dependencies>
 to detect loops.
 
-=method C<lock>
-
-Locks the service; you should never need to call this method in normal
-code.
-
-=method C<unlock>
-
-Unlocks the service; you should never need to call this method in
-normal code.
-
-=attr C<lifecycle>
+=head2 C<lifecycle>
 
   $service->lifecycle('Singleton');
 
@@ -154,7 +162,19 @@ with C<+> (like C<+My::Special::Lifecycle>). The name is expected to
 refer to a loadable I<role>, which will be applied to the service
 instance.
 
-=method C<get>
+=head1 METHODS
+
+=head2 C<lock>
+
+Locks the service; you should never need to call this method in normal
+code.
+
+=head2 C<unlock>
+
+Unlocks the service; you should never need to call this method in
+normal code.
+
+=head2 C<get>
 
   my $value = $service->get();
 
@@ -162,16 +182,16 @@ This method I<must> be implemented by the consuming class. It's
 expected to instantiate whatever object or value this service should
 resolve to.
 
-=method C<init_params>
+=head2 C<init_params>
 
 Builder for the service parameters, defaults to returning an empty
 hashref.
 
-=method C<clear_params>
+=head2 C<clear_params>
 
 Clearer of the service parameters.
 
-=method C<param>
+=head2 C<param>
 
   my @param_names = $service->param();
   my $param_value = $service->param($param_name);
@@ -187,7 +207,7 @@ same thing as L<dependencies|Bread::Board::Service::WithDependencies>
 (although the resolved dependencies will be copied here before C<get>
 is called).
 
-=method C<clone_and_inherit_params>
+=head2 C<clone_and_inherit_params>
 
 When declaring a service using the L<< C<service> helper
 function|Bread::Board/service >>, if the name you use starts with a
@@ -195,3 +215,25 @@ C<'+'>, the service definition will extend an existing service with
 the given name (without the C<'+'>). This method implements the
 extension semantics: the C<dependencies> and C<parameters> options
 will be merged with the existing values, rather than overridden.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
