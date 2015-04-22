@@ -1,4 +1,8 @@
 package Bread::Board::Service::Inferred;
+BEGIN {
+  $Bread::Board::Service::Inferred::AUTHORITY = 'cpan:STEVAN';
+}
+$Bread::Board::Service::Inferred::VERSION = '0.33';
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
@@ -211,10 +215,46 @@ no Moose; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Service::Inferred
+
+=head1 VERSION
+
+version 0.33
+
 =head1 DESCRIPTION
 
 CAUTION, EXPERIMENTAL FEATURE.
 
 Docs to come, as well as refactoring.
 
-=method C<infer_service>
+=head1 METHODS
+
+=head2 C<infer_service>
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
