@@ -1,371 +1,261 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
-    - add 'literal' keyword (Yanick Champoux, #31)
-    - added documentation for most of the classes (dakkar, sponsored
-      by Net-a-Porter.com)
+ [API CHANGES]
 
-0.32  2014-06-03
-    - fixes to arrayref dependencies (dakkar, #35)
+ [BUG FIXES]
 
-0.31  2014-05-08
-    - allow specifying dependency values as arrayrefs, which will resolve to an
-      arrayref containing the resolved service values (dakkar, #34)
+ [DOCUMENTATION]
 
-0.30  2014-02-02
-    - fix deprecated use of Class::MOP::load_class (Caleb Cushing, #33)
+ [ENHANCEMENTS]
 
-0.29  2013-11-21
-    - Fix deprecated enum syntax
+ [NEW FEATURES]
 
-0.28  2013-08-30
-    - Allow overriding of services and containers. This is useful when using
-      the common pattern of "sub BUILD { my $self = shift; container $self =>
-      as { ... } }" since the BUILD method in a subclass can modify existing
-      services and containers that were defined in a superclass, rather than
-      only being able to replace them (Florian Ragwitz, #26, #27).
+ [STATISTICS]
 
-0.27  2013-08-06
-    - allow the 'container $obj' sugar for parameterized containers (Florian
-      Ragwitz, #25)
+0.33 2015-04-26
+ - add 'literal' keyword (Yanick Champoux, #31)
+ - added documentation for most of the classes (dakkar, sponsored by
+   Net-a-Porter.com)
 
-0.26  2013-08-01
-    - allow cloning containers with parameterized subcontainers (Florian
-      Ragwitz, #22)
-    - allow referencing parent services from parameterized subcontainers
-      (Florian Ragwitz, #23)
-    - deprecate special case in path traversal where a path component with the
-      name of the current container was ignored (doy, #20)
-    - fix setting the current container multiple times from outside of a
-      container (doy)
-    - make some error messages more helpful (Jason Galea, #14)
-    - doc improvements (Sterling Hanenkamp, zdk, Philippe Bruhat, and Gabor
-      Szabo; #15, #17, #19, #21)
-    - remove the (unmaintained) Bread::Board::GraphViz
+ [STATISTICS]
+ - code churn: 35 files changed, 1016 insertions(+), 375 deletions(-)
 
-0.25  2011-10-20
-    * Bread::Board
-        - the container sugar was misbehaving
-          (since April 2010 apparently), so
-          we have fixed it and clarified it
+0.32 2014-06-03
+ - fixes to arrayref dependencies (dakkar, #35)
 
-0.24  2011-10-15
-    * Bread::Board::Container
-        - make sure to clone subcontainers,
-          this is necessary for parameterized
-          containers to retain their connections
+0.31 2014-05-08
+ - allow specifying dependency values as arrayrefs, which will resolve to
+   an arrayref containing the resolved service values (dakkar, #34)
 
-    * Bread::Board::Traversable
-        - add some errors, be a little more
-          defensive
+0.30 2014-02-02
+ - fix deprecated use of Class::MOP::load_class (Caleb Cushing, #33)
 
-0.23  2011-10-14
-    * Bread::Board::Container::Parameterized
-        - retain control of names of the generated
-          containers, so if your the container being
-          generated has a name, it keeps it.
-            - this makes these containers more
-              addressable when composed into
-              higher level containers
-            - this helps when subclassing
-              parameterized containers
-        - switch the generated containers to be
-          created with builder instead of default
-            - also helps when subclassing
-              parameterized containers as well
+0.29 2013-11-21
+ - Fix deprecated enum syntax
 
-    * t/046_custom_parameter_service.t
-        - fixing the error about Moose deprecations
+0.28 2013-08-30
+ - Allow overriding of services and containers. This is useful when using
+   the common pattern of "sub BUILD { my $self = shift; container $self =>
+   as { ... } }" since the BUILD method in a subclass can modify existing
+   services and containers that were defined in a superclass, rather than
+   only being able to replace them (Florian Ragwitz, #26, #27).
 
-0.22  2011-10-03
-    - When inferring a service for a type, allow subclasses to fulfill
-      discovered types.
-    - Converted to Dist::Zilla
+0.27 2013-08-06
+ - allow the 'container $obj' sugar for parameterized containers (Florian
+   Ragwitz, #25)
+
+0.26 2013-08-01
+ - allow cloning containers with parameterized subcontainers (Florian
+   Ragwitz, #22)
+ - allow referencing parent services from parameterized subcontainers
+   (Florian Ragwitz, #23)
+ - deprecate special case in path traversal where a path component with the
+   name of the current container was ignored (doy, #20)
+ - fix setting the current container multiple times from outside of a
+   container (doy)
+ - make some error messages more helpful (Jason Galea, #14)
+ - doc improvements (Sterling Hanenkamp, zdk, Philippe Bruhat, and Gabor
+   Szabo; #15, #17, #19, #21)
+ - remove the (unmaintained) Bread::Board::GraphViz
+
+0.25 2011-10-20
+ - Bread::Board - the container sugar was misbehaving (since April 2010
+   apparently), so we have fixed it and clarified it
+
+0.24 2011-10-15
+ - Bread::Board::Container - make sure to clone subcontainers, this is
+   necessary for parameterized containers to retain their connections
+ - Bread::Board::Traversable - add some errors, be a little more defensive
+
+0.23 2011-10-14
+ - Bread::Board::Container::Parameterized - retain control of names of the
+   generated containers, so if your the container being generated has a
+   name, it keeps it. - this makes these containers more addressable when
+   composed into higher level containers - this helps when subclassing
+   parameterized containers - switch the generated containers to be created
+   with builder instead of default - also helps when subclassing
+   parameterized containers as well
+ - t/046_custom_parameter_service.t - fixing the error about Moose
+   deprecations
+
+0.22 2011-10-03
+ - When inferring a service for a type, allow subclasses to fulfill
+   discovered types.
+ - Converted to Dist::Zilla
 
 0.21 2011-09-06
-    * Bread::Board
-        - Allow service() and alias() sugar functions to
-          return the newly-created objects if the context
-          container is not defined. (thanks to kip hampton)
-            - added tests for this
-        - this module is just an exporter, so it does not
-          need to 'use Moose' (thanks to Tomas Doran)
-
-    - fixed some spelling and grammar errors
-      (thanks to ben hengst and Brad Bowman)
-
-    * Bread::Board::Service::WithParameters
-        - parameters attribute now has a builder instead
-          of a default, so as to allow better tweaking
-          in subclasses (thanks to Andre Walker)
-            - added tests for this
+ - Bread::Board - Allow service() and alias() sugar functions to return the
+   newly-created objects if the context container is not defined. (thanks
+   to kip hampton) - added tests for this - this module is just an
+   exporter, so it does not need to 'use Moose' (thanks to Tomas Doran)
+ - fixed some spelling and grammar errors (thanks to ben hengst and Brad
+   Bowman)
+ - Bread::Board::Service::WithParameters - parameters attribute now has a
+   builder instead of a default, so as to allow better tweaking in
+   subclasses (thanks to Andre Walker) - added tests for this
 
 0.20 2011-06-13
-    * Bread::Board::Lifecycle::Singleton
-        - fix bug in singletons with circular
-          refs (thanks to doy)
-            - added tests for this (thanks to perigrin)
+ - Bread::Board::Lifecycle::Singleton - fix bug in singletons with circular
+   refs (thanks to doy) - added tests for this (thanks to perigrin)
 
 0.19 2011-06-01
-    * Bread::Board::GraphViz
-        - added by jrockway, this allows you to visualise
-          a Bread::Board system using GraphViz
-            - note that this is optional and requires you
-              to install optional dependencies
-
-    * Bread::Board::Service::Alias
-        - add the ability to alias services under
-          another name (thanks to doy)
-            - added tests for this
-
-    * Bread::Board::Service::Inferred
-        - improving edge cases (thanks to doy)
-
-    * Bread::Board::Service::*
-        - several code improvements (thanks to doy)
-
-    * Bread::Board::Service
-        - allow for custom Lifecycles by using the "+"
-          prefix (thanks to jasonmay)
-            - added tests for this
+ - Bread::Board::GraphViz - added by jrockway, this allows you to visualise
+   a Bread::Board system using GraphViz - note that this is optional and
+   requires you to install optional dependencies
+ - Bread::Board::Service::Alias - add the ability to alias services under
+   another name (thanks to doy) - added tests for this
+ - Bread::Board::Service::Inferred - improving edge cases (thanks to doy)
+ - Bread::Board::Service::* - several code improvements (thanks to doy)
+ - Bread::Board::Service - allow for custom Lifecycles by using the "+"
+   prefix (thanks to jasonmay) - added tests for this
 
 0.18 2011-04-13
-    * Bread::Board::Service::WithParameters
-        - added has_parameter_defaults method to check
-          if a parameter has default values
-    * Bread::Board::Service::WithDependencies
-        - added a check for has_parameter_defaults before
-          we make a Thunk
-          - added test for this (thanks to rafl)
+ - Bread::Board::Service::WithParameters - added has_parameter_defaults
+   method to check if a parameter has default values
+ - Bread::Board::Service::WithDependencies - added a check for
+   has_parameter_defaults before we make a Thunk - added test for this
+   (thanks to rafl)
 
 0.17 2011-02-22
-    * Bread::Board::Service::Inferred
-      - make recrusive inferrence work
-        - add tests for this
-
-    * Bread::Board::Manual::Concepts::Advanced
-      - small doc update about subclassing and
-        the name parameter, resolving RT#63124
-        (thanks to Evan Haas)
-
-    !! POSSIBLE BACK COMPAT BREAKAGE !!
-    * Bread::Board::Traversal
-      - make relative parent path traversal more sane, there
-        should be no more need for excessive ../../ stuff in
-        dependency service paths (thanks doy)
-        - adjust tests accordingly
-        - this should fix RT#64478 as well
+ - Bread::Board::Service::Inferred - make recrusive inferrence work - add
+   tests for this
+ - Bread::Board::Manual::Concepts::Advanced - small doc update about
+   subclassing and the name parameter, resolving RT#63124 (thanks to Evan
+   Haas)
+ - POSSIBLE BACK COMPAT BREAKAGE !!
+ - Bread::Board::Traversal - make relative parent path traversal more sane,
+   there should be no more need for excessive ../../ stuff in dependency
+   service paths (thanks doy) - adjust tests accordingly - this should fix
+   RT#64478 as well
 
 0.16 2011-01-10
-    * Bread::Board::service sugar
-      - adding the 'service_class' param for the
-        service sugar function which allows you
-        to pass in a custom service subclass
-        - added tests for this (062_service_class_w_sugar.t)
-
-    * Bread::Board::Dependency
-      - added the service_params attribute here
-        so that it is possible to pass in parameters
-        when you depend on a service which requires them
-        - added tests for this (045_parameters_in_dependency.t)
-
-    * Bread::Board::Service::Inferred
-      - when a typemapped service is created it is now
-        named with the special 'type:' prefix. This allows
-        you to depend on a typemapped service in a
-        non-typemapped service
-        - added tests for this (079_depending_on_type.t)
-
-    * Bread::Board::Traversable
-      - improving the error messages when a container/service
-        is not found
+ - Bread::Board::service sugar - adding the 'service_class' param for the
+   service sugar function which allows you to pass in a custom service
+   subclass - added tests for this (062_service_class_w_sugar.t)
+ - Bread::Board::Dependency - added the service_params attribute here so
+   that it is possible to pass in parameters when you depend on a service
+   which requires them - added tests for this
+   (045_parameters_in_dependency.t)
+ - Bread::Board::Service::Inferred - when a typemapped service is created
+   it is now named with the special 'type:' prefix. This allows you to
+   depend on a typemapped service in a non-typemapped service - added tests
+   for this (079_depending_on_type.t)
+ - Bread::Board::Traversable - improving the error messages when a
+   container/service is not found
 
 0.15 2010-09-30
-    * Bread::Board::Service
-      - removed the MooseX::Param dependency
-        and implemented it internally so that
-        we have more control
-
-    * Bread::Board::Types
-      - the Bread::Board::Service::Dependencies
-        type now can also coerce ArrayRef[Str]
-        and HashRef[Str] types correctly (doy)
-
-    * Bread::Board::Service::WithDependencies
-      - we now only create a ::Deferred::Thunk
-        object if we have non-optional params
-    * Bread::Board::Service::WithParameters
-      - added the has_required_parameters
-        method, to see if there are any
-        non-optional parameters
-        - added tests for both the above
-
-    !! NEW EXPERIMENTAL FEATURE !!
-
-    * Bread::Board
-      - added the typemap and infer keyword
-        to help in the mapping of types and
-        construction of inferred services
-        - added tests for this
-
-    * Bread::Board::Container
-      - added the typemap feature and added
-        the ->resolve( type => $type ) call
-        - added tests for this
-
-    * Bread::Board::Service::Inferred
-      - added this and tests for it
-
-    * Bread::Board::Manual::Concepts::Typemap
-      - added this to help explain the
-        typemap feature
+ - Bread::Board::Service - removed the MooseX::Param dependency and
+   implemented it internally so that we have more control
+ - Bread::Board::Types - the Bread::Board::Service::Dependencies type now
+   can also coerce ArrayRef[Str] and HashRef[Str] types correctly (doy)
+ - Bread::Board::Service::WithDependencies - we now only create a
+   ::Deferred::Thunk object if we have non-optional params
+ - Bread::Board::Service::WithParameters - added the
+   has_required_parameters method, to see if there are any non-optional
+   parameters - added tests for both the above
+ - NEW EXPERIMENTAL FEATURE !!
+ - Bread::Board - added the typemap and infer keyword to help in the
+   mapping of types and construction of inferred services - added tests for
+   this
+ - Bread::Board::Container - added the typemap feature and added the
+   ->resolve( type => $type ) call - added tests for this
+ - Bread::Board::Service::Inferred - added this and tests for it
+ - Bread::Board::Manual::Concepts::Typemap - added this to help explain the
+   typemap feature
 
 0.14 2010-08-24
-    * Bread::Board::Container
-      - added the ->resolve method to replace
-        the ->fetch( $service )->get pattern
-        that annoys mst so much.
-        - adjusted all the tests to account
-          for this change.
-        - adjusted all the docs to now use
-          this approach instead
-
-    - now using Try::Tiny for all exception
-      handling (except the Deferred service)
-
-    * Bread::Board::Service::WithDependencies
-      - if you want to depend on a parameterized
-        service, now you can and it will return
-        a Bread::Board::Service::Deferred::Thunk
-        that you can call ->inflate on and pass
-        in the parameters for it.
-        - added tests for this
-
-    * Bread::Board::Service::Deferred::Thunk
-      - added this + tests for it
+ - Bread::Board::Container - added the ->resolve method to replace the
+   ->fetch( $service )->get pattern that annoys mst so much. - adjusted all
+   the tests to account for this change. - adjusted all the docs to now use
+   this approach instead
+ - now using Try::Tiny for all exception handling (except the Deferred
+   service)
+ - Bread::Board::Service::WithDependencies - if you want to depend on a
+   parameterized service, now you can and it will return a
+   Bread::Board::Service::Deferred::Thunk that you can call ->inflate on
+   and pass in the parameters for it. - added tests for this
+ - Bread::Board::Service::Deferred::Thunk - added this + tests for it
 
 0.13 2010-04-23
-    * Bread::Board
-      - making the include keyword handle
-        compilation errors better (doy)
-          - added test for this
-
-    * Bread::Board::Container
-      Bread::Board::Container::Parameterized
-      - it is now possible to store parameterized
-        containers within regular containers and
-        have them behave properly
-          - added tests for this
-
-    * Bread::Board::Manual::Example::*
-      - adding some examples of ways to use
-        Bread::Board to the manual
-          - added tests to confirm they work
+ - Bread::Board - making the include keyword handle compilation errors
+   better (doy) - added test for this
+ - Bread::Board::Container Bread::Board::Container::Parameterized - it is
+   now possible to store parameterized containers within regular containers
+   and have them behave properly - added tests for this
+ - Bread::Board::Manual::Example::* - adding some examples of ways to use
+   Bread::Board to the manual - added tests to confirm they work
 
 0.12 2010-04-18
-    * Bread::Board
-      - added the `include` keyword which will evaluate
-        an external file within your Bread::Board
-        configuration
-          - added tests for this
-      - added support for parameterized containers
-          - added tests for this
-      - the 'container' keyword will now accept an
-        instance of Bread::Board::Container instead
-        of the name, this makes subclassing easier
-          - added tests for this
-
-    + Bread::Board::Container::Parameterized
-      - added this module and tests
-
-    + Bread::Baord::Manual
-      - moved, re-organizad and added too the docs
-        that were previously in Bread::Board.pm
+ - Bread::Board - added the `include` keyword which will evaluate an
+   external file within your Bread::Board configuration - added tests for
+   this - added support for parameterized containers - added tests for this
+   - the 'container' keyword will now accept an instance of
+   Bread::Board::Container instead of the name, this makes subclassing
+   easier - added tests for this
+ - Bread::Board::Container::Parameterized - added this module and tests
+ - Bread::Baord::Manual - moved, re-organizad and added too the docs that
+   were previously in Bread::Board.pm
 
 0.11 2010-03-25
-    * Much improved documentation.
-    * Fixed inc/ to include all used Module-Install extensions.
+ - Much improved documentation.
+ - Fixed inc/ to include all used Module-Install extensions.
 
 0.10 2010-02-22
-    * Bread::Board
-      - import strict and warnings into the caller
-        upon import (Florian Ragwitz)
-      - fixing the SYNOPSIS so that it will actually
-        run (thanks to zby for spotting this)
-
-    * Bread::Board::ConstructorInjection
-      - Add a constructor_name parameter for classes using
-        MooseX::Traits or other things which need an alternately
-        named constructor. (Tomas Doran)
+ - Bread::Board - import strict and warnings into the caller upon import
+   (Florian Ragwitz) - fixing the SYNOPSIS so that it will actually run
+   (thanks to zby for spotting this)
+ - Bread::Board::ConstructorInjection - Add a constructor_name parameter
+   for classes using MooseX::Traits or other things which need an
+   alternately named constructor. (Tomas Doran)
 
 0.09 2009-07-29
-    Add cloning support for containers and services
-    (thanks to jrockway for this)
-      - adding tests for this
-
-    * Bread::Board::ConstructorInjection
-      - use meta->constructor_name instead of "new"
-        if possible (jrockway)
-
-    * Bread::Board::Service::WithParameters
-      - fixing a leak where we would hold onto
-        parameters that were passed into get()
+ - Add cloning support for containers and services
+ - (thanks to jrockway for this) - adding tests for this
+ - Bread::Board::ConstructorInjection - use meta->constructor_name instead
+   of "new" if possible (jrockway)
+ - Bread::Board::Service::WithParameters - fixing a leak where we would
+   hold onto parameters that were passed into get()
 
 0.08 2009-07-18
-    - updating dates on all files
-
-    * Bread::Board::LifeCycle::Singleton::WithParameters
-      - new module added to support the idea of a singleton
-        lifecycle keyed on the parameters rather then just
-        a per-instance item.
-
-    * Bread::Board::Traversable
-      - fixed the is_weak_ref mis-spelling
+ - updating dates on all files
+ - Bread::Board::LifeCycle::Singleton::WithParameters - new module added to
+   support the idea of a singleton lifecycle keyed on the parameters rather
+   then just a per-instance item.
+ - Bread::Board::Traversable - fixed the is_weak_ref mis-spelling
 
 0.07 2009-02-18
-    - Work with new MooseX::Params::Validate
-    - Specify MX::P::Validate version number in Makefile.PL
+ - Work with new MooseX::Params::Validate
+ - Specify MX::P::Validate version number in Makefile.PL
 
 0.06 2008-11-03
-    - Forgot to update MANIFEST before uploading to CPAN.
+ - Forgot to update MANIFEST before uploading to CPAN.
 
 0.05 2008-11-03
-    - Applied immutablity to classes where applicable, and vigorously unimport
-      Moose keywords when they are no longer needed. This results in
-      x 2 performance as far as defining a Bread::Board model (Daisuke Maki).
-
-    * Bread::Board
-      - Implemented unimport(), thus allowing you to remove keywords
-        exported by Bread::Board (Daisuke Maki).
-
-    * Bread::Board::Traversable
-      - Unrolled recursive calls to loops, and removed Sub::Current dependency
-        (Daisuke Maki)
+ - Applied immutablity to classes where applicable, and vigorously unimport
+   Moose keywords when they are no longer needed. This results in x 2
+   performance as far as defining a Bread::Board model (Daisuke Maki).
+ - Bread::Board - Implemented unimport(), thus allowing you to remove
+   keywords exported by Bread::Board (Daisuke Maki).
+ - Bread::Board::Traversable - Unrolled recursive calls to loops, and
+   removed Sub::Current dependency (Daisuke Maki)
 
 0.04 2008-10-31
-    * Bread::Board
-      Bread::Board::Traversable
-      - fix root path handling (thanks to Daisuke Maki)
-        - added tests for this
-
-    * Bread::Board::Dumper
-      - Simple utility for dumping containers
-        (thanks to Daisuke Maki)
-
-    * t/
-      - fixing the plans so that new versions of
-        Test::More stop complaining
+ - Bread::Board Bread::Board::Traversable - fix root path handling (thanks
+   to Daisuke Maki) - added tests for this
+ - Bread::Board::Dumper - Simple utility for dumping containers (thanks to
+   Daisuke Maki)
+ - t/ - fixing the plans so that new versions of Test::More stop
+   complaining
 
 0.03 2008-01-08
-    * Bread::Board::Service::WithParameters
-      - fixed the parameter validation to
-        use a custom cache key, this is so
-        that it plays nicely with the new
-        MooseX::Params::Validate
-        - added tests for this
+ - Bread::Board::Service::WithParameters - fixed the parameter validation
+   to use a custom cache key, this is so that it plays nicely with the new
+   MooseX::Params::Validate - added tests for this
 
 0.02 2008-01-08
-    - forgot a dependency, whoops.
+ - forgot a dependency, whoops.
 
 0.01 2008-01-07
-    - Out with the old (IOC) and in with the new (Bread::Board)
+ - Out with the old (IOC) and in with the new (Bread::Board)
+
