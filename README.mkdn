@@ -1,0 +1,505 @@
+# NAME
+
+Bread::Board - A solderless way to wire up your application components
+
+# VERSION
+
+version 0.33
+
+# SYNOPSIS
+
+    use Bread::Board;
+
+    my $c = container 'MyApp' => as {
+
+        service 'log_file_name' => "logfile.log";
+
+        service 'logger' => (
+            class        => 'FileLogger',
+            lifecycle    => 'Singleton',
+            dependencies => [ 'log_file_name' ],
+            ]
+        );
+
+        container 'Database' => as {
+            service 'dsn'      => "dbi:SQLite:dbname=my-app.db";
+            service 'username' => "user234";
+            service 'password' => "****";
+
+            service 'dbh' => (
+                block => sub {
+                    my $s = shift;
+                    require DBI;
+                    DBI->connect(
+                        $s->param('dsn'),
+                        $s->param('username'),
+                        $s->param('password'),
+                    ) || die "Could not connect";
+                },
+                dependencies => [ 'dsn', 'username', 'password' ]
+            );
+        };
+
+        service 'application' => (
+            class        => 'MyApplication',
+            dependencies => {
+                logger => 'logger',
+                dbh    => 'Database/dbh',
+            }
+        );
+
+    };
+
+    no Bread::Board; # removes keywords
+
+    # get an instance of MyApplication
+    # from the container
+    my $app = $c->resolve( service => 'application' );
+
+    # now user your MyApplication
+    # as you normally would ...
+    $app->run;
+
+# DESCRIPTION
+
+Bread::Board is an inversion of control framework with a focus on
+dependency injection and lifecycle management. It's goal is to
+help you write more decoupled objects and components by removing
+the need for you to manually wire those objects/components together.
+
+Want to know more? See the [Bread::Board::Manual](https://metacpan.org/pod/Bread::Board::Manual).
+
+    +-----------------------------------------+
+    |          A B C D E   F G H I J          |
+    |-----------------------------------------|
+    | o o |  1 o-o-o-o-o v o-o-o-o-o 1  | o o |
+    | o o |  2 o-o-o-o-o   o-o-o-o-o 2  | o o |
+    | o o |  3 o-o-o-o-o   o-o-o-o-o 3  | o o |
+    | o o |  4 o-o-o-o-o   o-o-o-o-o 4  | o o |
+    | o o |  5 o-o-o-o-o   o-o-o-o-o 5  | o o |
+    |     |  6 o-o-o-o-o   o-o-o-o-o 6  |     |
+    | o o |  7 o-o-o-o-o   o-o-o-o-o 7  | o o |
+    | o o |  8 o-o-o-o-o   o-o-o-o-o 8  | o o |
+    | o o |  9 o-o-o-o-o   o-o-o-o-o 9  | o o |
+    | o o | 10 o-o-o-o-o   o-o-o-o-o 10 | o o |
+    | o o | 11 o-o-o-o-o   o-o-o-o-o 11 | o o |
+    |     | 12 o-o-o-o-o   o-o-o-o-o 12 |     |
+    | o o | 13 o-o-o-o-o   o-o-o-o-o 13 | o o |
+    | o o | 14 o-o-o-o-o   o-o-o-o-o 14 | o o |
+    | o o | 15 o-o-o-o-o   o-o-o-o-o 15 | o o |
+    | o o | 16 o-o-o-o-o   o-o-o-o-o 16 | o o |
+    | o o | 17 o-o-o-o-o   o-o-o-o-o 17 | o o |
+    |     | 18 o-o-o-o-o   o-o-o-o-o 18 |     |
+    | o o | 19 o-o-o-o-o   o-o-o-o-o 19 | o o |
+    | o o | 20 o-o-o-o-o   o-o-o-o-o 20 | o o |
+    | o o | 21 o-o-o-o-o   o-o-o-o-o 21 | o o |
+    | o o | 22 o-o-o-o-o   o-o-o-o-o 22 | o o |
+    | o o | 22 o-o-o-o-o   o-o-o-o-o 22 | o o |
+    |     | 23 o-o-o-o-o   o-o-o-o-o 23 |     |
+    | o o | 24 o-o-o-o-o   o-o-o-o-o 24 | o o |
+    | o o | 25 o-o-o-o-o   o-o-o-o-o 25 | o o |
+    | o o | 26 o-o-o-o-o   o-o-o-o-o 26 | o o |
+    | o o | 27 o-o-o-o-o   o-o-o-o-o 27 | o o |
+    | o o | 28 o-o-o-o-o ^ o-o-o-o-o 28 | o o |
+    +-----------------------------------------+
+
+Loading this package will automatically load the rest of the packages needed by
+your Bread::Board configuration.
+
+# EXPORTED FUNCTIONS
+
+The functions of this package provide syntactic sugar to help you build your
+Bread::Board configuration. You can build such a configuration by constructing
+the objects manually instead, but your code may be more difficult to
+understand.
+
+## `container`
+
+### simple case
+
+    container $name, \&body;
+
+This function constructs and returns an instance of [Bread::Board::Container](https://metacpan.org/pod/Bread::Board::Container).
+The (optional) `&body` block may be used to add services or sub-containers
+within the newly constructed container. Usually, the block is not passed
+directly, but passed using the `as` function.
+
+For example,
+
+    container 'MyWebApp' => as {
+        service my_dispatcher => (
+            class => 'MyWebApp::Dispatcher',
+        );
+    };
+
+If `$name` starts with `'+'`, and the container is being declared inside
+another container, then this declaration will instead extend an existing
+container with the name `$name` (without the `'+'`).
+
+### from an instance
+
+    container $container_instance, \&body
+
+In many cases, subclassing [Bread::Board::Container](https://metacpan.org/pod/Bread::Board::Container) is the easiest route to
+getting access to this framework. You can do this and still get all the
+benefits of the syntactic sugar for configuring that class by passing an
+instance of your container subclass to `container`.
+
+You could, for example, configure your container inside the `BUILD` method of
+your class:
+
+    package MyWebApp;
+    use Moose;
+
+    extends 'Bread::Board::Container';
+
+    sub BUILD {
+        my $self = shift;
+
+        container $self => as {
+            service dbh => ( ... );
+        };
+    }
+
+### with parameters
+
+    container $name, \@parameters, \&body
+
+A third way of using the `container` function is to build a parameterized
+container. These are useful as a way of providing a placeholder for parts of
+the configuration that may be provided later. You may not use an instance
+object in place of the `$name` in this case.
+
+For more detail on how you might use parameterized containers, see
+["Parameterized Containers" in Bread::Board::Manual::Concepts::Advanced](https://metacpan.org/pod/Bread::Board::Manual::Concepts::Advanced#Parameterized-Containers).
+
+## `as`
+
+    as { some_code() };
+
+This is just a replacement for the `sub` keyword that is easier to read when
+defining containers.
+
+## `service`
+
+    service $name, $literal;
+    service $name, %service_description;
+
+Within the `as` blocks for your containers, you may construct services using
+the `service` function. This can construct several different kinds of services
+based upon how it is called.
+
+### literal services
+
+To build a literal service (a [Bread::Board::Literal](https://metacpan.org/pod/Bread::Board::Literal) object), just specify a
+scalar value or reference you want to use as the literal value:
+
+    # In case you need to adjust the gravitational constant of the Universe
+    service gravitational_constant => 6.673E-11;
+
+### using injections
+
+To build a service using one of the injection services, just fill in all the
+details required to use that sort of injection:
+
+    service search_service => (
+        class => 'MyApp::Search',
+        block => sub {
+            my $s = shift;
+            MyApp::Search->new($s->param('url'), $s->param('type'));
+        },
+        dependencies => {
+            url => 'search_url',
+        },
+        parameters => {
+            type => { isa => 'Str', default => 'text' },
+        },
+    );
+
+The type of injection performed depends on the parameters used. You may use
+the `service_class` parameter to pick a specific injector class. For
+instance, this is useful if you need to use [Bread::Board::SetterInjection](https://metacpan.org/pod/Bread::Board::SetterInjection)
+or have defined a custom injection service.  If you specify a `block`, block
+injection will be performed using [Bread::Board::BlockInjection](https://metacpan.org/pod/Bread::Board::BlockInjection). If neither
+of these is present, constructor injection will be used with
+[Bread::Board::ConstructorInjection](https://metacpan.org/pod/Bread::Board::ConstructorInjection) (and you must provide the `class`
+option).
+
+### service dependencies
+
+The `dependencies` parameter takes a hashref of dependency names mapped to
+[Bread::Board::Dependency](https://metacpan.org/pod/Bread::Board::Dependency) objects, but there are several coercions and sugar
+functions available to make specifying dependencies as easy as possible. The
+simplest case is when the names of the services you're depending on are the
+same as the names that the service you're defining will be accessing them with.
+In this case, you can just specify an arrayref of service names:
+
+    service foo => (
+        dependencies => [ 'bar', 'baz' ],
+        # ...
+    );
+
+If you need to use a different name, you can specify the dependencies as a
+hashref instead:
+
+    service foo => (
+        dependencies => {
+            dbh => 'foo_dbh',
+        },
+        # ...
+    );
+
+You can also specify parameters when depending on a parameterized service:
+
+    service foo => (
+        dependencies => [
+            { bar => { bar_param => 1 } },
+            'baz',
+        ],
+        # ...
+    );
+
+Finally, services themselves can also be specified as dependencies, in which
+case they will just be resolved directly:
+
+    service foo => (
+        dependencies => {
+            dsn => Bread::Board::Literal->new(
+                name  => 'dsn',
+                value => 'dbi:mysql:mydb',
+            ),
+        },
+        # ...
+    );
+
+As a special case, an arrayref of dependencies will be interpreted as a service
+which returns an arrayref containing the resolved values of those dependencies:
+
+    service foo => (
+        dependencies => {
+            # items will resolve to [ $bar_service->get, $baz_service->get ]
+            items => [
+                'bar',
+                Bread::Board::Literal->new(name => 'baz', value => 'BAZ'),
+            ],
+        },
+        # ...
+    );
+
+### inheriting and extending services
+
+If the `$name` starts with a `'+'`, the service definition will instead
+extend an existing service with the given `$name` (without the `'+'`). This
+works similarly to the `has '+foo'` syntax in Moose. It is most useful when
+defining a container class where the container is built up in `BUILD` methods,
+as each class in the inheritance hierarchy can modify services defined in
+superclasses. The `dependencies` and `parameters` options will be merged with
+the existing values, rather than overridden. Note that literal services can't
+be extended, because there's nothing to extend. You can still override them
+entirely by declaring the service name without a leading `'+'`.
+
+## `literal`
+
+    literal($value);
+
+Creates an anonymous [Bread::Board::Literal](https://metacpan.org/pod/Bread::Board::Literal) object with the given value.
+
+          service 'dbh' => (
+              block => sub {
+                  my $s = shift;
+                  require DBI;
+                  DBI->connect(
+                      $s->param('dsn'),
+                      $s->param('username'),
+                      $s->param('password'),
+                  ) || die "Could not connect";
+              },
+              dependencies => {
+                dsn      => literal 'dbi:SQLite:somedb',
+                username => literal 'foo',
+                password => literal 'password',
+
+              },
+          );
+
+## `depends_on`
+
+    depends_on($service_path);
+
+The `depends_on` function creates a [Bread::Board::Dependency](https://metacpan.org/pod/Bread::Board::Dependency) object for the
+named `$service_path` and returns it.
+
+## `wire_names`
+
+    wire_names(@service_names);
+
+This function is just a shortcut for passing a hash reference of dependencies
+into the service. It is not typically needed, since Bread::Board can usually
+understand what you mean - these declarations are all equivalent:
+
+    service foo => (
+        class => 'Pity::TheFoo',
+        dependencies => {
+            foo => depends_on('foo'),
+            bar => depends_on('bar'),
+            baz => depends_on('baz'),
+        },
+    );
+
+    service foo => (
+        class => 'Pity::TheFoo',
+        dependencies => wire_names(qw( foo bar baz )),
+    );
+
+    service foo => (
+        class => 'Pity::TheFoo',
+        dependencies => {
+            foo => 'foo',
+            bar => 'bar',
+            baz => 'baz',
+        },
+    );
+
+    service foo => (
+        class => 'Pity::TheFoo',
+        dependencies => [ qw(foo bar baz ) ],
+    );
+
+## `typemap`
+
+    typemap $type, $service;
+    typemap $type, $service_path;
+
+This creates a type mapping for the named type. Typically, it is paired with
+the `infer` call like so:
+
+    typemap 'MyApp::Model::UserAccount' => infer;
+
+For more details on what type mapping is and how it works, see
+[Bread::Board::Manual::Concepts::Typemap](https://metacpan.org/pod/Bread::Board::Manual::Concepts::Typemap).
+
+## `infer`
+
+    infer;
+    infer(%hints);
+
+This is used with `typemap` to help create the typemap inference. It can be
+used with no arguments to do everything automatically. However, in some cases,
+you may want to pass a service instance as the argument or a hash of service
+arguments to change how the type map works. For example, if your type needs to
+be constructed using a setter injection, you can use an inference similar to
+this:
+
+    typemap 'MyApp::Model::UserPassword' => infer(
+        service_class => 'Bread::Board::SetterInjection',
+    );
+
+For more details on what type mapping is and how it works, see
+[Bread::Board::Manual::Concepts::Typemap](https://metacpan.org/pod/Bread::Board::Manual::Concepts::Typemap).
+
+## `include`
+
+    include $file;
+
+This is a shortcut for loading a Bread::Board configuration from another file.
+
+    include "filename.pl";
+
+The above is pretty much identical to running:
+
+    do "filename.pl";
+
+However, you might find it more readable to use `include`.
+
+## `alias`
+
+    alias $service_name, $service_path, %service_description;
+
+This helper allows for the creation of [service
+aliases](https://metacpan.org/pod/Bread::Board::Service::Alias), which allows you to define a
+service in one place and then reuse that service with a different name
+somewhere else. This is sort of like a symbolic link for
+services. Aliases will be [resolved
+recursively](https://metacpan.org/pod/Bread::Board::Traversable#fetch), so an alias can alias an
+alias.
+
+For example,
+
+    service file_logger => (
+        class => 'MyApp::Logger::File',
+    );
+
+    alias my_logger => 'file_logger';
+
+# OTHER FUNCTIONS
+
+These are not exported, but might be helpful to you.
+
+## `set_root_container`
+
+    set_root_container $container;
+
+You may use this to set a top-level root container for all container
+definitions.
+
+For example,
+
+    my $app = container MyApp => as { ... };
+
+    Bread::Board::set_root_container($app);
+
+    my $config = container Config => as { ... };
+
+Here the `$config` container would be created as a sub-container of `$app`.
+
+# ACKNOWLEDGEMENTS
+
+Thanks to Daisuke Maki for his contributions and for really
+pushing the development of this module along.
+
+Chuck "sprongie" Adams, for testing/using early (pre-release)
+versions of this module, and some good suggestions for naming
+it.
+
+Matt "mst" Trout, for finally coming up with the best name
+for this module.
+
+Gianni "dakkar" Ceccarelli for writing lots of documentation, and
+Net-a-Porter.com for paying his salary while he was doing it.
+
+# ARTICLES
+
+[Bread::Board is the right tool for this job](http://domm.plix.at/perl/2013_04_bread_board_is_the_right_rool_for_this_job.html)
+Thomas Klausner showing a use-case for Bread::Board.
+
+# SEE ALSO
+
+- [Bread::Board::Declare](https://metacpan.org/pod/Bread::Board::Declare)
+
+    This provides more powerful syntax for writing Bread::Board container classes.
+
+- [IOC](https://metacpan.org/pod/IOC)
+
+    Bread::Board is basically my re-write of IOC.
+
+- [http://en.wikipedia.org/wiki/Breadboard](http://en.wikipedia.org/wiki/Breadboard)
+
+# AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+# BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.

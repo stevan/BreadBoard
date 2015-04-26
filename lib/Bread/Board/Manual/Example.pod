@@ -1,7 +1,19 @@
 # PODNAME: Bread::Board::Manual::Example
 # ABSTRACT: A set of examples of Bread::Board usage
 
+__END__
+
 =pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Manual::Example - A set of examples of Bread::Board usage
+
+=head1 VERSION
+
+version 0.33
 
 =head1 DESCRIPTION
 
@@ -26,5 +38,25 @@ An example of using parameterized containers and dynamic dependencies
 together to build a set of re-usable components within an application.
 
 =back
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
