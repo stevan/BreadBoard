@@ -8,6 +8,7 @@ Revision history for Bread-Board
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - SetterInjection can now accept any constructor. (#43, dakkar)
 
  [NEW FEATURES]
 
