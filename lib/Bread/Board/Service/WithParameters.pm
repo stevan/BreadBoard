@@ -1,4 +1,5 @@
 package Bread::Board::Service::WithParameters;
+
 use Moose::Role;
 use MooseX::Params::Validate qw(validated_hash);
 

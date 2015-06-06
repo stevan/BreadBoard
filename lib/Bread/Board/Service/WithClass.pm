@@ -1,4 +1,5 @@
 package Bread::Board::Service::WithClass;
+
 use Moose::Role;
 use Module::Runtime ();
 

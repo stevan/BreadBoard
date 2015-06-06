@@ -1,4 +1,5 @@
 package Bread::Board::Traversable;
+
 use Moose::Role;
 
 with 'MooseX::Clone' => { -version => 0.05 };

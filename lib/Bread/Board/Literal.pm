@@ -1,4 +1,5 @@
 package Bread::Board::Literal;
+
 use Moose;
 
 with 'Bread::Board::Service';

@@ -1,4 +1,5 @@
 package Bread::Board::Dependency;
+
 use Moose;
 
 use Bread::Board::Service;

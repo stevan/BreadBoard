@@ -1,4 +1,5 @@
 package Bread::Board::Service::Inferred;
+
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 

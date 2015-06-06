@@ -1,4 +1,5 @@
 package Bread::Board::BlockInjection;
+
 use Moose;
 
 with 'Bread::Board::Service::WithParameters',

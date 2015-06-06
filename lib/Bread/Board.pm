@@ -1,4 +1,5 @@
 package Bread::Board;
+
 use strict;
 use warnings;
 use Carp qw(confess);

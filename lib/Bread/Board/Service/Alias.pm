@@ -1,4 +1,5 @@
 package Bread::Board::Service::Alias;
+
 use Moose;
 
 use Try::Tiny;

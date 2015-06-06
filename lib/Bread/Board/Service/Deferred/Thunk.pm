@@ -1,4 +1,5 @@
 package Bread::Board::Service::Deferred::Thunk;
+
 use Moose;
 
 has 'thunk' => (

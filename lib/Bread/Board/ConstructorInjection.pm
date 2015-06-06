@@ -1,4 +1,5 @@
 package Bread::Board::ConstructorInjection;
+
 use Moose;
 
 use Try::Tiny;

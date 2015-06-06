@@ -1,4 +1,5 @@
 package Bread::Board::Service::Deferred;
+
 use Moose ();
 
 use overload

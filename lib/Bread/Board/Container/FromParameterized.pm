@@ -1,4 +1,5 @@
 package Bread::Board::Container::FromParameterized;
+
 use Moose;
 
 extends 'Bread::Board::Container';

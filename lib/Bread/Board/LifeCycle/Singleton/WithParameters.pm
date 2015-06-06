@@ -1,4 +1,5 @@
 package Bread::Board::LifeCycle::Singleton::WithParameters;
+
 use Moose::Role;
 
 with 'Bread::Board::LifeCycle';

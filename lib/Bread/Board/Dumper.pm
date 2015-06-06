@@ -1,4 +1,5 @@
 package Bread::Board::Dumper;
+
 use Moose;
 
 sub dump {

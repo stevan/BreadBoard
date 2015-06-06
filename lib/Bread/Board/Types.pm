@@ -1,4 +1,5 @@
 package Bread::Board::Types;
+
 use Moose::Util::TypeConstraints;
 
 use Scalar::Util qw(blessed);

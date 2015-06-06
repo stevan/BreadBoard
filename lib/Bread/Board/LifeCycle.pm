@@ -1,4 +1,5 @@
 package Bread::Board::LifeCycle;
+
 use Moose::Role;
 
 no Moose::Role; 1;

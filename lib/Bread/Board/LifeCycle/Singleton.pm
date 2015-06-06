@@ -1,4 +1,5 @@
 package Bread::Board::LifeCycle::Singleton;
+
 use Moose::Role;
 
 use Try::Tiny;

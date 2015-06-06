@@ -1,4 +1,5 @@
 package Bread::Board::SetterInjection;
+
 use Moose;
 
 use Bread::Board::Types;

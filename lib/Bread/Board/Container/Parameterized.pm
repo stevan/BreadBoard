@@ -1,4 +1,5 @@
 package Bread::Board::Container::Parameterized;
+
 use Moose;
 use Moose::Util 'find_meta';
 use Bread::Board::Container::FromParameterized;
