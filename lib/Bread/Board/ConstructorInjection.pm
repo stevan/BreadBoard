@@ -6,24 +6,11 @@ use Try::Tiny;
 
 use Bread::Board::Types;
 
-with 'Bread::Board::Service::WithClass',
+with 'Bread::Board::Service::WithConstructor',
      'Bread::Board::Service::WithParameters',
      'Bread::Board::Service::WithDependencies';
 
-has 'constructor_name' => (
-    is       => 'rw',
-    isa      => 'Str',
-    lazy     => 1,
-    builder  => '_build_constructor_name',
-);
-
 has '+class' => (required => 1);
-
-sub _build_constructor_name {
-    my $self = shift;
-
-    try { Class::MOP::class_of($self->class)->constructor_name } || 'new';
-}
 
 sub get {
     my $self = shift;
