@@ -1,4 +1,5 @@
 package Bread::Board::Types;
+# ABSTRACT: types and coercions for Bread::Board
 
 use Moose::Util::TypeConstraints;
 

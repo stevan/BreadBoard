@@ -1,4 +1,5 @@
 package Bread::Board::Traversable;
+# ABSTRACT: role for traversing a container service tree
 
 use Moose::Role;
 
