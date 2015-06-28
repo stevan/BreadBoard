@@ -1,4 +1,5 @@
 package Bread::Board::SetterInjection;
+# ABSTRACT: service instantiating objects via setter functions
 
 use Moose;
 
