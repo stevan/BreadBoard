@@ -1,4 +1,6 @@
 package Bread::Board::LifeCycle::Singleton;
+# ABSTRACT: Defines singleton lifecycle for a service
+
 use Moose::Role;
 
 use Try::Tiny;

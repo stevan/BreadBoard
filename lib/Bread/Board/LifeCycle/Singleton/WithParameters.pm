@@ -1,4 +1,6 @@
 package Bread::Board::LifeCycle::Singleton::WithParameters;
+# ABSTRACT: Defines singleton lifecycle for a parameterized service
+
 use Moose::Role;
 
 with 'Bread::Board::LifeCycle';
