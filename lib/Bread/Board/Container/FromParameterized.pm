@@ -1,4 +1,5 @@
 package Bread::Board::Container::FromParameterized;
+# ABSTRACT: container with weak parent reference
 
 use Moose;
 
