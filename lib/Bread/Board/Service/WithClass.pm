@@ -1,4 +1,6 @@
 package Bread::Board::Service::WithClass;
+# ABSTRACT: Services which return instances of a given class
+
 use Moose::Role;
 use Module::Runtime ();
 

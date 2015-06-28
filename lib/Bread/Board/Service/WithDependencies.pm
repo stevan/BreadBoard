@@ -1,4 +1,6 @@
 package Bread::Board::Service::WithDependencies;
+# ABSTRACT: Sub-role for recursively resolving dependencies
+
 use Moose::Role;
 
 use Try::Tiny;

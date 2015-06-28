@@ -1,4 +1,6 @@
 package Bread::Board::Service::Deferred;
+# ABSTRACT: For proxy objects used when resolving circular dependencies
+
 use Moose ();
 
 use overload

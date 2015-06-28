@@ -1,4 +1,6 @@
 package Bread::Board::Service::Deferred::Thunk;
+# ABSTRACT: For resolving circular dependencies in parameters
+
 use Moose;
 
 has 'thunk' => (

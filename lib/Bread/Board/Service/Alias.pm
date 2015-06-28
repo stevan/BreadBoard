@@ -1,4 +1,6 @@
 package Bread::Board::Service::Alias;
+# ABSTRACT: Implements service aliases
+
 use Moose;
 
 use Try::Tiny;

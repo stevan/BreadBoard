@@ -1,4 +1,6 @@
 package Bread::Board::Service;
+# ABSTRACT: Base role for all Service roles
+
 use Moose::Role;
 use Module::Runtime ();
 
