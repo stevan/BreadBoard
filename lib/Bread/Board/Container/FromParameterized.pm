@@ -1,4 +1,6 @@
 package Bread::Board::Container::FromParameterized;
+# ABSTRACT: same as Bread::Board::Container with weak parent reference
+
 use Moose;
 
 extends 'Bread::Board::Container';

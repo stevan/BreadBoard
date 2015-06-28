@@ -1,4 +1,6 @@
 package Bread::Board::Container;
+# ABSTRACT: A thing that contains services and other containers
+
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Params::Validate 0.14;
