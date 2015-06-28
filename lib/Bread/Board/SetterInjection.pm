@@ -1,4 +1,6 @@
 package Bread::Board::SetterInjection;
+# ABSTRACT: provides setter-based injection
+
 use Moose;
 
 use Bread::Board::Types;

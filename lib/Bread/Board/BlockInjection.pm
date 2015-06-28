@@ -1,4 +1,6 @@
 package Bread::Board::BlockInjection;
+# ABSTRACT: provides CodeRef-based injection
+
 use Moose;
 
 with 'Bread::Board::Service::WithParameters',

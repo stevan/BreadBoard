@@ -1,4 +1,6 @@
 package Bread::Board::ConstructorInjection;
+# ABSTRACT: provides object-based injection
+
 use Moose;
 
 use Try::Tiny;
