@@ -1,4 +1,5 @@
 package Bread::Board::Service::Alias;
+# ABSTRACT: aliases another service
 
 use Moose;
 

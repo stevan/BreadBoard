@@ -1,4 +1,5 @@
 package Bread::Board::Service::WithClass;
+# ABSTRACT: role for services returning instances of a given class
 
 use Moose::Role;
 use Module::Runtime ();
