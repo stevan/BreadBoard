@@ -1,4 +1,6 @@
 package Bread::Board::Literal;
+# ABSTRACT: Literal services take a value and always return that value
+
 use Moose;
 
 with 'Bread::Board::Service';

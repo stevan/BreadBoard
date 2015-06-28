@@ -1,4 +1,6 @@
 package Bread::Board::Dumper;
+# ABSTRACT: A utility for dumping a clean view of a Bread::Board
+
 use Moose;
 
 sub dump {

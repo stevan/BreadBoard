@@ -1,4 +1,6 @@
 package Bread::Board::Types;
+# ABSTRACT: Defines types and coercions for Bread::Board
+
 use Moose::Util::TypeConstraints;
 
 use Scalar::Util qw(blessed);

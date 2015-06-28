@@ -1,4 +1,6 @@
 package Bread::Board::Dependency;
+# ABSTRACT: Store a single dependency for a service
+
 use Moose;
 
 use Bread::Board::Service;
