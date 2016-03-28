@@ -1,7 +1,19 @@
 # PODNAME: Bread::Board::Manual::Example::LogDispatch
 # ABSTRACT: An example of composing a dynamic Log::Dispatch object.
 
+__END__
+
 =pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Manual::Example::LogDispatch - An example of composing a dynamic Log::Dispatch object.
+
+=head1 VERSION
+
+version 0.34
 
 =head1 SYNOPSIS
 
@@ -110,5 +122,25 @@ This example illustrates how when a parameterized container is
 instantiated, the parameters become sub-containers of the
 resulting container. This makes it just as easy to fetch
 the 'Outputs' container and use it inside the 'Logger' service.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2016 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
