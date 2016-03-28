@@ -48,7 +48,7 @@ my $c = container 'Config' => as {
     );
 };
 
-ok($c->resolve(service => 'bot'));
-is($seen, 1, 'seen only once');
+ok($c->resolve(service => 'bot'), 'can resolve bot service');
+is($seen, 1, '... and it is seen only once');
 
 done_testing;

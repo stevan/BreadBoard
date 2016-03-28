@@ -56,8 +56,8 @@ use Bread::Board;
         );
 
         isa_ok $t, 'Thing';
-        is $t->foo, 42;
-        is $t->moo, 123;
+        is $t->foo, 42, '... and has a foo literal';
+        is $t->moo, 123, '... and has a moo literal';
     }
 
     container $c => as {
@@ -80,10 +80,10 @@ use Bread::Board;
         );
 
         isa_ok $t, 'TestThing';
-        is $t->foo, 42;
-        is $t->moo, 123;
-        is $t->bar, 23;
-        is $t->kooh, 456;
+        is $t->foo, 42, '... and has a foo literal';
+        is $t->moo, 123, '... and has moo literal';
+        is $t->bar, 23, '... and has a bar literal';
+        is $t->kooh, 456, '... and has a kooh literal';
     }
 }
 
@@ -98,26 +98,26 @@ use Bread::Board;
 
     my $c = $parameterized->create(Config => container Config => as {});
 
-    is $c->resolve(service => 'foo'), 23;
+    is $c->resolve(service => 'foo'), 23, 'Can resolve foo from parameterized container';
 }
 
 like exception {
     service '+foo' => 42;
-}, qr/^Service inheritance doesn't make sense for literal services/;
+}, qr/^Service inheritance doesn't make sense for literal services/, 'exception thrown when trying to do service inheritance from literal service';
 
 like exception {
     container Foo => as {
         container foo => as {};
         service '+foo' => (block => sub { 42 });
     };
-}, qr/^Trying to inherit from service 'foo', but found a Bread::Board::Container/;
+}, qr/^Trying to inherit from service 'foo', but found a Bread::Board::Container/, 'exception thrown when trying to inherit from a container';
 
 like exception {
     container Foo => as {
         service foo => 42;
         service '+foo' => (block => sub { 123 });
     };
-}, qr/^Trying to inherit from a literal service/;
+}, qr/^Trying to inherit from a literal service/, 'exception thrown when trying to inherit from literal service';
 
 {
     package Bread::Board::FooInjection;
@@ -131,14 +131,14 @@ like exception {
         service foo => (block => sub { 123 });
         service '+foo' => (service_class => 'Bread::Board::FooInjection');
     };
-}, qr/^Changing a service's class is not possible when inheriting/;
+}, qr/^Changing a service's class is not possible when inheriting/, 'exception thrown when trying to change a service class when inheriting';
 
 like exception {
     container Foo => as {
         service foo => (block => sub { 123 });
         service '+foo' => (service_type => 'Foo');
     };
-}, qr/^Changing a service's class is not possible when inheriting/;
+}, qr/^Changing a service's class is not possible when inheriting/, 'exception thrown when trying to change a service type when inheriting';
 
 {
     package Foo;
@@ -151,13 +151,13 @@ like exception {
         service foo => (block => sub { 123 });
         service '+foo' => (class => 'Foo');
     };
-}, qr/^/;
+}, qr/^/, 'exception thrown when trying to change a service class for "+foo"';
 
 like exception {
     container Foo => as {
         service foo => (class => 'Foo');
         service '+foo' => (block => sub { 123 });
     };
-}, qr/^/;
+}, qr/^/, 'exception thrown when trying to change a service class for "foo"';
 
 done_testing;

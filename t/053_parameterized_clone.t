@@ -26,11 +26,11 @@ my $c = container Foo => as {
     };
 };
 
-is $c->fetch('Bar')->create(Baz => $c->fetch('Bif'))->resolve(service => 'moo'), 42;
+is $c->fetch('Bar')->create(Baz => $c->fetch('Bif'))->resolve(service => 'moo'), 42, 'container works as expected';
 
 my $clone;
-is exception { $clone = $c->clone }, undef;
+is exception { $clone = $c->clone }, undef, 'cloning the container does not throw an exception';
 
-is $clone->fetch('Bar')->create(Baz => $clone->fetch('Bif'))->resolve(service => 'moo'), 42;
+is $clone->fetch('Bar')->create(Baz => $clone->fetch('Bif'))->resolve(service => 'moo'), 42, 'clone behaves like the original';
 
 done_testing;

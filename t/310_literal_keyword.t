@@ -15,7 +15,7 @@ my $c = container 'Main' => as {
     );
 };
 
-is $c->resolve( service => 'with_literal' ) => 'fantastic12345';
+is $c->resolve( service => 'with_literal' ) => 'fantastic12345', 'got expected service string from literals';
 
 
 
