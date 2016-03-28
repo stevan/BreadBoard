@@ -20,7 +20,7 @@ my $c = container Foo => as {
     );
 };
 
-is($c->resolve(service => 'foo'), 'A');
-is($c->resolve(service => 'foo', parameters => { a => 'B' }), 'B');
+is($c->resolve(service => 'foo'), 'A', 'can resolve foo service with its default dependency');
+is($c->resolve(service => 'foo', parameters => { a => 'B' }), 'B', 'can resolve foo service with a parameter overriding the default');
 
 done_testing;
