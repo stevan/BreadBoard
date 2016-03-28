@@ -1,4 +1,5 @@
 package Bread::Board::Dependency;
+# ABSTRACT: dependency for a service
 
 use Moose;
 

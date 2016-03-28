@@ -1,4 +1,5 @@
 package Bread::Board::BlockInjection;
+# ABSTRACT: service instantiating objects via a coderef
 
 use Moose;
 

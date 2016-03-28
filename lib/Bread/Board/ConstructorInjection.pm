@@ -1,4 +1,5 @@
 package Bread::Board::ConstructorInjection;
+# ABSTRACT: service instantiating objects via a constructor
 
 use Moose;
 

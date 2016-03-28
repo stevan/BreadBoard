@@ -1,4 +1,5 @@
 package Bread::Board::Dumper;
+# ABSTRACT: utility for dumping a Bread::Board object's information
 
 use Moose;
 

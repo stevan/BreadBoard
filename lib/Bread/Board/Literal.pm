@@ -1,4 +1,5 @@
 package Bread::Board::Literal;
+# ABSTRACT: service providing a literal value
 
 use Moose;
 

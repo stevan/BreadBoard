@@ -1,4 +1,5 @@
 package Bread::Board::LifeCycle;
+# ABSTRACT: base lifecycle role 
 
 use Moose::Role;
 
