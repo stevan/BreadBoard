@@ -1,6 +1,8 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+ - Add test messages to tests which did not have them, (#50, Alex Balhatchet)
+
  [API CHANGES]
 
  [BUG FIXES]
