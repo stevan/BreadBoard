@@ -1,5 +1,5 @@
 package Bread::Board::Dumper;
-# ABSTRACT: utility for dumping a Bread::Board object's information
+# ABSTRACT: Pretty printer for visualizing the layout of your Bread::Board
 
 use Moose;
 

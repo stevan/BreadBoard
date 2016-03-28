@@ -1,5 +1,5 @@
 package Bread::Board::Service::WithDependencies;
-# ABSTRACT: service role for recursively resolving dependencies
+# ABSTRACT: Services with dependencies
 
 use Moose::Role;
 

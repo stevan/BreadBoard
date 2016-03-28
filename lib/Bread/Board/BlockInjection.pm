@@ -1,5 +1,5 @@
 package Bread::Board::BlockInjection;
-# ABSTRACT: service instantiating objects via a coderef
+# ABSTRACT: service instantiated via custom subroutine
 
 use Moose;
 

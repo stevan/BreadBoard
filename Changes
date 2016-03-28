@@ -8,7 +8,8 @@ Revision history for Bread-Board
  [BUG FIXES]
 
  [DOCUMENTATION]
- - add missing module abstracts. (GH#49, Alex Balhatchet)
+ - add missing module abstracts. (GH#49, Alex Balhatchet, GH#16, Sterling
+   Hanenkamp)
 
  [ENHANCEMENTS]
  - SetterInjection can now accept any constructor. (#43, dakkar)

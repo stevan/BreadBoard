@@ -1,4 +1,5 @@
 package Bread::Board::Service::WithConstructor;
+
 use Moose::Role;
 
 use Try::Tiny;

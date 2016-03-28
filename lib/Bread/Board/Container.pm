@@ -1,5 +1,5 @@
 package Bread::Board::Container;
-# ABSTRACT: entity containing services and other containers
+# ABSTRACT: A container for services and other containers
 
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
@@ -184,6 +184,41 @@ no Moose;
 1;
 
 __END__
+
+=head1 SYNOPSIS
+
+  use Bread::Board;
+  my $c = container MCP => as {
+      container Users => as {
+          service flynn => ...;
+          service bradley => ...;
+          service dillinger => ...;
+      };
+
+      container Programs => as {
+          container Rebels => as {
+              service tron => ...;
+              service yori => ...;
+              alias flynn => '/Users/flynn';
+          };
+
+          # nested container
+          container Slaves => as {
+              service sark => ...;
+              service crom => ...;
+          };
+      };
+  };
+
+  # OR directly...
+  my $guardians => Bread::Board::Container->new( name => 'Guardians' );
+  $guardians->add_service(
+      Bread::Board::ConstructorInjection->new(
+          name => 'dumont',
+          ...,
+      )
+  );
+  $c->get_sub_container('Programs')->add_sub_container($guardians);
 
 =head1 DESCRIPTION
 
