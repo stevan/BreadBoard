@@ -36,13 +36,15 @@ lib/Bread/Board/Service/Deferred.pm
 lib/Bread/Board/Service/Deferred/Thunk.pm
 lib/Bread/Board/Service/Inferred.pm
 lib/Bread/Board/Service/WithClass.pm
+lib/Bread/Board/Service/WithConstructor.pm
 lib/Bread/Board/Service/WithDependencies.pm
 lib/Bread/Board/Service/WithParameters.pm
 lib/Bread/Board/SetterInjection.pm
 lib/Bread/Board/Traversable.pm
 lib/Bread/Board/Types.pm
 t/00-compile.t
-t/000-report-versions-tiny.t
+t/00-report-prereqs.dd
+t/00-report-prereqs.t
 t/001_constructor_injection.t
 t/002_setter_injection.t
 t/003_block_injection.t
@@ -111,4 +113,5 @@ t/lib/bad.bb
 t/lib/false.bb
 t/lib/logger.bb
 t/lib/my_app.bb
+xt/release/pause-permissions.t
 xt/release/unused-vars.t
