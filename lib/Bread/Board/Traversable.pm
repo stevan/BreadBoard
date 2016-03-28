@@ -2,7 +2,6 @@ package Bread::Board::Traversable;
 # ABSTRACT: role for traversing a container service tree
 
 use Moose::Role;
-# ABSTRACT: Tools for finding a container or service on your Bread::Board
 
 with 'MooseX::Clone' => { -version => 0.05 };
 

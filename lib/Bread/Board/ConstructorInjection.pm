@@ -2,7 +2,6 @@ package Bread::Board::ConstructorInjection;
 # ABSTRACT: service instantiating objects via a constructor
 
 use Moose;
-# ABSTRACT: Lazy service loaded using the object constructor
 
 use Try::Tiny;
 

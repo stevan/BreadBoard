@@ -1,8 +1,7 @@
 package Bread::Board::Service::Deferred::Thunk;
-# ABSTRACT: for resolving circular dependencies in parameters
+# ABSTRACT: Helper for using services with incomplete parameters
 
 use Moose;
-# ABSTRACT: Helper for using services with incomplete parameters
 
 has 'thunk' => (
     traits   => [ 'Code' ],

@@ -2,7 +2,6 @@ package Bread::Board::Dependency;
 # ABSTRACT: dependency for a service
 
 use Moose;
-# ABSTRACT: Links one service to another lazily
 
 use Bread::Board::Service;
 

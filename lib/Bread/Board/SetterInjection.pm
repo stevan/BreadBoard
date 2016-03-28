@@ -2,7 +2,6 @@ package Bread::Board::SetterInjection;
 # ABSTRACT: service instantiating objects via setter functions
 
 use Moose;
-# ABSTRACT: Lazy service loaded automatically using setter methods
 
 use Bread::Board::Types;
 

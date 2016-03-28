@@ -1,9 +1,8 @@
 package Bread::Board::Service::WithParameters;
-# ABSTRACT: service role for parameterized services
+# ABSTRACT: Services with parameters
 
 use Moose::Role;
 use MooseX::Params::Validate qw(validated_hash);
-# ABSTRACT: Services with parameters
 
 use Bread::Board::Types;
 

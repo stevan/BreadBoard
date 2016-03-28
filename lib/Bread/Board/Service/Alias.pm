@@ -2,7 +2,6 @@ package Bread::Board::Service::Alias;
 # ABSTRACT: aliases another service
 
 use Moose;
-# ABSTRACT: Symbolic links for services
 
 use Try::Tiny;
 
