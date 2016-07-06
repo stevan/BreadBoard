@@ -149,7 +149,15 @@ sub service ($@) {
                 unless defined $CC;
 
             my $container = ($CC->isa('Bread::Board::Container::Parameterized') ? $CC->container : $CC);
-            my $prototype_service = $container->fetch($name);
+            my $prototype_service;
+            
+            if (defined $params{parent_service}) {
+                $prototype_service = $self->fetch($params{parent_service});
+                delete $params{parent_service};
+            }
+            else {
+                $prototype_service = $container->fetch($name);
+            }
 
             confess sprintf(
                 "Trying to inherit from service '%s', but found a %s",
