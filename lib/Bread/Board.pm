@@ -152,7 +152,7 @@ sub service ($@) {
             my $prototype_service;
             
             if (defined $params{parent_service}) {
-                $prototype_service = $self->fetch($params{parent_service});
+                $prototype_service = $container->fetch($params{parent_service});
                 delete $params{parent_service};
             }
             else {
