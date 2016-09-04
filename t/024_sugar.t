@@ -46,6 +46,7 @@ my $c = container 'MyApp' => as {
         service 'dsn'      => "dbi:sqlite:dbname=my-app.db";
         service 'username' => "user";
         service 'password' => "pass";
+        service 'host'     => undef;
 
         service 'dbh' => (
             block => sub {
@@ -77,6 +78,8 @@ is($logger->log_file, 'logfile.log', '... got the right logfile dep');
 
 is($c->fetch('logger/log_file')->service, $c->fetch('log_file'), '... got the right value');
 is($c->fetch('logger/log_file')->get, 'logfile.log', '... got the right value');
+
+is($c->resolve( service => 'Database/host'), undef, '... service where value is undef');
 
 my $dbh = $c->resolve( service => 'Database/dbh' );
 isa_ok($dbh, 'DBI');

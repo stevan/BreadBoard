@@ -7,7 +7,6 @@ with 'Bread::Board::Service';
 
 has 'value' => (
     is       => 'rw',
-    isa      => 'Defined',
     required => 1,
 );
 
