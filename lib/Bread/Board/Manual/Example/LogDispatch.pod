@@ -65,7 +65,7 @@ This example can be made even more dynamic if you build the
 'Logging' component as a parameterized container whose parameter
 is the 'Outputs' container. Here is what that would look like.
 
-  my $logging = container 'Logging' => [ 'Outputs' ] as {
+  my $logging = container 'Logging' => [ 'Outputs' ] => as {
       service 'Logger' => (
           block => sub {
               my $s       = shift;
