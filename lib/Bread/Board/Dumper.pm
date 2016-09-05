@@ -17,8 +17,9 @@ sub dump {
         $output .= join('', $indent, "service: ", $thing->name, "\n" );
 
         if ($thing->does('Bread::Board::Service::WithDependencies')) {
-            while (my($key, $value) = each %{ $thing->dependencies }) {
-                $output .= $self->dump($value, $indent);
+            my $deps = $thing->dependencies;
+            for my $key (sort keys %{$deps}) {
+                $output .= $self->dump($deps->{$key}, $indent);
             }
         }
     }
@@ -41,13 +42,14 @@ sub _dump_container {
 
     my $output = '';
 
-    my ($key, $value);
-    while (($key, $value) = each %{ $c->sub_containers }) {
-        $output .= $self->dump($value, $indent);
+    my $subs = $c->sub_containers;
+    for my $key (sort keys %{$subs}) {
+        $output .= $self->dump($subs->{$key}, $indent);
     }
 
-    while (($key, $value) = each %{ $c->services }) {
-        $output .= $self->dump($value, $indent);
+    my $services = $c->services;
+    for my $key (sort keys %{$services}) {
+        $output .= $self->dump($services->{$key}, $indent);
     }
 
     return $output;

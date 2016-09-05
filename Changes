@@ -10,6 +10,8 @@ Revision history for Bread-Board
   [ DOCUMENTATION ]
 
   [ ENHANCEMENTS ]
+     - Bread::Board::Dumper now sorts services and sub containers - previously
+       these came out in a random order each time (#56, Dave Rolsky)
 
   [ NEW FEATURES ]
 
