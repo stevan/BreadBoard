@@ -4,6 +4,8 @@ Revision history for Bread-Board
   [ API CHANGES ]
 
   [ BUG FIXES ]
+     - fixed Bread::Board::Dumper to dump parameterized containers -
+       previously it would just ignore them entirely (#56, Dave Rolsky)
 
   [ DOCUMENTATION ]
 

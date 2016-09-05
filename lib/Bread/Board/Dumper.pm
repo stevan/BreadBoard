@@ -25,15 +25,29 @@ sub dump {
     elsif ($thing->isa('Bread::Board::Container')) {
         $output = join('', $indent, "container: ", $thing->name, "\n" );
 
-        my ($key, $value);
+        $output .= $self->_dump_container($thing, $indent);
+    }
+    elsif ($thing->isa('Bread::Board::Container::Parameterized')) {
+        my $params = join ', ', @{ $thing->allowed_parameter_names };
+        $output = join('', $indent, "container: ", $thing->name, " [$params]\n" );
+        $output .= $self->_dump_container($thing, $indent);
+    }
 
-        while (($key, $value) = each %{ $thing->sub_containers }) {
-            $output .= $self->dump($value, $indent);
-        }
+    return $output;
+}
 
-        while (($key, $value) = each %{ $thing->services }) {
-            $output .= $self->dump($value, $indent);
-        }
+sub _dump_container {
+    my ($self, $c, $indent) = @_;
+
+    my $output = '';
+
+    my ($key, $value);
+    while (($key, $value) = each %{ $c->sub_containers }) {
+        $output .= $self->dump($value, $indent);
+    }
+
+    while (($key, $value) = each %{ $c->services }) {
+        $output .= $self->dump($value, $indent);
     }
 
     return $output;

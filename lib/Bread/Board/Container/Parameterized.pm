@@ -32,12 +32,14 @@ has 'container' => (
         has_service
         get_service_list
         has_services
+        services
 
         add_sub_container
         get_sub_container
         has_sub_container
         get_sub_container_list
         has_sub_containers
+        sub_containers
     ]]
 );
 
