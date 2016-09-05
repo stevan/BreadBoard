@@ -1,14 +1,21 @@
 language: perl
 perl:
-    - "5.19"
+    - blead
+    - dev
+    - "5.24"
+    - "5.22"
+    - "5.20"
     - "5.18"
     - "5.16"
     - "5.14"
     - "5.12"
     - "5.10"
-install:
-    - cpanm -q --notest Dist::Zilla || (cat /home/travis/.cpanm/build.log; false)
-    - dzil authordeps --missing | cpanm -q --notest || (cat /home/travis/.cpanm/build.log; false)
-    - dzil listdeps --author --missing | cpanm -q --notest || (cat /home/travis/.cpanm/build.log; false)
-script:
-    - dzil test --all
+matrix:
+    allow_failures:
+        - perl: blead
+env:
+    global:
+        - RELEASE_TESTING=1
+        - AUTHOR_TESTING=1
+before_install:
+    - eval $(curl https://travis-perl.github.io/init) --auto
