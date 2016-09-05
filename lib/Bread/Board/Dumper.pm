@@ -17,23 +17,39 @@ sub dump {
         $output .= join('', $indent, "service: ", $thing->name, "\n" );
 
         if ($thing->does('Bread::Board::Service::WithDependencies')) {
-            while (my($key, $value) = each %{ $thing->dependencies }) {
-                $output .= $self->dump($value, $indent);
+            my $deps = $thing->dependencies;
+            for my $key (sort keys %{$deps}) {
+                $output .= $self->dump($deps->{$key}, $indent);
             }
         }
     }
     elsif ($thing->isa('Bread::Board::Container')) {
         $output = join('', $indent, "container: ", $thing->name, "\n" );
 
-        my ($key, $value);
+        $output .= $self->_dump_container($thing, $indent);
+    }
+    elsif ($thing->isa('Bread::Board::Container::Parameterized')) {
+        my $params = join ', ', @{ $thing->allowed_parameter_names };
+        $output = join('', $indent, "container: ", $thing->name, " [$params]\n" );
+        $output .= $self->_dump_container($thing, $indent);
+    }
 
-        while (($key, $value) = each %{ $thing->sub_containers }) {
-            $output .= $self->dump($value, $indent);
-        }
+    return $output;
+}
 
-        while (($key, $value) = each %{ $thing->services }) {
-            $output .= $self->dump($value, $indent);
-        }
+sub _dump_container {
+    my ($self, $c, $indent) = @_;
+
+    my $output = '';
+
+    my $subs = $c->sub_containers;
+    for my $key (sort keys %{$subs}) {
+        $output .= $self->dump($subs->{$key}, $indent);
+    }
+
+    my $services = $c->services;
+    for my $key (sort keys %{$services}) {
+        $output .= $self->dump($services->{$key}, $indent);
     }
 
     return $output;

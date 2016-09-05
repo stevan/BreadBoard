@@ -4,10 +4,14 @@ Revision history for Bread-Board
   [ API CHANGES ]
 
   [ BUG FIXES ]
+     - fixed Bread::Board::Dumper to dump parameterized containers -
+       previously it would just ignore them entirely (#56, Dave Rolsky)
 
   [ DOCUMENTATION ]
 
   [ ENHANCEMENTS ]
+     - Bread::Board::Dumper now sorts services and sub containers - previously
+       these came out in a random order each time (#56, Dave Rolsky)
 
   [ NEW FEATURES ]
 
