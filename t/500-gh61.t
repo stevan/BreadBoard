@@ -1,3 +1,5 @@
+use Test::Requires 'Moo';
+
 {
     package Foo;
 
@@ -14,13 +16,16 @@
     around str => sub {
         my ($orig, $self, $val) = @_;
 
-        return $self->$orig unless defined $val;
+        return $orig->($self) unless defined $val;
 
-        $self->$orig('prefix_'.$val);
+        $orig->( $self, 'prefix_'.$val);
     };
 }
 
 
+# BB was using Class::MOP::class_of to determine
+# the constructor, and that plays havoc with Moo,
+# it seems
 { package Bar; use Moo; extends 'Foo'; }
 
 { package Baz; use Moose; extends 'Foo'; }
@@ -35,9 +40,12 @@ use Test::More;
 use Bread::Board;
 
 my $c = container 'MyApp' => as {
-    service 'foo' => ( class => 'Foo', parameters => { str => { optional => 1 } } );
-    service 'bar' => ( class => 'Bar', parameters => { str => { optional => 1 } } );
-    service 'baz' => ( class => 'Baz', parameters => { str => { optional => 1 } } );
+    map {
+        service lc $_ => ( 
+            class => $_,
+            parameters => { str => { optional => 1 } } 
+        )
+    } qw/ Foo Bar Baz /
 };
 
 
@@ -51,11 +59,16 @@ sub test_class {
     is $plain->str => 'prefix_foo_plain';
 
     my $bb = $c->resolve( service => lc $class, parameters => { str => 'foo_bb' } );
+    is( $class->new( str => 'foo_plain' )->str => 'prefix_foo_plain', 'plain after resolve' );
+
     is $bb->str => 'prefix_foo_bb';
+    is $plain->str => 'prefix_foo_plain', 'plain after str';
 
     $bb->str('foo_bb_setter');
     is $bb->str => 'prefix_foo_bb_setter';
 
     my $plain_after_bb = $class->new({ str => 'foo_plain_after_bb' });
     is $plain_after_bb->str => 'prefix_foo_plain_after_bb';
+
+    is( Foo->new( str => 'foo_plain' )->str => 'prefix_foo_plain', 'Foo untouched' );
 }

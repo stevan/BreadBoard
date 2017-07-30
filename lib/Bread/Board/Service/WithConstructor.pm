@@ -16,7 +16,12 @@ has 'constructor_name' => (
 sub _build_constructor_name {
     my $self = shift;
 
-    try { Class::MOP::class_of($self->class)->constructor_name } || 'new';
+    # using Class::MOP::class_of on a Moo 
+    # object causes mayhem, so we take care of that
+    # special case first. See GH#61
+    try { $self->class->isa('Moo::Object') && 'new' }
+    || try { Class::MOP::class_of($self->class)->constructor_name } 
+    || 'new';
 }
 
 no Moose; 1;
