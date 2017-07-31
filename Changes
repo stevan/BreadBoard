@@ -4,6 +4,8 @@ Revision history for Bread-Board
   [ API CHANGES ]
 
   [ BUG FIXES ]
+  - Moo classes were losing their method modifiers because
+    of bad interaction with Class::MOP::class_of(). (GH#61)
 
   [ DOCUMENTATION ]
 
