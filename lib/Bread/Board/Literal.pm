@@ -72,8 +72,6 @@ See L<Scalar::Util/weaken>.
 
 =head1 METHODS
 
-=over 4
-
 =attr C<value>
 
 Required attribute with read/write accessor. This is the value that
