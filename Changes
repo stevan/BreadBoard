@@ -12,6 +12,8 @@ Revision history for Bread-Board
   [ DOCUMENTATION ]
 
   [ ENHANCEMENTS ]
+    - Using Bread::Board no longer enables strict and warnings in the calling
+      package. (#53, Dave Rolsky)
     - Bread::Board::Dumper now sorts services and sub containers - previously
       these came out in a random order each time (#56, Dave Rolsky)
     - allow a service or literal to be undefined. (#54, Dave Rolsky)
