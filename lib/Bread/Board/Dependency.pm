@@ -1,6 +1,7 @@
 package Bread::Board::Dependency;
+our $AUTHORITY = 'cpan:STEVAN';
 # ABSTRACT: dependency for a service
-
+$Bread::Board::Dependency::VERSION = '0.35';
 use Moose;
 
 use Bread::Board::Service;
@@ -50,6 +51,18 @@ no Moose; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Dependency - dependency for a service
+
+=head1 VERSION
+
+version 0.35
+
 =head1 DESCRIPTION
 
 This class holds the information for a dependency of a
@@ -61,31 +74,57 @@ provide the depended-on values.
 This class consumes the L<Bread::Board::Traversable> role to retrieve
 services given their path.
 
-=attr C<service_path>
+=head1 ATTRIBUTES
+
+=head2 C<service_path>
 
 The path to use (possibly relative to the dependency itself) to access
 the L</service>.
 
-=method C<has_service_path>
-
-Predicate for the L</service_path> attribute.
-
-=attr C<service>
+=head2 C<service>
 
 The service this dependency points at. Usually built lazily from the
 L</service_path>, but could just be passed in to the constructor.
 
-=attr C<service_name>
+=head2 C<service_name>
 
 Name of the L</service>, defaults to the last element of the
 L</service_path>.
 
-=method C<get>
+=head1 METHODS
 
-=method C<is_locked>
+=head2 C<has_service_path>
 
-=method C<lock>
+Predicate for the L</service_path> attribute.
 
-=method C<unlock>
+=head2 C<get>
+
+=head2 C<is_locked>
+
+=head2 C<lock>
+
+=head2 C<unlock>
 
 These methods are delegated to the L</service>.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

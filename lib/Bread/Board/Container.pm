@@ -1,6 +1,7 @@
 package Bread::Board::Container;
+our $AUTHORITY = 'cpan:STEVAN';
 # ABSTRACT: A container for services and other containers
-
+$Bread::Board::Container::VERSION = '0.35';
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Params::Validate 0.14;
@@ -185,6 +186,18 @@ no Moose;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Container - A container for services and other containers
+
+=head1 VERSION
+
+version 0.35
+
 =head1 SYNOPSIS
 
   use Bread::Board;
@@ -229,12 +242,14 @@ like files and directories in a filesystem: each item can be
 referenced using a path (see L<Bread::Board::Traversable> for the
 details).
 
-=attr C<name>
+=head1 ATTRIBUTES
+
+=head2 C<name>
 
 Read/write string, required. Every container needs a name, by which it
 can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
 
-=attr C<services>
+=head2 C<services>
 
 Hashref, constrained by L<<
 C<Bread::Board::Container::ServiceList>|Bread::Board::Types/Bread::Board::Container::ServiceList
@@ -248,40 +263,7 @@ will be the names of the services.
 You should probably use L</add_service> and L</get_service> to
 manipulate this attribute, instead of modifying it directly.
 
-=method C<add_service>
-
-  $container->add_service($service);
-
-Adds a service into the L</services> map, using its name as the key.
-
-=method C<get_service>
-
-  my $service = $container->get_service($name);
-
-Returns a service by name, or C<undef> if there's no such service in
-the L</services> map.
-
-=method C<has_service>
-
-  if ($container->has_service($name)) { ... }
-
-Returns true if a service with the given name name exists in the
-L</services> map, false otherwise.
-
-=method C<has_services>
-
-  if ($container->has_services) { ... }
-
-Returns true if the L</services> map contains any services, false if
-it's empty.
-
-=method C<get_service_list>
-
-  my @service_names = $container->get_service_list();
-
-Returns the names off all services present in the L</services> map.
-
-=attr C<sub_containers>
+=head2 C<sub_containers>
 
 Hashref, constrained by L<<
 C<Bread::Board::Container::SubContainerList>|Bread::Board::Types/Bread::Board::Container::SubContainerList
@@ -299,42 +281,77 @@ modifying it directly.
 Containers added here can either be normal L<Bread::Board::Container>
 or L<Bread::Board::Container::Parameterized>.
 
-=method C<add_sub_container>
+=head1 METHODS
+
+=head2 C<add_service>
+
+  $container->add_service($service);
+
+Adds a service into the L</services> map, using its name as the key.
+
+=head2 C<get_service>
+
+  my $service = $container->get_service($name);
+
+Returns a service by name, or C<undef> if there's no such service in
+the L</services> map.
+
+=head2 C<has_service>
+
+  if ($container->has_service($name)) { ... }
+
+Returns true if a service with the given name name exists in the
+L</services> map, false otherwise.
+
+=head2 C<has_services>
+
+  if ($container->has_services) { ... }
+
+Returns true if the L</services> map contains any services, false if
+it's empty.
+
+=head2 C<get_service_list>
+
+  my @service_names = $container->get_service_list();
+
+Returns the names off all services present in the L</services> map.
+
+=head2 C<add_sub_container>
 
   $container->add_sub_container($container);
 
 Adds a container into the L</sub_containers> map, using its name as
 the key.
 
-=method C<get_sub_container>
+=head2 C<get_sub_container>
 
   my $container = $container->get_sub_container($name);
 
 Returns a container by name, or C<undef> if there's no such container
 in the L</sub_containers> map.
 
-=method C<has_sub_container>
+=head2 C<has_sub_container>
 
   if ($container->has_sub_container($name)) { ... }
 
 Returns true if a container with the given name name exists in the
 L</sub_containers> map, false otherwise.
 
-=method C<has_sub_containers>
+=head2 C<has_sub_containers>
 
   if ($container->has_sub_containers) { ... }
 
 Returns true if the L</sub_containers> map contains any contains,
 false if it's empty.
 
-=method C<get_sub_container_list>
+=head2 C<get_sub_container_list>
 
   my @container_names = $container->get_sub_container_list();
 
 Returns the names off all containers present in the L</sub_containers>
 map.
 
-=method C<add_type_mapping_for>
+=head2 C<add_type_mapping_for>
 
   $containers->add_type_mapping_for( $type_name, $service );
 
@@ -343,7 +360,7 @@ service: whenever we try to L<< resolve|/resolve ( ?service =>
 $service_name, ?type => $type, ?parameters => { ... } ) >> that type,
 we'll use that service to instantiate it.
 
-=method C<get_type_mapping_for>
+=head2 C<get_type_mapping_for>
 
   my $service = $container->get_type_mapping_for( $type_name );
 
@@ -364,7 +381,7 @@ mapping for a I<subtype> of it can, you'll get the latter instead:
 C<$o> is an instance of C<Subclass>. If there are more than one
 sub-type mapped, you get a random one. This is probably a bad idea.
 
-=method C<has_type_mapping_for>
+=head2 C<has_type_mapping_for>
 
   if ($container->has_type_mapping_for( $type_name )) { ... }
 
@@ -373,7 +390,7 @@ type name, but see the note on
 L<get_type_mapping_for|/get_type_mapping_for ( $type_name )> about
 subtype mapping.
 
-=method C<resolve>
+=head2 C<resolve>
 
   my $object = $container->resolve(service=>$service_name);
   my $object = $container->resolve(service=>$service_name,parameters=>\%p);
@@ -391,3 +408,25 @@ L<get_type_mapping_for|/get_type_mapping_for ( $type_name )> to get
 the service, then call L<< C<get>|Bread::Board::Service/get >> on it,
 optionally passing the given parameters. If the instance is not of the
 expected type, the method will die.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

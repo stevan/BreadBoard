@@ -1,7 +1,19 @@
 # PODNAME: Bread::Board::Manual::Concepts
 # ABSTRACT: An overview of the concepts in Bread::Board
 
+__END__
+
 =pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Manual::Concepts - An overview of the concepts in Bread::Board
+
+=head1 VERSION
+
+version 0.35
 
 =head1 INTRODUCTION
 
@@ -487,5 +499,25 @@ declarative and easier to read.
 This article is based on an article I wrote for The Perl Journal
 about my earlier L<IOC> module. That article can be found online
 at L<http://www.drdobbs.com/windows/184416179>.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

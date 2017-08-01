@@ -1,0 +1,142 @@
+---
+abstract: 'A solderless way to wire up your application components'
+author:
+  - 'Stevan Little <stevan@iinteractive.com>'
+build_requires:
+  ExtUtils::MakeMaker: '0'
+  File::Spec: '0'
+  FindBin: '0'
+  IO::Handle: '0'
+  IPC::Open3: '0'
+  Test::Fatal: '0'
+  Test::Moose: '0'
+  Test::More: '0'
+  Test::Requires: '0'
+  perl: '5.006'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 6.009, CPAN::Meta::Converter version 2.150001'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Bread-Board
+provides:
+  Bread::Board:
+    file: lib/Bread/Board.pm
+    version: '0.35'
+  Bread::Board::BlockInjection:
+    file: lib/Bread/Board/BlockInjection.pm
+    version: '0.35'
+  Bread::Board::ConstructorInjection:
+    file: lib/Bread/Board/ConstructorInjection.pm
+    version: '0.35'
+  Bread::Board::Container:
+    file: lib/Bread/Board/Container.pm
+    version: '0.35'
+  Bread::Board::Container::FromParameterized:
+    file: lib/Bread/Board/Container/FromParameterized.pm
+    version: '0.35'
+  Bread::Board::Container::Parameterized:
+    file: lib/Bread/Board/Container/Parameterized.pm
+    version: '0.35'
+  Bread::Board::Dependency:
+    file: lib/Bread/Board/Dependency.pm
+    version: '0.35'
+  Bread::Board::Dumper:
+    file: lib/Bread/Board/Dumper.pm
+    version: '0.35'
+  Bread::Board::LifeCycle:
+    file: lib/Bread/Board/LifeCycle.pm
+    version: '0.35'
+  Bread::Board::LifeCycle::Singleton:
+    file: lib/Bread/Board/LifeCycle/Singleton.pm
+    version: '0.35'
+  Bread::Board::LifeCycle::Singleton::WithParameters:
+    file: lib/Bread/Board/LifeCycle/Singleton/WithParameters.pm
+    version: '0.35'
+  Bread::Board::Literal:
+    file: lib/Bread/Board/Literal.pm
+    version: '0.35'
+  Bread::Board::Service:
+    file: lib/Bread/Board/Service.pm
+    version: '0.35'
+  Bread::Board::Service::Alias:
+    file: lib/Bread/Board/Service/Alias.pm
+    version: '0.35'
+  Bread::Board::Service::Deferred:
+    file: lib/Bread/Board/Service/Deferred.pm
+    version: '0.35'
+  Bread::Board::Service::Deferred::Thunk:
+    file: lib/Bread/Board/Service/Deferred/Thunk.pm
+    version: '0.35'
+  Bread::Board::Service::Inferred:
+    file: lib/Bread/Board/Service/Inferred.pm
+    version: '0.35'
+  Bread::Board::Service::WithClass:
+    file: lib/Bread/Board/Service/WithClass.pm
+    version: '0.35'
+  Bread::Board::Service::WithConstructor:
+    file: lib/Bread/Board/Service/WithConstructor.pm
+    version: '0.35'
+  Bread::Board::Service::WithDependencies:
+    file: lib/Bread/Board/Service/WithDependencies.pm
+    version: '0.35'
+  Bread::Board::Service::WithParameters:
+    file: lib/Bread/Board/Service/WithParameters.pm
+    version: '0.35'
+  Bread::Board::SetterInjection:
+    file: lib/Bread/Board/SetterInjection.pm
+    version: '0.35'
+  Bread::Board::Traversable:
+    file: lib/Bread/Board/Traversable.pm
+    version: '0.35'
+  Bread::Board::Types:
+    file: lib/Bread/Board/Types.pm
+    version: '0.35'
+requires:
+  Carp: '0'
+  Exporter: '0'
+  Module::Runtime: '0'
+  Moose: '0'
+  Moose::Role: '0'
+  Moose::Util: '0'
+  Moose::Util::TypeConstraints: '0'
+  MooseX::Clone: '0.05'
+  MooseX::Params::Validate: '0.14'
+  Scalar::Util: '0'
+  Try::Tiny: '0'
+  overload: '0'
+  strict: '0'
+  warnings: '0'
+resources:
+  bugtracker: https://github.com/stevan/BreadBoard/issues
+  homepage: https://github.com/stevan/BreadBoard
+  repository: https://github.com/stevan/BreadBoard.git
+version: '0.35'
+x_authority: cpan:STEVAN
+x_contributors:
+  - 'Alex Balhatchet <kaoru@slackwise.net>'
+  - 'André Walker <andre@andrewalker.net>'
+  - 'ben hengst <ben.hengst@gmail.com>'
+  - 'Brad Bowman <github@bereft.net>'
+  - 'Caleb Cushing <xenoterracide@gmail.com>'
+  - 'Daisuke Maki <dmaki@cpan.org>'
+  - 'Dave Rolsky <autarch@urth.org>'
+  - 'Florian Ragwitz <rafl@debian.org>'
+  - 'Gabor Szabo <szabgab@gmail.com>'
+  - 'Gianni Ceccarelli <gianni.ceccarelli@net-a-porter.com>'
+  - 'Jason Galea <jason@lecstor.com>'
+  - 'Jason May <jason.a.may@gmail.com>'
+  - 'Jay Hannah <jay.hannah@iinteractive.com>'
+  - 'Jesse Luehrs <doy@tozt.net>'
+  - 'Jonathan Rockway <jon@jrock.us>'
+  - 'Kip Hampton <khampton@totalcinema.com>'
+  - 'Neil Bowers <neil@bowers.com>'
+  - 'Philippe Bruhat (BooK) <book@cpan.org>'
+  - 'Sterling Hanenkamp <hanenkamp@cpan.org>'
+  - 'Tomas Doran <bobtfish@bobtfish.net>'
+  - 'Yanick Champoux <yanick@babyl.dyndns.org>'
+  - 'zdk <nx2zdk@gmail.com>'
+x_serialization_backend: 'YAML::Tiny version 1.67'

@@ -1,6 +1,7 @@
 package Bread::Board::Types;
+our $AUTHORITY = 'cpan:STEVAN';
 # ABSTRACT: types and coercions for Bread::Board
-
+$Bread::Board::Types::VERSION = '0.35';
 use Moose::Util::TypeConstraints;
 
 use Scalar::Util qw(blessed);
@@ -104,6 +105,18 @@ no Moose::Util::TypeConstraints; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Types - types and coercions for Bread::Board
+
+=head1 VERSION
+
+version 0.35
+
 =head1 DESCRIPTION
 
 This package defines types and coercions for L<Bread::Board>.
@@ -131,33 +144,33 @@ Hashref mapping strings to instances of L<Bread::Board::Dependency>.
 
 The values of the hashref can be coerced in several different ways:
 
-=begin :list
+=over 4
 
-= a string
+=item a string
 
 will be interpreted as the L<< C<service_path>|Bread::Board::Dependency/service_path >>
 
-= a hashref with a single key
+=item a hashref with a single key
 
 the key will be interpreted as a L<<
 C<service_path>|Bread::Board::Dependency/service_path >>, and the
 value as a hashref for L<<
 C<service_params>|Bread::Board::Dependency/service_params >>
 
-= an arrayref
+=item an arrayref
 
 each element will be interpreted as a dependency (possibly through all
 the coercions listed here); see below for an example
 
-= a L<service|Bread::Board::Service> object
+=item a L<service|Bread::Board::Service> object
 
 will be interpreted as a dependency on that service
 
-= a L<dependency|Bread::Board::Dependency> object
+=item a L<dependency|Bread::Board::Dependency> object
 
 will be taken as-is
 
-=end :list
+=back
 
 Instead of a hashref of any of the above things, you can use an
 arrayref: it will be coerced to hashref, using the (coerced)
@@ -188,7 +201,6 @@ The service C<foo> depends on the services C<bar> and C<baz>, and when
 instantiating C<foo>, its constructor will receive something like C<<
 things => [ $instance_of_bar, $instance_of_baz ] >>.
 
-
    service foo => (
      class => 'Foo',
      dependencies => {
@@ -218,3 +230,25 @@ becomes:
     b => { optional => 0 },
     c => { optional => 0 },
   }
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

@@ -1,6 +1,7 @@
 package Bread::Board::Service::Deferred;
+our $AUTHORITY = 'cpan:STEVAN';
 # ABSTRACT: Helper for holding a service that is not quite constructed yet
-
+$Bread::Board::Service::Deferred::VERSION = '0.35';
 use Moose ();
 
 use overload
@@ -84,6 +85,18 @@ sub AUTOLOAD {
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Service::Deferred - Helper for holding a service that is not quite constructed yet
+
+=head1 VERSION
+
+version 0.35
+
 =head1 DESCRIPTION
 
 Class for proxy objects used when L<resolving circular
@@ -100,3 +113,25 @@ actual value instantiated by the service at the first opportunity, and
 you should not notice that this class was ever there.
 
 =for Pod::Coverage can isa meta new
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

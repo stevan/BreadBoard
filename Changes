@@ -1,26 +1,21 @@
 Revision history for Bread-Board
 
-{{$NEXT}}
-  [ API CHANGES ]
-
+0.35 2017-07-31
   [ BUG FIXES ]
-  - fixed Bread::Board::Dumper to dump parameterized containers -
-       previously it would just ignore them entirely (#56, Dave Rolsky)
-  - Moo classes were losing their method modifiers because
-    of bad interaction with Class::MOP::class_of(). (GH#61)
-
-  [ DOCUMENTATION ]
+    - fixed Bread::Board::Dumper to dump parameterized containers -
+      previously it would just ignore them entirely (#56, Dave Rolsky)
+    - Moo classes were losing their method modifiers because of bad
+      interaction with Class::MOP::class_of(). (GH#61)
 
   [ ENHANCEMENTS ]
-    - Using Bread::Board no longer enables strict and warnings in the calling
-      package. (#53, Dave Rolsky)
-    - Bread::Board::Dumper now sorts services and sub containers - previously
-      these came out in a random order each time (#56, Dave Rolsky)
-    - allow a service or literal to be undefined. (#54, Dave Rolsky)
-
-  [ NEW FEATURES ]
+    - Using Bread::Board no longer enables strict and warnings in the
+      calling package. (#53, Dave Rolsky) - Bread::Board::Dumper now sorts
+      services and sub containers - previously these came out in a random
+      order each time (#56, Dave Rolsky) - allow a service or literal to be
+      undefined. (#54, Dave Rolsky)
 
   [ STATISTICS ]
+    - code churn: 13 files changed, 425 insertions(+), 237 deletions(-)
 
 0.34 2016-03-28
   - Add test messages to tests which did not have them, (#50, Alex
