@@ -6,7 +6,6 @@ MANIFEST
 META.json
 META.yml
 Makefile.PL
-README
 README.mkdn
 SIGNATURE
 cpanfile
@@ -109,9 +108,9 @@ t/300_no_new.t
 t/301_sugar.t
 t/302_path_traversal_deprecation.t
 t/310_literal_keyword.t
+t/500-gh61.t
 t/lib/bad.bb
 t/lib/false.bb
 t/lib/logger.bb
 t/lib/my_app.bb
-xt/release/pause-permissions.t
 xt/release/unused-vars.t
