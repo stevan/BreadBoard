@@ -1,6 +1,12 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+  [ MISC ]
+
+    - Reverting the changes of #53, as it breaks a few packages that are using
+        `also => 'Bread::Board'` in their import, and the benefit we get from 
+        freeing ourselves from Moose::Exporter isn't that huge.
+    
   [ API CHANGES ]
 
   [ BUG FIXES ]
