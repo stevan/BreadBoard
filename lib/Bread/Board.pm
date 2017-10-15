@@ -149,7 +149,15 @@ sub service ($@) {
                 unless defined $CC;
 
             my $container = ($CC->isa('Bread::Board::Container::Parameterized') ? $CC->container : $CC);
-            my $prototype_service = $container->fetch($name);
+            my $prototype_service;
+            
+            if (defined $params{parent_service}) {
+                $prototype_service = $container->fetch($params{parent_service});
+                delete $params{parent_service};
+            }
+            else {
+                $prototype_service = $container->fetch($name);
+            }
 
             confess sprintf(
                 "Trying to inherit from service '%s', but found a %s",
@@ -540,6 +548,62 @@ superclasses. The C<dependencies> and C<parameters> options will be merged with
 the existing values, rather than overridden. Note that literal services can't
 be extended, because there's nothing to extend. You can still override them
 entirely by declaring the service name without a leading C<'+'>.
+
+You can also use C<parent_service> attribute to inherit a parent service. This is 
+useful when a hierarchy of classes is mapped to corresponding hierarchy of services.
+
+Example:
+
+Classes
+
+  package Foo;
+  use Moose;
+  has 'foo_prop' => ( is => 'rw', default => 123);
+  
+  package Bar;
+  use Moose;
+  has 'foo'      => ( is => 'rw' );
+  has 'bar_prop' => ( is => 'rw' );
+  
+  package Baz;
+  use Moose;
+  extends 'Bar';
+  has 'baz_prop' => ( is => 'rw' );
+
+Services
+  
+  service foo => {
+      class => 'Foo'
+  };
+  
+  service bar => (
+      class => 'Bar',
+      dependencies => {
+          foo => 'foo'
+      },
+      parameters => {
+          bar_prop => { optional => 1 }
+      }
+  );
+  
+  service baz => (
+      class => 'Baz',
+      parent_service => 'bar',
+      parameters => {
+          baz_prop => { optional => 1 }
+      }
+  );
+
+Usage
+
+  my $c = ...;
+  
+  my $baz = $c->resolve(service => 'baz', parameters => {
+      bar_prop => 123,
+      baz_prop => 456
+  });
+  
+  say $baz->foo->foo_prop; # 123
 
 =head2 C<literal>
 
