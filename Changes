@@ -1,16 +1,14 @@
 Revision history for Bread-Board
 
 {{$NEXT}}
+
   [ MISC ]
 
-    - Reverting the changes of #53, as it breaks a few packages that are using
-        `also => 'Bread::Board'` in their import, and the benefit we get from 
-        freeing ourselves from Moose::Exporter isn't that huge.
-    
+    - Fix some broken formatting in 'Changes'. (GH#65, Dave Rolsky)
+
   [ API CHANGES ]
 
   [ BUG FIXES ]
-  - fix pod error. (Mohammad S Anwar, GH#63)
 
   [ DOCUMENTATION ]
 
@@ -19,6 +17,18 @@ Revision history for Bread-Board
   [ NEW FEATURES ]
 
   [ STATISTICS ]
+
+0.36 2017-10-15
+  [ BUG FIXES ]
+    - fix pod error. (Mohammad S Anwar, GH#63)
+
+  [ MISC ]
+    - Reverting the changes of #53, as it breaks a few packages that are
+      using `also => 'Bread::Board'` in their import, and the benefit we
+      get from	freeing ourselves from Moose::Exporter isn't that huge.
+
+  [ STATISTICS ]
+    - code churn: 4 files changed, 40 insertions(+), 44 deletions(-)
 
 0.35 2017-07-31
   [ BUG FIXES ]
@@ -29,10 +39,10 @@ Revision history for Bread-Board
 
   [ ENHANCEMENTS ]
     - Using Bread::Board no longer enables strict and warnings in the
-      calling package. (#53, Dave Rolsky) - Bread::Board::Dumper now sorts
-      services and sub containers - previously these came out in a random
-      order each time (#56, Dave Rolsky) - allow a service or literal to be
-      undefined. (#54, Dave Rolsky)
+      calling package. (#53, Dave Rolsky)
+    - Bread::Board::Dumper now sorts services and sub containers - previously
+      these came out in a random order each time (#56, Dave Rolsky)
+    - allow a service or literal to be undefined. (#54, Dave Rolsky)
 
   [ STATISTICS ]
     - code churn: 13 files changed, 425 insertions(+), 237 deletions(-)
