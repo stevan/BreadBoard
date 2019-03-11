@@ -261,7 +261,6 @@ __END__
           class        => 'FileLogger',
           lifecycle    => 'Singleton',
           dependencies => [ 'log_file_name' ],
-          ]
       );
 
       container 'Database' => as {
