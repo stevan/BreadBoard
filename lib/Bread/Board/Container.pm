@@ -339,8 +339,7 @@ map.
   $containers->add_type_mapping_for( $type_name, $service );
 
 Adds a mapping from a L<Moose type|Moose::Util::TypeConstraints> to a
-service: whenever we try to L<< resolve|/resolve ( ?service =>
-$service_name, ?type => $type, ?parameters => { ... } ) >> that type,
+service: whenever we try to L</resolve> that type,
 we'll use that service to instantiate it.
 
 =method C<get_type_mapping_for>
@@ -370,7 +369,7 @@ sub-type mapped, you get a random one. This is probably a bad idea.
 
 Returns true if we have a service defined to instantiate the given
 type name, but see the note on
-L<get_type_mapping_for|/get_type_mapping_for ( $type_name )> about
+L</get_type_mapping_for> about
 subtype mapping.
 
 =method C<resolve>
@@ -387,7 +386,7 @@ given parameters.
   my $object = $container->resolve(type=>$type,parameters=>\%p);
 
 When given a type name, this method will use
-L<get_type_mapping_for|/get_type_mapping_for ( $type_name )> to get
+L</get_type_mapping_for> to get
 the service, then call L<< C<get>|Bread::Board::Service/get >> on it,
 optionally passing the given parameters. If the instance is not of the
 expected type, the method will die.
