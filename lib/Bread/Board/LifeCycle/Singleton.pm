@@ -1,6 +1,7 @@
 package Bread::Board::LifeCycle::Singleton;
+our $AUTHORITY = 'cpan:STEVAN';
 # ABSTRACT: service role for singleton lifecycle
-
+$Bread::Board::LifeCycle::Singleton::VERSION = '0.37';
 use Moose::Role;
 
 use Try::Tiny;
@@ -60,6 +61,18 @@ no Moose::Role; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::LifeCycle::Singleton - service role for singleton lifecycle
+
+=head1 VERSION
+
+version 0.37
+
 =head1 DESCRIPTION
 
 Sub-role of L<Bread::Board::LifeCycle>, this role defines the
@@ -67,7 +80,16 @@ Sub-role of L<Bread::Board::LifeCycle>, this role defines the
 its work the first time it is invoked; subsequent invocations will
 return the same object.
 
-=method C<get>
+=head1 ATTRIBUTES
+
+=head2 C<instance>
+
+The object build by the last call to C<get> to actually do any work,
+and returned by any subsequent call to C<get>.
+
+=head1 METHODS
+
+=head2 C<get>
 
 The first time this is called (or the first time after calling
 L</flush_instance>), the actual C<get> method will be invoked, and its
@@ -75,16 +97,33 @@ return value cached in the L</instance> attribute. The value of that
 attribute will always be returned, so you can call C<get> as many time
 as you need, and always receive the same instance.
 
-=attr C<instance>
-
-The object build by the last call to C<get> to actually do any work,
-and returned by any subsequent call to C<get>.
-
-=method C<has_instance>
+=head2 C<has_instance>
 
 Predicate for the L</instance> attribute.
 
-=method C<flush_instance>
+=head2 C<flush_instance>
 
 Clearer for the L</instance> attribute. Clearing the attribute will
 cause the next call to C<get> to instantiate a new object.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2019, 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

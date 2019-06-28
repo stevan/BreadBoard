@@ -1,26 +1,16 @@
 Revision history for Bread-Board
 
-{{$NEXT}}
-
-  [ MISC ]
-
-    - Fix some broken formatting in 'Changes'. (GH#65, Dave Rolsky)
-
-  [ API CHANGES ]
-
-  [ BUG FIXES ]
-
+0.37 2019-06-28
   [ DOCUMENTATION ]
     - Fixed pod error as reported by CPANTS. (GH#67, Mohammad S Anwar)
-    remove extraneous character from synopsis
-
+    - remove extraneous character from synopsis
     - Remove extraneous character from synopsis (GH#66, Graham Knop)
 
-  [ ENHANCEMENTS ]
-
-  [ NEW FEATURES ]
+  [ MISC ]
+    - Fix some broken formatting in 'Changes'. (GH#65, Dave Rolsky)
 
   [ STATISTICS ]
+    - code churn: 10 files changed, 137 insertions(+), 70 deletions(-)
 
 0.36 2017-10-15
   [ BUG FIXES ]
@@ -44,8 +34,9 @@ Revision history for Bread-Board
   [ ENHANCEMENTS ]
     - Using Bread::Board no longer enables strict and warnings in the
       calling package. (#53, Dave Rolsky)
-    - Bread::Board::Dumper now sorts services and sub containers - previously
-      these came out in a random order each time (#56, Dave Rolsky)
+    - Bread::Board::Dumper now sorts services and sub containers -
+      previously these came out in a random order each time (#56, Dave
+      Rolsky)
     - allow a service or literal to be undefined. (#54, Dave Rolsky)
 
   [ STATISTICS ]

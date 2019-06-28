@@ -1,5 +1,6 @@
 package Bread::Board::Container::Parameterized;
-
+our $AUTHORITY = 'cpan:STEVAN';
+$Bread::Board::Container::Parameterized::VERSION = '0.37';
 use Moose;
 use Moose::Util 'find_meta';
 use Bread::Board::Container::FromParameterized;
@@ -103,6 +104,18 @@ no Moose; no Moose::Util; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Container::Parameterized - A parameterized container
+
+=head1 VERSION
+
+version 0.37
+
 =head1 DESCRIPTION
 
 This class implements a sort of container factory for L<Bread::Board>:
@@ -110,47 +123,51 @@ a parameterized container is a, in practice, a function from a set of
 parameters (which must be containers) to an actual container. See
 L<Bread::Board::Manual::Example::FormSensible> for an example.
 
-=attr C<name>
+=head1 ATTRIBUTES
+
+=head2 C<name>
 
 Read/write string, required. Every container needs a name, by which it
 can be referenced when L<fetching it|Bread::Board::Traversable/fetch>.
 
-=attr C<allowed_parameter_names>
+=head2 C<allowed_parameter_names>
 
 Read-only arrayref of strings, required. These are the names of the
 containers that must be passed to L<< C<create>|create ( %params ) >>
 to get an actual container out of this parameterized object.
 
-=attr C<container>
+=head2 C<container>
 
 This attribute holds the "prototype" container. Services inside it can
 depend on service paths that include the container names given in
 L</allowed_parameter_names>.
 
-=method C<add_service>
+=head1 METHODS
 
-=method C<get_service>
+=head2 C<add_service>
 
-=method C<has_service>
+=head2 C<get_service>
 
-=method C<get_service_list>
+=head2 C<has_service>
 
-=method C<has_services>
+=head2 C<get_service_list>
 
-=method C<add_sub_container>
+=head2 C<has_services>
 
-=method C<get_sub_container>
+=head2 C<add_sub_container>
 
-=method C<has_sub_container>
+=head2 C<get_sub_container>
 
-=method C<get_sub_container_list>
+=head2 C<has_sub_container>
 
-=method C<has_sub_containers>
+=head2 C<get_sub_container_list>
+
+=head2 C<has_sub_containers>
 
 All these methods are delegated to the "prototype" L</container>, so
 that this object can be defined as if it were a normal container.
 
-=method C<create>
+=head2 C<create>
 
   my $container = $parameterized_container->create(%params);
 
@@ -168,10 +185,32 @@ this method with different parameter values will return different
 containers, but all with the same name. It's probably a bad idea to
 instantiate a non-top-level parameterized container more than once.
 
-=method C<fetch>
+=head2 C<fetch>
 
-=method C<resolve>
+=head2 C<resolve>
 
 These two methods die, since services in a parameterized container
 won't usually resolve, and attempting to do so is almost always a
 mistake.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2019, 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

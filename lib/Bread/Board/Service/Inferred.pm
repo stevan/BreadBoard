@@ -1,6 +1,7 @@
 package Bread::Board::Service::Inferred;
+our $AUTHORITY = 'cpan:STEVAN';
 # ABSTRACT: Helper for inferring a service from a Moose object
-
+$Bread::Board::Service::Inferred::VERSION = '0.37';
 use Moose;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
@@ -213,10 +214,46 @@ no Moose; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Service::Inferred - Helper for inferring a service from a Moose object
+
+=head1 VERSION
+
+version 0.37
+
 =head1 DESCRIPTION
 
 CAUTION, EXPERIMENTAL FEATURE.
 
 Docs to come, as well as refactoring.
 
-=method C<infer_service>
+=head1 METHODS
+
+=head2 C<infer_service>
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2019, 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

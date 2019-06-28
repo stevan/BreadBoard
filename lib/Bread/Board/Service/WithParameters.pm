@@ -1,6 +1,7 @@
 package Bread::Board::Service::WithParameters;
+our $AUTHORITY = 'cpan:STEVAN';
 # ABSTRACT: Services with parameters
-
+$Bread::Board::Service::WithParameters::VERSION = '0.37';
 use Moose::Role;
 use MooseX::Params::Validate qw(validated_hash);
 
@@ -74,6 +75,18 @@ no Moose::Role; 1;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Bread::Board::Service::WithParameters - Services with parameters
+
+=head1 VERSION
+
+version 0.37
+
 =head1 DESCRIPTION
 
 This is a sub-role of L<Bread::Board::Service>, for parameterized
@@ -85,7 +98,9 @@ C<Bread::Board::Dependency>|Bread::Board::Dependency/service_params
 C<Bread::Board::Service::Deferred::Thunk>|Bread::Board::Service::Deferred::Thunk/inflate
 >>.
 
-=attr C<parameters>
+=head1 ATTRIBUTES
+
+=head2 C<parameters>
 
 Read-only hashref, will be passed as-is to L<<
 C<MooseX::Params::Validate>'s
@@ -118,20 +133,22 @@ and it will be equivalent to:
     },
   );
 
-=method C<has_parameters>
+=head1 METHODS
+
+=head2 C<has_parameters>
 
 Predicate for the L</parameters> attribute.
 
-=method C<has_parameter_defaults>
+=head2 C<has_parameter_defaults>
 
 Returns true if any of the L</parameters> have a C<default> value.
 
-=method C<has_required_parameters>
+=head2 C<has_required_parameters>
 
 Returns true if any of the L</parameters> does I<not> have C<optional>
 set to true.
 
-=method C<check_parameters>
+=head2 C<check_parameters>
 
   my %parameters = $service->check_parameters(name1=>$value1,name2=>$value2);
   my %parameters = $service->check_parameters({name1=>$value1,name2=>$value2});
@@ -142,10 +159,32 @@ L<MooseX::Params::Validate>). It will die if the validation fails, or
 return the validated parameters (including default value) if it
 succeeds.
 
-=method C<get>
+=head2 C<get>
 
 I<Before> the C<get> method, arguments to C<get> are passed through
 L</check_parameters> and added to the L<<
 C<params>|Bread::Board::Service/params >> hashref. I<After> the C<get>
 method, those keys/values will be removed. In practice, this makes all
 parameters available to the actual C<get> method body.
+
+=head1 AUTHOR
+
+Stevan Little <stevan@iinteractive.com>
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://github.com/stevan/BreadBoard/issues
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2019, 2017, 2016, 2015, 2014, 2013, 2011, 2009 by Infinity Interactive.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
