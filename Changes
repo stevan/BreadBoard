@@ -12,6 +12,9 @@ Revision history for Bread-Board
 
   [ DOCUMENTATION ]
     - Fixed pod error as reported by CPANTS. (GH#67, Mohammad S Anwar)
+    remove extraneous character from synopsis
+
+    - Remove extraneous character from synopsis (GH#66, Graham Knop)
 
   [ ENHANCEMENTS ]
 
