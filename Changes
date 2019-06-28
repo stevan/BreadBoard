@@ -11,6 +11,7 @@ Revision history for Bread-Board
   [ BUG FIXES ]
 
   [ DOCUMENTATION ]
+    - Fixed pod error as reported by CPANTS. (GH#67, Mohammad S Anwar)
 
   [ ENHANCEMENTS ]
 
