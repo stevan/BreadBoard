@@ -9,7 +9,8 @@ use Bread::Board::Types;
 
 with 'Bread::Board::Service::WithConstructor',
      'Bread::Board::Service::WithParameters',
-     'Bread::Board::Service::WithDependencies';
+     'Bread::Board::Service::WithDependencies',
+     'Bread::Board::Service::WithRoles';
 
 has '+class' => (required => 1);
 
